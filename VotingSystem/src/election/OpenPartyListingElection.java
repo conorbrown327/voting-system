@@ -15,15 +15,21 @@ public class OpenPartyListingElection extends Election {
 	}
 
 	@Override
-	protected void writeMediaFile() {
+	protected void writeMediaFile(Candidate winner) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected void writeResultsToTerminal() {
+	protected void displayResultsToTerminal(Candidate winner) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	protected Candidate getWinner() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

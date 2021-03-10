@@ -16,19 +16,18 @@ public abstract class Election {
 		return null;
 	}
 
-	protected void determineWinner(String filePath) {
-		return;
+	protected Candidate determineWinner(String filePath) {
+		readBallotFile(filePath);
+		return getWinner();
 	}
 
-	protected Candidate getWinner() {
-		return null;
-	}
+	protected abstract Candidate getWinner();
 
 	protected abstract void readBallotFile(String filePath);
 
 	protected abstract void writeToBallotFile(String line);
 
-	protected abstract void writeMediaFile();
+	protected abstract void writeMediaFile(Candidate winner);
 
-	protected abstract void writeResultsToTerminal();
+	protected abstract void displayResultsToTerminal(Candidate winner);
 }
