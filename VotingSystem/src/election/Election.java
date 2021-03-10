@@ -6,11 +6,11 @@ import java.util.Map;
 
 public abstract class Election {
 
-	private List<Candidate> candidates;
-	private FileWriter auditFile;
-	private int numCandidates;
-	private int numBallots;
-	private Map<String, Party> participatingParties;
+	protected List<Candidate> candidates;
+	protected FileWriter auditFile;
+	protected int numCandidates;
+	protected int numBallots;
+	protected Map<String, Party> participatingParties;
 
 	protected Candidate breakTie(Candidate candidate1, Candidate candidate2) {
 		return null;
