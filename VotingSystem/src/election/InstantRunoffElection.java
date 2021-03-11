@@ -22,7 +22,7 @@ public class InstantRunoffElection extends Election {
 	}
 
 	@Override
-	protected void writeToBallotFile(String line) {
+	protected void writeToAuditFile(String line) {
 		// TODO Auto-generated method stub
 
 	}

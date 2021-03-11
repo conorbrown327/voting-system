@@ -52,7 +52,7 @@ public abstract class Election {
 
 	protected abstract void readBallotFile(String filePath);
 
-	protected abstract void writeToBallotFile(String line);
+	protected abstract void writeToAuditFile(String line);
 
 	protected abstract void writeMediaFile(Candidate winner);
 
