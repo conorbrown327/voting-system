@@ -76,6 +76,7 @@ public class InstantRunoffElection extends Election {
 
 	private void redistributeBallotVote(Ballot ballot) {
 		// TODO If the ballot queue is empty, toss the vote and decrement numBallots
+
 		// Otherwise, add the ballot to the next in line candidate and increment his
 		// vote total
 	}
