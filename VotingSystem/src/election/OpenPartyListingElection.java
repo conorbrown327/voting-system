@@ -1,6 +1,7 @@
 package election;
 
 import java.util.*;
+import java.io.*;
 import java.time.LocalDateTime; // import the LocalDateTime class
 
 public class OpenPartyListingElection extends Election {
@@ -28,8 +29,12 @@ public class OpenPartyListingElection extends Election {
 
 	@Override
 	protected void writeMediaFile() {
-		// TODO Auto-generated method stub
+		File mediaFile = new File("MediaFile-" + LocalDateTime.now() + ".txt");
+		FileWriter writer = new FileWriter(mediaFile);
 
+		writer.write("");
+
+		writer.close();
 	}
 
 	@Override
@@ -52,7 +57,8 @@ public class OpenPartyListingElection extends Election {
 		System.out.println("Total: Ballots Counted: " + numBallots);
 
 		// this will be changed, should pass a LocalDateTime obj to func? when audit file created
-		System.out.println("An audit file with the name " + LocalDateTime.now() + " has been produced in " + System.getProperty("user.dir"));
+		System.out.println("An audit file with the name AuditFile-" + LocalDateTime.now() + ".txt has been produced in " + System.getProperty("user.dir"));
+		System.out.println("A media file with the name MediaFile-" + LocalDateTime.now() + ".txt has been produced in " + System.getProperty("user.dir"));
 
 	}
 
