@@ -113,9 +113,4 @@ public class OpenPartyListingElection extends Election {
 		}
 		p.addSeats(numSeats);
 	}
-	
-	private void groupIndependents(List<Candidate> candidates) {
-		
-	}
-
 }
