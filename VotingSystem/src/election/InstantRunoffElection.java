@@ -3,6 +3,7 @@ package election;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.time.LocalDateTime; // import the LocalDateTime class
 
 public class InstantRunoffElection extends Election {
 
@@ -34,7 +35,19 @@ public class InstantRunoffElection extends Election {
 
 	@Override
 	protected void displayResultsToTerminal() {
-		// TODO Auto-generated method stub
+		System.out.println("Program completed successfully\n");
+		System.out.println("Election Summary");
+		System.out.println("Election Type: Instant Runoff");
+		System.out.println("Winner: " + winner.toString());
+		System.out.println("Elimination order(first at top): ");
+		for(Candidate c : eliminatedCandidates)
+		{
+			System.out.println("\t-" + c.getName());
+		}
+		System.out.println("Total: Ballots Counted: " + numBallots);
+
+		// this will be changed, should pass a LocalDateTime obj to func? when audit file created
+		System.out.println("An audit file with the name " + LocalDateTime.now() + " has been produced in " + System.getProperty("user.dir"));
 
 	}
 	
