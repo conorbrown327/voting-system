@@ -11,7 +11,7 @@ class OPLTest {
 
 	@Test
 	void test() {
-		Election e = new OpenPartyListingElection();
+		Election e = new OpenPartyListingElection("EmptyFile.txt");
 		fail("Not yet implemented");
 	}
 

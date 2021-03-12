@@ -8,11 +8,10 @@ public class InstantRunoffElection extends Election {
 
 	private Map<Candidate, List<Ballot>> candidatesBallots;
 	private List<Candidate> eliminatedCandidates;
+	private Candidate winner;
 
 	public InstantRunoffElection(String filePath) {
-		Candidate winner = determineWinner(filePath);
-		writeMediaFile(winner);
-		displayResultsToTerminal(winner);
+		determineWinner(filePath);
 	}
 
 	@Override
@@ -28,19 +27,27 @@ public class InstantRunoffElection extends Election {
 	}
 
 	@Override
-	protected void writeMediaFile(Candidate winner) {
+	protected void writeMediaFile() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected void displayResultsToTerminal(Candidate winner) {
+	protected void displayResultsToTerminal() {
 		// TODO Auto-generated method stub
 
 	}
+	
+	//Accomplishes what you did before, but uses the more general determineWinner
+	
+	protected void determineWinner(String filePath) {
+		readBallotFile(filePath);
+		winner = getWinner();
+		writeMediaFile();
+		displayResultsToTerminal();
+	}
 
-	@Override
-	protected Candidate getWinner() {
+	private Candidate getWinner() {
 		candidates.sort(null); // Should sort using Comparable's compareTo()
 		if (existsMajority())
 			return candidates.get(0);

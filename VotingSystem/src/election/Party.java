@@ -6,7 +6,7 @@ public class Party {
 	private int totalPartyVotes;
 	private List<Candidate> affiliatedPartyMembers; //new ArrayList<Candidate>();
 	private int seatsAllocated;
-	private int remainder;
+	private Integer remainder;
 	
 	public Party(String partyName) {
 		this.partyName = partyName;
@@ -36,7 +36,7 @@ public class Party {
 		seatsAllocated += seats;
 	}
 	
-	public void setRemainder(int remainder) {
+	public void setRemainder(Integer remainder) {
 		this.remainder = remainder;
 	}
 	
@@ -44,7 +44,7 @@ public class Party {
 		return affiliatedPartyMembers;
 	}
 	
-	public int getRemainder() {
+	public Integer getRemainder() {
 		return remainder;
 	}
 	

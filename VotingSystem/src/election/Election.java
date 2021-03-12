@@ -1,8 +1,9 @@
 package election;
 import java.util.*;
+
 import java.io.FileWriter;
 import java.util.List;
-import java.util.Map;
+//import java.util.Map;
 
 public abstract class Election {
 
@@ -10,7 +11,7 @@ public abstract class Election {
 	protected FileWriter auditFile;
 	protected int numCandidates;
 	protected int numBallots;
-	protected Map<String, Party> participatingParties;
+	protected List<Party> participatingParties;
 	
 	/**
 	 * Breaks a tie between two candidates by using a random number generator to simulate flipping a coin 99 times.
@@ -42,19 +43,21 @@ public abstract class Election {
 			return candidate2;
 		}	
 	}
-
-	protected Candidate determineWinner(String filePath) {
-		readBallotFile(filePath);
-		return getWinner();
-	}
-
-	protected abstract Candidate getWinner();
+	
+	//I changed determineWinner to be void. This matches our UML, and also I feel like allows for the flexibility we need in running the elections
+	
+	protected abstract void determineWinner(String filePath);
+	
+	// protected abstract Candidate getWinner();
 
 	protected abstract void readBallotFile(String filePath);
 
 	protected abstract void writeToAuditFile(String line);
+	
+	//I took out the arguments for winner and instead made it a private variable in the  IR class, since the other class doesn't have a "winner"
+	//This way, they are more general, and the private variable can just be used wherever the winner was needed anyways.
+	
+	protected abstract void writeMediaFile();
 
-	protected abstract void writeMediaFile(Candidate winner);
-
-	protected abstract void displayResultsToTerminal(Candidate winner);
+	protected abstract void displayResultsToTerminal();
 }
