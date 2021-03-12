@@ -2,7 +2,8 @@ package election;
 
 import java.util.*;
 import java.io.*;
-import java.time.LocalDateTime; // import the LocalDateTime class
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class OpenPartyListingElection extends Election {
 	
@@ -29,12 +30,38 @@ public class OpenPartyListingElection extends Election {
 
 	@Override
 	protected void writeMediaFile() {
+		try{
 		File mediaFile = new File("MediaFile-" + LocalDateTime.now() + ".txt");
-		FileWriter writer = new FileWriter(mediaFile);
+		FileWriter writer;
+		writer = new FileWriter(mediaFile);
 
-		writer.write("");
+		writer.write(LocalDate.now() + " Open Party Election Election Results\n" +
+										"--------------------------------\n" +
+										"Candidates " + "(" + numCandidates + ") and votes by party: \n");
+	
+		for(Party p : participatingParties)
+		{
+			writer.write(p.getPartyName() + " Total Party Votes: " + p.getTotalPartyVote() + "\n" +
+						"---------------------");
+			for(Candidate c : p.getPartyMembers())
+			{
+				writer.write("\t-" + c.toString() + "\n");
+			}
+		}
 
+		writer.write("\nAwarded Seats: \n");
+		for(Candidate c : seatedCandidates)
+		{
+			writer.write("-" + c.toString());
+		}
+		
+		writer.flush();
 		writer.close();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -42,10 +69,10 @@ public class OpenPartyListingElection extends Election {
 		System.out.println("Program completed successfully\n");
 		System.out.println("Election Summary");
 		System.out.println("Election Type: Open Party Listing");
-		System.out.println("Participating parties: ")
-		for(Paty p : participatingParties)
+		System.out.println("Participating parties: ");
+		for(Party p : participatingParties)
 		{
-			System.out.println("\t-" + p.getPartyName);
+			System.out.println("\t-" + p.getPartyName());
 		}
 
 		System.out.println("Seats allocated: " + seats);
@@ -54,7 +81,7 @@ public class OpenPartyListingElection extends Election {
 		{
 			System.out.println(c.getName() + ": " + c.getParty().getPartyName());
 		}
-		System.out.println("Total: Ballots Counted: " + numBallots);
+		System.out.println("Total Ballots Counted: " + numBallots);
 
 		// this will be changed, should pass a LocalDateTime obj to func? when audit file created
 		System.out.println("An audit file with the name AuditFile-" + LocalDateTime.now() + ".txt has been produced in " + System.getProperty("user.dir"));

@@ -56,7 +56,7 @@ public class InstantRunoffElection extends Election {
 		}
 
 		writer.write("\nFinal votes garnered by each candidate\n" +
-						 "--------------------------------------\n");
+						"--------------------------------------\n");
 		for(Candidate c : candidates)
 		{
 			writer.write("-" + c.toString());
@@ -84,7 +84,7 @@ public class InstantRunoffElection extends Election {
 			System.out.println("(" + counter + ") " + c.getName());
 			counter++;
 		}
-		System.out.println("Total: Ballots Counted: " + numBallots);
+		System.out.println("Total Ballots Counted: " + numBallots);
 
 		// this will be changed, should pass a LocalDateTime obj to func? when audit file created
 		System.out.println("An audit file with the name AuditFile-" + LocalDateTime.now() + ".txt has been produced in " + System.getProperty("user.dir"));
