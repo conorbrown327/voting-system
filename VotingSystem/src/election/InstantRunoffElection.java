@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.io.*;
+import java.io.FileWriter;
 
 public class InstantRunoffElection extends Election {
 
@@ -23,10 +24,54 @@ public class InstantRunoffElection extends Election {
 
 	@Override
 	protected void writeToAuditFile(String line) {
-		// TODO Auto-generated method stub
+		try
+		{
+			auditFileWriter.write(line);
+			auditFileWriter.flush();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 
 	}
 
+	/**
+	 * Function will create the audit file and audit file writer and write the audit file head after
+	 * the ballots file has been processed and initial information is stored. This function takes
+	 * no parameters and has no return type.
+	 */
+	@Override
+	protected void writeAuditFileHeader() {
+		try{
+
+		auditFile = new File("AuditFile-" + dateTime.format(formatObj) + ".txt");
+		auditFile.createNewFile();
+		auditFileWriter = new FileWriter(auditFile);	// would need to close once done writing to audit file
+
+		auditFileWriter.write("Election Type: Instant Runoff\n");
+		auditFileWriter.write("Number of ballots: " + numBallots + "\n");
+		auditFileWriter.write("Number of candidates: " + numCandidates + "\n");
+
+		auditFileWriter.write("Candidates: "  + "\n");
+		for(Candidate c : candidates)
+		{
+			auditFileWriter.write("\t-" + c.getName() + ", Party: " + c.getParty().getPartyName() + "\n");
+		}
+		
+		auditFileWriter.flush();
+
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Create a file with an election summary to provide to the media. This function
+	 * take no parameters and has no return type.
+	 */
 	@Override
 	protected void writeMediaFile() {
 		try{
@@ -69,7 +114,10 @@ public class InstantRunoffElection extends Election {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Displays relevant election results to the terminal. Output is formatted so as to fit the results
+	 * of an Instant Runoff Election. This function takes no parameters and has no return type.
+	 */
 	@Override
 	protected void displayResultsToTerminal() {
 		System.out.println("Program completed successfully\n");
@@ -93,7 +141,15 @@ public class InstantRunoffElection extends Election {
 	
 	protected void determineWinner(String filePath) {
 		readBallotFile(filePath);
+		writeAuditFileHeader();
 		winner = getWinner();
+		try{
+			auditFileWriter.close();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 		writeMediaFile();
 		displayResultsToTerminal();
 	}
