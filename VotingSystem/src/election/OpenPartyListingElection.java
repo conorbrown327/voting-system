@@ -2,6 +2,7 @@ package election;
 
 import java.util.*;
 import java.io.*;
+import java.io.FileWriter;
 
 public class OpenPartyListingElection extends Election {
 	
@@ -26,17 +27,76 @@ public class OpenPartyListingElection extends Election {
 
 	@Override
 	protected void writeToAuditFile(String line) {
-		// TODO Auto-generated method stub
-
+		try{
+			auditFileWriter.write(line);
+			auditFileWriter.flush();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
+	/**
+	 * Function will create the audit file and audit file writer and write the audit file head after
+	 * the ballots file has been processed and initial information is stored. This function takes
+	 * no parameters and has no return type.
+	 */
+	@Override
+	protected void writeAuditFileHeader() {
+		try{
+
+		auditFile = new File("AuditFile-" + dateTime.format(formatObj) + ".txt");
+		auditFile.createNewFile();
+		auditFileWriter = new FileWriter(auditFile);
+
+		auditFileWriter.write("Election Type: Open Party Listing\n");
+		auditFileWriter.write("Number of ballots: " + numBallots + "\n");
+		auditFileWriter.write("Open Seats: " + seats + "\n");
+		auditFileWriter.write("Quota: " + quota + " votes");
+		auditFileWriter.write("Candidates by party: \n");
+
+		for(Party p : participatingParties)
+		{
+			auditFileWriter.write(p.getPartyName() + "\n");
+			for(Candidate c : p.getPartyMembers())
+			{
+				auditFileWriter.write("\t-" + c.getName() + "\n");
+			}
+		}
+
+		auditFileWriter.write("Initial votes summary for party and each candidate: \n");
+
+		for(Party p : participatingParties)
+		{
+			auditFileWriter.write(p.getPartyName() + ", Total Party Votes: " + p.getTotalPartyVote() + "\n" +
+								"---------------------");
+			for(Candidate c : p.getPartyMembers())
+			{
+				auditFileWriter.write("\t-" + c.toString() + "\n");
+			}
+		}
+
+		auditFileWriter.flush();
+
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Create a file with an election summary to provide to the media. This function
+	 * take no parameters and has no return type.
+	 */
 	@Override
 	protected void writeMediaFile() {
 		try{
+
 		File mediaFile = new File("MediaFile-" + dateTime.format(formatObj) + ".txt");
 		mediaFile.createNewFile();
-		FileWriter writer;
-		writer = new FileWriter(mediaFile);
+		FileWriter writer = new FileWriter(mediaFile);
 
 		writer.write(dateTime.format(formatObj) + " Open Party Election Election Results\n" +
 										"--------------------------------\n" +
@@ -44,7 +104,7 @@ public class OpenPartyListingElection extends Election {
 	
 		for(Party p : participatingParties)
 		{
-			writer.write(p.getPartyName() + " Total Party Votes: " + p.getTotalPartyVote() + "\n" +
+			writer.write(p.getPartyName() + ", Total Party Votes: " + p.getTotalPartyVote() + "\n" +
 						"---------------------");
 			for(Candidate c : p.getPartyMembers())
 			{
@@ -105,6 +165,7 @@ public class OpenPartyListingElection extends Election {
 	protected void determineWinner(Scanner ballotFile) {
 		readBallotFile(ballotFile); //Read all of the necessary information/data into the proper locations
 		determineQuota(); //Get quota set
+		writeAuditFileHeader(); //write the audit file header
 		seatsRemaining = seats; //seatsRemaining should initially be equal to the seats read in from the file
 		List<Party> manipulatedList = new ArrayList<Party>(participatingParties);
 		//Initial distribution of seats to all of the parties in the election
@@ -125,6 +186,13 @@ public class OpenPartyListingElection extends Election {
 				updateSeatsRemaining(partySeats);
 			}
 		}
+		// write the initial seats won prior to remainder distribution to the audit file
+		writeToAuditFile("Initial Seats Awarded: \n\n");
+		for(Party p : participatingParties)
+		{
+			writeToAuditFile(p.getPartyName() + ": " + p.getSeatsAllocated() + "with " + p.getRemainder() + " votes remaining\n");
+		}
+
 		//Checks for the need to distribute seats based on remainders
 		if (seatsRemaining > 0) {
 			Comparator<Party> compareByRemainder = (Party p1, Party p2) -> p1.getRemainder().compareTo(p2.getRemainder());
@@ -138,13 +206,32 @@ public class OpenPartyListingElection extends Election {
 					distributionCounter = 0;
 				}
 			}
+			// write the updated seats won after remainder distribution to the audit file
+			writeToAuditFile("Updated Seats Awarded after remainder distrubution: \n\n");
+			for(Party p : participatingParties)
+			{
+				writeToAuditFile(p.getPartyName() + ": " + p.getSeatsAllocated() + "with " + p.getRemainder() + " votes remaining\n");
+			}
 		}
 		//Now, we can actually distribute the seats, since we will have a total number of seats to distribute, including remainder allocated seats
 		for (Party p: manipulatedList) {
 			int seatsAllocated = p.getSeatsAllocated();
 			distributeSeats(seatsAllocated, p);
 		}
-		
+
+		for(Candidate c : seatedCandidates)
+		{
+			writeToAuditFile(c.getName() + ": " + c.getParty().getPartyName() + "\n");
+		}
+
+		try{
+			auditFileWriter.close();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+
 		writeMediaFile();
 		displayResultsToTerminal();
 	}

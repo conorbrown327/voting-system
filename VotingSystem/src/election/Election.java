@@ -1,6 +1,7 @@
 package election;
 import java.util.*;
 
+import java.io.*;
 import java.io.FileWriter;
 import java.util.List;
 
@@ -12,10 +13,13 @@ import java.time.format.DateTimeFormatter;
 public abstract class Election {
 
 	protected List<Candidate> candidates;
-	protected FileWriter auditFile;
+	protected FileWriter auditFileWriter;
+	// audit file File type
+	protected File auditFile;
 	protected int numCandidates;
 	protected int numBallots;
 	protected List<Party> participatingParties;
+	// date and time formatting for file creating and display
 	protected LocalDateTime dateTime = LocalDateTime.now();
     protected DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
 	
@@ -59,6 +63,9 @@ public abstract class Election {
 	protected abstract void readBallotFile(Scanner ballotFile);
 
 	protected abstract void writeToAuditFile(String line);
+
+	// added func to write the audit file header should be called once csv inital info has been read
+	protected abstract void writeAuditFileHeader();
 	
 	//I took out the arguments for winner and instead made it a private variable in the  IR class, since the other class doesn't have a "winner"
 	//This way, they are more general, and the private variable can just be used wherever the winner was needed anyways.
