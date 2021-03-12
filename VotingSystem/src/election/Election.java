@@ -3,6 +3,10 @@ import java.util.*;
 
 import java.io.FileWriter;
 import java.util.List;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 //import java.util.Map;
 
 public abstract class Election {
@@ -12,6 +16,8 @@ public abstract class Election {
 	protected int numCandidates;
 	protected int numBallots;
 	protected List<Party> participatingParties;
+	protected LocalDateTime dateTime = LocalDateTime.now();
+    protected DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
 	
 	/**
 	 * Breaks a tie between two candidates by using a random number generator to simulate flipping a coin 99 times.

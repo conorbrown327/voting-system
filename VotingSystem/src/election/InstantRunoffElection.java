@@ -3,7 +3,7 @@ package election;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.time.LocalDateTime; // import the LocalDateTime class
+import java.io.*;
 
 public class InstantRunoffElection extends Election {
 
@@ -29,8 +29,45 @@ public class InstantRunoffElection extends Election {
 
 	@Override
 	protected void writeMediaFile() {
-		// TODO Auto-generated method stub
+		try{
+		File mediaFile = new File("MediaFile-" + dateTime.format(formatObj) + ".txt");
+        mediaFile.createNewFile();
+		FileWriter writer;
+		writer = new FileWriter(mediaFile);
 
+		writer.write(dateTime.format(formatObj) + " Instant Runoff Election Results\n" +
+										"--------------------------------\n" +
+										"Candidates " + "(" + numCandidates + "): \n");
+	
+		for(Candidate c : candidates)
+		{
+			writer.write("-" + c.getName() + "\n");
+		}
+
+		writer.write("Elimination Order\n" +
+					 "-----------------\n");
+
+		int counter = 1;
+		for(Candidate c : eliminatedCandidates)
+		{
+			writer.write("(" + counter + ") " + c.getName() + "\n");
+			counter++;
+		}
+
+		writer.write("\nFinal votes garnered by each candidate\n" +
+						"--------------------------------------\n");
+		for(Candidate c : candidates)
+		{
+			writer.write("-" + c.toString());
+		}
+		
+		writer.flush();
+		writer.close();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -39,16 +76,17 @@ public class InstantRunoffElection extends Election {
 		System.out.println("Election Summary");
 		System.out.println("Election Type: Instant Runoff");
 		System.out.println("Winner: " + winner.toString());
-		System.out.println("Elimination order(first at top): ");
+		System.out.println("Elimination order: ");
+		int counter = 1;
 		for(Candidate c : eliminatedCandidates)
 		{
-			System.out.println("\t-" + c.getName());
+			System.out.println("(" + counter + ") " + c.getName());
+			counter++;
 		}
-		System.out.println("Total: Ballots Counted: " + numBallots);
+		System.out.println("Total Ballots Counted: " + numBallots);
 
-		// this will be changed, should pass a LocalDateTime obj to func? when audit file created
-		System.out.println("An audit file with the name " + LocalDateTime.now() + " has been produced in " + System.getProperty("user.dir"));
-
+		System.out.println("An audit file with the name AuditFile-" + dateTime.format(formatObj) + ".csv has been produced in " + System.getProperty("user.dir"));
+		System.out.println("A media file with the name MediaFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
 	}
 	
 	//Accomplishes what you did before, but uses the more general determineWinner

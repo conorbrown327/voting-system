@@ -1,7 +1,7 @@
 package election;
 
 import java.util.*;
-import java.time.LocalDateTime; // import the LocalDateTime class
+import java.io.*;
 
 public class OpenPartyListingElection extends Election {
 	
@@ -28,8 +28,39 @@ public class OpenPartyListingElection extends Election {
 
 	@Override
 	protected void writeMediaFile() {
-		// TODO Auto-generated method stub
+		try{
+		File mediaFile = new File("MediaFile-" + dateTime.format(formatObj) + ".txt");
+		mediaFile.createNewFile();
+		FileWriter writer;
+		writer = new FileWriter(mediaFile);
 
+		writer.write(dateTime.format(formatObj) + " Open Party Election Election Results\n" +
+										"--------------------------------\n" +
+										"Candidates " + "(" + numCandidates + ") and votes by party: \n");
+	
+		for(Party p : participatingParties)
+		{
+			writer.write(p.getPartyName() + " Total Party Votes: " + p.getTotalPartyVote() + "\n" +
+						"---------------------");
+			for(Candidate c : p.getPartyMembers())
+			{
+				writer.write("\t-" + c.toString() + "\n");
+			}
+		}
+
+		writer.write("\nAwarded Seats: \n");
+		for(Candidate c : seatedCandidates)
+		{
+			writer.write("-" + c.toString());
+		}
+		
+		writer.flush();
+		writer.close();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -53,10 +84,11 @@ public class OpenPartyListingElection extends Election {
 		{
 			System.out.println(c.getName() + ": " + c.getParty().getPartyName());
 		}
-		System.out.println("Total: Ballots Counted: " + numBallots);
+		System.out.println("Total Ballots Counted: " + numBallots);
 
 		// this will be changed, should pass a LocalDateTime obj to func? when audit file created
-		System.out.println("An audit file with the name " + LocalDateTime.now() + " has been produced in " + System.getProperty("user.dir"));
+		System.out.println("An audit file with the name AuditFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
+		System.out.println("A media file with the name MediaFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
 
 	}
 	
