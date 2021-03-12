@@ -31,16 +31,20 @@ public class OpenPartyListingElection extends Election {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	/**
+	 * Displays relevant election results to the terminal. Output is formatted so as to fit the results
+	 * of an Open Party Listing Election. This function takes no parameters and has no return type.
+	 */
 	@Override
 	protected void displayResultsToTerminal() {
 		System.out.println("Program completed successfully\n");
 		System.out.println("Election Summary");
 		System.out.println("Election Type: Open Party Listing");
-		System.out.println("Participating parties: ")
-		for(Paty p : participatingParties)
+		System.out.println("Participating parties: ");
+		for(Party p : participatingParties)
 		{
-			System.out.println("\t-" + p.getPartyName);
+			System.out.println("\t-" + p.getPartyName());
 		}
 
 		System.out.println("Seats allocated: " + seats);
@@ -55,33 +59,53 @@ public class OpenPartyListingElection extends Election {
 		System.out.println("An audit file with the name " + LocalDateTime.now() + " has been produced in " + System.getProperty("user.dir"));
 
 	}
-
+	
+	/**
+	 * This is heart of the OpenPartyListingElection class. This is the main function that determines which
+	 * parties get which seats, and which seats go to which candidates.
+	 * @param String filePath: The filePath to the election file that is currently being run
+	 * @return void
+	 */
 	@Override
 	protected void determineWinner(String filePath) {
 		readBallotFile(filePath); //Read all of the necessary information/data into the proper locations
 		determineQuota(); //Get quota set
 		seatsRemaining = seats; //seatsRemaining should initially be equal to the seats read in from the file
+		List<Party> manipulatedList = new ArrayList<Party>(participatingParties);
 		//Initial distribution of seats to all of the parties in the election
-		for (Party p : participatingParties) {
+		for (Party p : manipulatedList) {
 			int partySeats = calculateSeats(p);
 			int partyRemainder = calculateRemainder(p);
 			p.setRemainder(partyRemainder);
-			p.addSeats(partySeats); //Don't distribute the seats yet, just update the number so that we only distribute once at the end
-			updateSeatsRemaining(partySeats);
+			//Handle the case where a party gets more seats than it has candidates here
+			if (partySeats > p.getPartyMembers().size()) {
+				p.addSeats(p.getPartyMembers().size());
+				distributeSeats(p.getPartyMembers().size(), p);
+				updateSeatsRemaining(p.getPartyMembers().size());
+				manipulatedList.remove(p);
+			}
+			//All other cases go here
+			else {
+				p.addSeats(partySeats); //Don't distribute the seats yet, just update the number so that we only distribute once at the end
+				updateSeatsRemaining(partySeats);
+			}
 		}
 		//Checks for the need to distribute seats based on remainders
 		if (seatsRemaining > 0) {
 			Comparator<Party> compareByRemainder = (Party p1, Party p2) -> p1.getRemainder().compareTo(p2.getRemainder());
-			Collections.sort(participatingParties, compareByRemainder);
+			Collections.sort(manipulatedList, compareByRemainder.reversed());
 			int distributionCounter = 0; //Counter for keeping track of which party should be distributed to
 			while (seatsRemaining > 0) {
-				participatingParties.get(distributionCounter).addSeats(1);
+				manipulatedList.get(distributionCounter).addSeats(1);
 				distributionCounter += 1;
 				updateSeatsRemaining(1);
+				if (distributionCounter == manipulatedList.size()) {
+					distributionCounter = 0;
+				}
 			}
 		}
 		//Now, we can actually distribute the seats, since we will have a total number of seats to distribute, including remainder allocated seats
-		for (Party p: participatingParties) {
+		for (Party p: manipulatedList) {
 			int seatsAllocated = p.getSeatsAllocated();
 			distributeSeats(seatsAllocated, p);
 		}
@@ -130,6 +154,5 @@ public class OpenPartyListingElection extends Election {
 				seatedCandidates.add(sortedList.get(i));
 			}
 		}
-		p.addSeats(numSeats);
 	}
 }

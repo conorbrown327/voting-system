@@ -16,9 +16,9 @@ public abstract class Election {
 	/**
 	 * Breaks a tie between two candidates by using a random number generator to simulate flipping a coin 99 times.
 	 * This way, there will always be a winner, as the odd number of tosses removes the possibility of ties.
-	 * @param candidate1
-	 * @param candidate2
-	 * @return Either candidate1 or candidate2 based on the results of flipping a simulated coin 99 times.
+	 * @param candidate1: The first candidate who is tied
+	 * @param candidate2: The second candidate who is tied
+	 * @return Either candidate1 or candidate2 based on the results of flipping a simulated coin 99 times
 	 */
 
 	protected Candidate breakTie(Candidate candidate1, Candidate candidate2) {

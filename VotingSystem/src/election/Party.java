@@ -1,6 +1,13 @@
 package election;
 import java.util.*;
 
+/**
+ * A class to represent an individual Party in an election. This class will be used by multiple other methods
+ * throughout the course of running an election.
+ * 
+ * @author Jack Soderwall (soder365)
+ *
+ */
 public class Party {
 	private String partyName;
 	private int totalPartyVotes;
