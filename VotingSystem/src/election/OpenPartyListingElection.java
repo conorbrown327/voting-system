@@ -61,6 +61,18 @@ public class OpenPartyListingElection extends Election {
 			}
 		}
 
+		auditFileWriter.write("Initial votes summary for party and each candidate: \n");
+
+		for(Party p : participatingParties)
+		{
+			auditFileWriter.write(p.getPartyName() + ", Total Party Votes: " + p.getTotalPartyVote() + "\n" +
+								"---------------------");
+			for(Candidate c : p.getPartyMembers())
+			{
+				auditFileWriter.write("\t-" + c.toString() + "\n");
+			}
+		}
+
 		auditFileWriter.flush();
 
 		}
@@ -149,7 +161,7 @@ public class OpenPartyListingElection extends Election {
 	protected void determineWinner(String filePath) {
 		readBallotFile(filePath); //Read all of the necessary information/data into the proper locations
 		determineQuota(); //Get quota set
-		writeAuditFileHeader();
+		writeAuditFileHeader(); //write the audit file header
 		seatsRemaining = seats; //seatsRemaining should initially be equal to the seats read in from the file
 		List<Party> manipulatedList = new ArrayList<Party>(participatingParties);
 		//Initial distribution of seats to all of the parties in the election
@@ -170,6 +182,13 @@ public class OpenPartyListingElection extends Election {
 				updateSeatsRemaining(partySeats);
 			}
 		}
+		// write the initial seats won prior to remainder distribution to the audit file
+		writeToAuditFile("Initial Seats Awarded: \n\n");
+		for(Party p : participatingParties)
+		{
+			writeToAuditFile(p.getPartyName() + ": " + p.getSeatsAllocated() + "with " + p.getRemainder() + " votes remaining\n");
+		}
+
 		//Checks for the need to distribute seats based on remainders
 		if (seatsRemaining > 0) {
 			Comparator<Party> compareByRemainder = (Party p1, Party p2) -> p1.getRemainder().compareTo(p2.getRemainder());
@@ -183,13 +202,24 @@ public class OpenPartyListingElection extends Election {
 					distributionCounter = 0;
 				}
 			}
+			// write the updated seats won after remainder distribution to the audit file
+			writeToAuditFile("Updated Seats Awarded after remainder distrubution: \n\n");
+			for(Party p : participatingParties)
+			{
+				writeToAuditFile(p.getPartyName() + ": " + p.getSeatsAllocated() + "with " + p.getRemainder() + " votes remaining\n");
+			}
 		}
 		//Now, we can actually distribute the seats, since we will have a total number of seats to distribute, including remainder allocated seats
 		for (Party p: manipulatedList) {
 			int seatsAllocated = p.getSeatsAllocated();
 			distributeSeats(seatsAllocated, p);
 		}
-		
+
+		for(Candidate c : seatedCandidates)
+		{
+			writeToAuditFile(c.getName() + ": " + c.getParty().getPartyName() + "\n");
+		}
+
 		try{
 			auditFileWriter.close();
 		}
