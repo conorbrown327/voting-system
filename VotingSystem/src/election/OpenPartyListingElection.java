@@ -2,8 +2,6 @@ package election;
 
 import java.util.*;
 import java.io.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class OpenPartyListingElection extends Election {
 	
@@ -31,11 +29,12 @@ public class OpenPartyListingElection extends Election {
 	@Override
 	protected void writeMediaFile() {
 		try{
-		File mediaFile = new File("MediaFile-" + LocalDateTime.now() + ".txt");
+		File mediaFile = new File("MediaFile-" + dateTime.format(formatObj) + ".txt");
+		mediaFile.createNewFile();
 		FileWriter writer;
 		writer = new FileWriter(mediaFile);
 
-		writer.write(LocalDate.now() + " Open Party Election Election Results\n" +
+		writer.write(dateTime.format(formatObj) + " Open Party Election Election Results\n" +
 										"--------------------------------\n" +
 										"Candidates " + "(" + numCandidates + ") and votes by party: \n");
 	
@@ -84,8 +83,8 @@ public class OpenPartyListingElection extends Election {
 		System.out.println("Total Ballots Counted: " + numBallots);
 
 		// this will be changed, should pass a LocalDateTime obj to func? when audit file created
-		System.out.println("An audit file with the name AuditFile-" + LocalDateTime.now() + ".txt has been produced in " + System.getProperty("user.dir"));
-		System.out.println("A media file with the name MediaFile-" + LocalDateTime.now() + ".txt has been produced in " + System.getProperty("user.dir"));
+		System.out.println("An audit file with the name AuditFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
+		System.out.println("A media file with the name MediaFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
 
 	}
 

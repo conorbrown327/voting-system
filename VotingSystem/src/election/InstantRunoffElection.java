@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.io.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class InstantRunoffElection extends Election {
 
@@ -32,11 +30,12 @@ public class InstantRunoffElection extends Election {
 	@Override
 	protected void writeMediaFile() {
 		try{
-		File mediaFile = new File("MediaFile-" + LocalDateTime.now() + ".txt");
+		File mediaFile = new File("MediaFile-" + dateTime.format(formatObj) + ".txt");
+        mediaFile.createNewFile();
 		FileWriter writer;
 		writer = new FileWriter(mediaFile);
 
-		writer.write(LocalDate.now() + " Instant Runoff Election Results\n" +
+		writer.write(dateTime.format(formatObj) + " Instant Runoff Election Results\n" +
 										"--------------------------------\n" +
 										"Candidates " + "(" + numCandidates + "): \n");
 	
@@ -86,9 +85,8 @@ public class InstantRunoffElection extends Election {
 		}
 		System.out.println("Total Ballots Counted: " + numBallots);
 
-		// this will be changed, should pass a LocalDateTime obj to func? when audit file created
-		System.out.println("An audit file with the name AuditFile-" + LocalDateTime.now() + ".txt has been produced in " + System.getProperty("user.dir"));
-		System.out.println("A media file with the name MediaFile-" + LocalDateTime.now() + ".txt has been produced in " + System.getProperty("user.dir"));
+		System.out.println("An audit file with the name AuditFile-" + dateTime.format(formatObj) + ".csv has been produced in " + System.getProperty("user.dir"));
+		System.out.println("A media file with the name MediaFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
 	}
 	
 	//Accomplishes what you did before, but uses the more general determineWinner
