@@ -72,6 +72,7 @@ public class OpenPartyListingElection extends Election {
 		System.out.println("Program completed successfully\n");
 		System.out.println("Election Summary");
 		System.out.println("Election Type: Open Party Listing");
+		System.out.println("Total Ballots Counted: " + numBallots);
 		System.out.println("Participating parties: ");
 		for(Party p : participatingParties)
 		{
@@ -84,9 +85,7 @@ public class OpenPartyListingElection extends Election {
 		{
 			System.out.println(c.getName() + ": " + c.getParty().getPartyName());
 		}
-		System.out.println("Total Ballots Counted: " + numBallots);
 
-		// this will be changed, should pass a LocalDateTime obj to func? when audit file created
 		System.out.println("An audit file with the name AuditFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
 		System.out.println("A media file with the name MediaFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
 

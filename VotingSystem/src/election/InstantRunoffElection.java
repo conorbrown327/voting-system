@@ -75,6 +75,7 @@ public class InstantRunoffElection extends Election {
 		System.out.println("Program completed successfully\n");
 		System.out.println("Election Summary");
 		System.out.println("Election Type: Instant Runoff");
+		System.out.println("Total Ballots Counted: " + numBallots);
 		System.out.println("Winner: " + winner.toString());
 		System.out.println("Elimination order: ");
 		int counter = 1;
@@ -83,9 +84,8 @@ public class InstantRunoffElection extends Election {
 			System.out.println("(" + counter + ") " + c.getName());
 			counter++;
 		}
-		System.out.println("Total Ballots Counted: " + numBallots);
 
-		System.out.println("An audit file with the name AuditFile-" + dateTime.format(formatObj) + ".csv has been produced in " + System.getProperty("user.dir"));
+		System.out.println("An audit file with the name AuditFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
 		System.out.println("A media file with the name MediaFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
 	}
 	
