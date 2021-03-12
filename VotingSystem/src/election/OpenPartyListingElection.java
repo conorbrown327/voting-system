@@ -267,6 +267,7 @@ public class OpenPartyListingElection extends Election {
 			if(sortedList.size() > (i + 1) && sortedList.get(i).getVoteCount() == sortedList.get(i + 1).getVoteCount()) {
 				Candidate tieWinner = breakTie(sortedList.get(i), sortedList.get(i+1));
 				seatedCandidates.add(tieWinner);
+				writeToAuditFile("Breaking tie, tie winner: " + tieWinner.getName());
 			}
 			else {
 				seatedCandidates.add(sortedList.get(i));
