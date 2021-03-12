@@ -1,5 +1,6 @@
 package election;
 
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,14 +12,18 @@ public class InstantRunoffElection extends Election {
 	private List<Candidate> eliminatedCandidates;
 	private Candidate winner;
 
-	public InstantRunoffElection(String filePath) {
-		determineWinner(filePath);
+	public InstantRunoffElection(Scanner ballotFile) {
+		determineWinner(ballotFile);
 	}
 
 	@Override
-	protected void readBallotFile(String filePath) {
-		// TODO Auto-generated method stub
-
+	protected void readBallotFile(Scanner ballotFile) {
+		numCandidates = Integer.parseInt(ballotFile.nextLine());
+		// TODO: CANDIDATES AND PARTIES //
+		numBallots = Integer.parseInt(ballotFile.nextLine());
+		while (ballotFile.hasNextLine()) {
+			// TODO: ASSIGN BALLOTS TO CANDIDATES //
+		}
 	}
 
 	@Override
@@ -91,8 +96,8 @@ public class InstantRunoffElection extends Election {
 	
 	//Accomplishes what you did before, but uses the more general determineWinner
 	
-	protected void determineWinner(String filePath) {
-		readBallotFile(filePath);
+	protected void determineWinner(Scanner ballotFile) {
+		readBallotFile(ballotFile);
 		winner = getWinner();
 		writeMediaFile();
 		displayResultsToTerminal();

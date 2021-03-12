@@ -10,14 +10,18 @@ public class OpenPartyListingElection extends Election {
 	private int quota;
 	private List<Candidate> seatedCandidates;
 	
-	public OpenPartyListingElection(String filePath) {
-		determineWinner(filePath);
+	public OpenPartyListingElection(Scanner ballotFile) {
+		determineWinner(ballotFile);
 	}
 
 	@Override
-	protected void readBallotFile(String filePath) {
-		// TODO Auto-generated method stub
-
+	protected void readBallotFile(Scanner ballotFile) {
+		numCandidates = Integer.parseInt(ballotFile.nextLine());
+		// TODO: CANDIDATES AND PARTIES //SS
+		numBallots = Integer.parseInt(ballotFile.nextLine());
+		while (ballotFile.hasNextLine()) {
+			// TODO: TALLY VOTES //
+		}
 	}
 
 	@Override
@@ -98,8 +102,8 @@ public class OpenPartyListingElection extends Election {
 	 * @return void
 	 */
 	@Override
-	protected void determineWinner(String filePath) {
-		readBallotFile(filePath); //Read all of the necessary information/data into the proper locations
+	protected void determineWinner(Scanner ballotFile) {
+		readBallotFile(ballotFile); //Read all of the necessary information/data into the proper locations
 		determineQuota(); //Get quota set
 		seatsRemaining = seats; //seatsRemaining should initially be equal to the seats read in from the file
 		List<Party> manipulatedList = new ArrayList<Party>(participatingParties);

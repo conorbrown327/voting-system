@@ -52,11 +52,11 @@ public abstract class Election {
 	
 	//I changed determineWinner to be void. This matches our UML, and also I feel like allows for the flexibility we need in running the elections
 	
-	protected abstract void determineWinner(String filePath);
+	protected abstract void determineWinner(Scanner ballotFile);
 	
 	// protected abstract Candidate getWinner();
 
-	protected abstract void readBallotFile(String filePath);
+	protected abstract void readBallotFile(Scanner ballotFile);
 
 	protected abstract void writeToAuditFile(String line);
 	
@@ -66,4 +66,6 @@ public abstract class Election {
 	protected abstract void writeMediaFile();
 
 	protected abstract void displayResultsToTerminal();
+
+	// FILE INPUT HELPER METHODS //
 }
