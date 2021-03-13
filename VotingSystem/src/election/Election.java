@@ -1,6 +1,6 @@
 /**
  * Election.java
- * Authors: Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
  * 
  * Election is the parent class that InstantRunoffElection.java and OpenPartyListingElection.java
  * inherit from. It defines attributes and methods needed in both election scenarios.

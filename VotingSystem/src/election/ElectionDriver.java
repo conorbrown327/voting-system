@@ -1,6 +1,6 @@
 /**
  * ElectionDriver.java
- * Authors: Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
  * 
  * ElectionDriver contains the main function. In main the ballots csv
  * file will be opened from the file provided in the cmd args and the
@@ -44,9 +44,8 @@ public class ElectionDriver {
 
 			if(firstLine == "IR")
 				electionTypeToRun = new InstantRunoffElection(fileName);
-			// For some reason it throws error cant find symbol for OpenPartyListingElection
-			//else if(firstLine == "OPL")
-			//	electionTypeToRun = new OpenPartyListingElection(fileName);
+			else if(firstLine == "OPL")
+				electionTypeToRun = new OpenPartyListingElection(fileName);
 		}
 		catch(FileNotFoundException f)
 		{

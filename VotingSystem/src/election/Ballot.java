@@ -1,6 +1,6 @@
 /**
  * Ballot.java
- * Authors: Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
  * 
  * Ballot.java is used to store individual ballots read in from the 
  * ballots csv file. It keeps track of each ballots rankings of candidates.

@@ -1,6 +1,6 @@
 /**
  * InstantRuboffElection.java
- * Authors: Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
  * 
  * InstantRunoffElection process the Instant runoff election type and
  * produces results. determineWinner() is the main function beinging run

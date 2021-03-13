@@ -1,6 +1,6 @@
 /**
  * Candidate.java
- * Authors: Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
  * 
  * Candidate stores info about each candidate read in from the ballots file.
  * This includes their votes and party affiliation.
