@@ -20,7 +20,10 @@ public class OpenPartyListingElection extends Election {
 		// TODO Auto-generated method stub
 
 	}
-
+	/**
+	 * Takes in String parameter line and writes that line to the audit file.
+	 * Has no return type
+	 */
 	@Override
 	protected void writeToAuditFile(String line) {
 		try{

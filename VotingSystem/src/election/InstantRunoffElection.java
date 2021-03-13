@@ -21,7 +21,10 @@ public class InstantRunoffElection extends Election {
 		// TODO Auto-generated method stub
 
 	}
-
+	/**
+	 * Takes in String parameter line and writes that line to the audit file.
+	 * Has no return type
+	 */
 	@Override
 	protected void writeToAuditFile(String line) {
 		try
@@ -33,7 +36,6 @@ public class InstantRunoffElection extends Election {
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -57,6 +59,12 @@ public class InstantRunoffElection extends Election {
 		for(Candidate c : candidates)
 		{
 			auditFileWriter.write("\t-" + c.getName() + ", Party: " + c.getParty().getPartyName() + "\n");
+		}
+
+		auditFileWriter.write("Initial votes per candidate: \n");
+		for(Candidate c : candidates)
+		{
+			auditFileWriter.write("\t-" + c.toString() + "\n");
 		}
 		
 		auditFileWriter.flush();
@@ -143,6 +151,7 @@ public class InstantRunoffElection extends Election {
 		readBallotFile(filePath);
 		writeAuditFileHeader();
 		winner = getWinner();
+		writeToAuditFile("Winner: " + winner.toString());
 		try{
 			auditFileWriter.close();
 		}
@@ -157,7 +166,11 @@ public class InstantRunoffElection extends Election {
 	private Candidate getWinner() {
 		candidates.sort(null); // Should sort using Comparable's compareTo()
 		if (existsMajority())
+		{
+			writeToAuditFile("Majority found, Winner declared: \n\n");
 			return candidates.get(0);
+		}
+		writeToAuditFile("No majority\n\n");
 		List<Candidate> lastPlaceCandidates = getLastPlaceCandidates();
 		Candidate candidateToBeEliminated;
 		if (lastPlaceCandidates.size() == 1)
@@ -201,6 +214,8 @@ public class InstantRunoffElection extends Election {
 		}
 		candidates.remove(eliminatedCandidate);
 		eliminatedCandidates.add(eliminatedCandidate);
+
+		writeToAuditFile(eliminatedCandidate.getName() + " eliminated, redistributing votes...\n");
 	}
 
 }
