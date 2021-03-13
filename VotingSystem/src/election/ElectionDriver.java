@@ -23,6 +23,7 @@ public class ElectionDriver {
 		Scanner ballotFile = new Scanner(new File(fileName));
 		Scanner readNewFile = new Scanner(System.in);
 
+		// TODO: Validate file
 		// if the file is not found prompt the user to enter a new file or "quit"
 		while(ballotFile == null)
 		{
