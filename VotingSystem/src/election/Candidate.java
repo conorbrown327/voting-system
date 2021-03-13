@@ -89,7 +89,7 @@ public class Candidate implements Comparable<Candidate> {
 	 */
 	@Override
 	public int compareTo(Candidate o) {
-		return this.getVoteCount().compareTo(o.getVoteCount());
+		return this.getVoteCount().compareTo(o.getVoteCount()) * -1;
 	}
 
 	/**

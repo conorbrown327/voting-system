@@ -36,16 +36,20 @@ public class ElectionDriver {
 		}
 
 		// Dispatch to the appropriate election type
-		Election heldElection;
-		String electionType = ballotFile.nextLine().replaceAll("\\s+", "");
-		if (electionType.equals("IR")) {
-			heldElection = new InstantRunoffElection(ballotFile);
-			heldElection.determineWinner(ballotFile);
-		} else if (electionType.equals("OPL")) {
-			heldElection = new OpenPartyListingElection(ballotFile);
-			heldElection.determineWinner(ballotFile);
-		} else {
-			System.out.println(String.format("Invalid election type '%s'", electionType));
+		try {
+			String electionType = ballotFile.nextLine().replaceAll("\\s+", "");
+
+			if (electionType.equals("IR")) {
+				new InstantRunoffElection(ballotFile);
+			} else if (electionType.equals("OPL")) {
+				new OpenPartyListingElection(ballotFile);
+			} else {
+				System.out.println(String.format("Invalid election type '%s'", electionType));
+				System.exit(1);
+			}
+
+		} catch (Exception e) {
+			System.out.println(String.format("Error: file '%s' is empty", fileName));
 			System.exit(1);
 		}
 	}

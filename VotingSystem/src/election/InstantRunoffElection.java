@@ -55,6 +55,12 @@ public class InstantRunoffElection extends Election {
 			// Assign candidate ballots
 			candidatesBallots.get(ballot.getPreferredCandidate()).add(ballot);
 		}
+
+		for (Candidate candidate : candidates) {
+			System.out.print(candidate.getName() + " votes: "); //d
+			candidate.incrementVoteCount(candidatesBallots.get(candidate).size());
+			System.out.println(candidate.getVoteCount()); //d
+		}
 	}
 
 	/**
@@ -198,12 +204,18 @@ public class InstantRunoffElection extends Election {
 	}
 
 	private List<Candidate> getLastPlaceCandidates() {
+		System.out.println(candidates.size()); //d
+		for (Candidate candidate : candidates) {
+			System.out.print(candidate.getName() + " "); //d
+			System.out.println(candidate.getVoteCount()); //d
+		}
 		List<Candidate> lastPlaceCandidates = new ArrayList<>();
 		lastPlaceCandidates.add(candidates.get(candidates.size() - 1));
 		int lastPlaceVoteCount = lastPlaceCandidates.get(0).getVoteCount();
-		for (int i = candidates.size() - 2; candidates.get(i).getVoteCount() == lastPlaceVoteCount; i--) {
+		for (int i = candidates.size() - 2; i >= 0 && candidates.get(i).getVoteCount() == lastPlaceVoteCount; i--) {
 			lastPlaceCandidates.add(candidates.get(i));
 		}
+		System.out.println("Last place candidates: " + lastPlaceCandidates.toString()); //d
 		return lastPlaceCandidates;
 	}
 
@@ -226,6 +238,7 @@ public class InstantRunoffElection extends Election {
 			nextPreferredCandidate = ballot.eliminatePreferredCandidate();
 		}
 		if (nextPreferredCandidate != null) {
+			System.out.println("Next preferred candidate: " + nextPreferredCandidate.getName()); //d
 			candidatesBallots.get(nextPreferredCandidate).add(ballot);
 			// TODO: Remove comment. Moved to eliminateCandidate()
 			// nextPreferredCandidate.incrementVoteCount();
@@ -233,19 +246,24 @@ public class InstantRunoffElection extends Election {
 		} else {
 			// TODO Remove else statement if not needed
 			// Toss the ballot and write to audit file that ballot was tossed??
+			--numBallots;
 		}
+		System.out.println("Num ballots: " + numBallots);
 	}
 
 	private void eliminateCandidate(Candidate eliminatedCandidate) {
 		// A data structure to keep track of how many votes each Candidate receives
 		// after ballot redistribution
+	
+		eliminatedCandidates.add(eliminatedCandidate);
+
 		Map<Candidate, Integer> newlyAddedVotes = initializeMap();
 		for (Ballot ballot : candidatesBallots.get(eliminatedCandidate)) {
+			System.out.println("Eliminated candidate " + eliminatedCandidate.getName()); //d
 			redistributeBallotVote(ballot, newlyAddedVotes);
 		}
 		candidates.remove(eliminatedCandidate);
 		candidatesBallots.remove(eliminatedCandidate);
-		eliminatedCandidates.add(eliminatedCandidate);
 
 		writeToAuditFile(eliminatedCandidate.getName() + " eliminated, redistributing votes...\n");
 		for (Candidate candidate : newlyAddedVotes.keySet()) {

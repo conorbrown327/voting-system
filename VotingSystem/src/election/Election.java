@@ -109,6 +109,12 @@ public abstract class Election {
 	protected void setCandidatesAndParties(String candidateLine) {
 		setCandidates(candidateLine);
 		consolidateParties();
+		System.out.println("Parties consolidated:"); //d
+		for (Party party : participatingParties) {
+			System.out.println(party.getPartyName()); //d
+			System.out.println(party.getPartyMembers()); //d
+			System.out.println(); //d
+		}
 	}
 
 	protected void consolidateParties() {
@@ -119,6 +125,7 @@ public abstract class Election {
 			for (Party party : participatingParties) {
 				if (candidate.getParty().getPartyName().equals(party.getPartyName())) {
 					candidate.setParty(party);
+					partyFound = true;
 				}
 			}
 			
