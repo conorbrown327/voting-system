@@ -35,6 +35,7 @@ public class OpenPartyListingElection extends Election {
 	protected void readBallotFile(Scanner ballotFile) {
 		numCandidates = Integer.parseInt(ballotFile.nextLine());
 		setCandidatesAndParties(ballotFile.nextLine());
+		seats = Integer.parseInt(ballotFile.nextLine());
 		numBallots = Integer.parseInt(ballotFile.nextLine());
 		while (ballotFile.hasNextLine()) {
 			Ballot ballot = new Ballot(candidates, ballotFile.nextLine());
