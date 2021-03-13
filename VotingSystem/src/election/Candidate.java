@@ -101,4 +101,8 @@ public class Candidate implements Comparable<Candidate> {
 	public String toString() {
 		return name + " Votes: " + voteCount;
 	}
+
+	public void setParty(Party party) {
+		this.party = party;
+	}
 }

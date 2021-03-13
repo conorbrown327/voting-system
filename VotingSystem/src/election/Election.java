@@ -106,9 +106,33 @@ public abstract class Election {
 
 	// FILE INPUT HELPER METHODS //
 
+	protected void setCandidatesAndParties(String candidateLine) {
+		setCandidates(candidateLine);
+		consolidateParties();
+	}
+
+	protected void consolidateParties() {
+		for (Candidate candidate : candidates) {
+
+			boolean partyFound = false;
+
+			for (Party party : participatingParties) {
+				if (candidate.getParty().getPartyName().equals(party.getPartyName())) {
+					candidate.setParty(party);
+				}
+			}
+			
+			if (!partyFound) {
+				participatingParties.add(candidate.getParty());
+			}
+
+			candidate.getParty().addCandidate(candidate);
+		}
+	}
+
 	// Definitely can be done better - will get back around to this
 	// when I can test the changes
-	protected void setCandidatesAndParties(String candidateLine) {
+	protected void setCandidates(String candidateLine) {
 		String nextCandidateName = "";
 		String nextCandidateParty = "";
 		boolean haveCandidateName = false;
@@ -121,7 +145,6 @@ public abstract class Election {
 				}
 			} else if (!nextCandidateName.equals("")) {
 				if (!nextCandidateParty.equals("")) {
-					participatingParties.add(new Party(nextCandidateParty));
 					candidates.add(new Candidate(nextCandidateName, new Party(nextCandidateParty)));
 					nextCandidateName = "";
 					nextCandidateParty = "";

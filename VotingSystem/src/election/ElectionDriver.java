@@ -37,7 +37,7 @@ public class ElectionDriver {
 
 		// Dispatch to the appropriate election type
 		Election heldElection;
-		String electionType = ballotFile.nextLine();
+		String electionType = ballotFile.nextLine().replaceAll("\\s+", "");
 		if (electionType.equals("IR")) {
 			heldElection = new InstantRunoffElection(ballotFile);
 			heldElection.determineWinner(ballotFile);

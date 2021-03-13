@@ -43,14 +43,14 @@ public class InstantRunoffElection extends Election {
 	 */
 	@Override
 	protected void readBallotFile(Scanner ballotFile) {
-		numCandidates = Integer.parseInt(ballotFile.nextLine());
-		setCandidatesAndParties(ballotFile.nextLine());
+		numCandidates = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
+		setCandidatesAndParties(ballotFile.nextLine().replaceAll("\\s+", ""));
 		for (Candidate candidate : candidates) {
 			candidatesBallots.put(candidate, new LinkedList<Ballot>());
 		}
-		numBallots = Integer.parseInt(ballotFile.nextLine());
+		numBallots = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
 		while (ballotFile.hasNextLine()) {
-			Ballot ballot = new Ballot(candidates, ballotFile.nextLine());
+			Ballot ballot = new Ballot(candidates, ballotFile.nextLine().replaceAll("\\s+", ""));
 
 			// Assign candidate ballots
 			candidatesBallots.get(ballot.getPreferredCandidate()).add(ballot);
@@ -159,7 +159,6 @@ public class InstantRunoffElection extends Election {
 
 	@Override
 	protected void determineWinner(Scanner ballotFile) {
-		readBallotFile(ballotFile);
 		writeAuditFileHeader();
 		winner = getWinner();
 		writeToAuditFile("Winner: " + winner.toString());

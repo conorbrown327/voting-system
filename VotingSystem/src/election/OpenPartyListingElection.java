@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.LinkedList;
 
 public class OpenPartyListingElection extends Election {
 
@@ -29,6 +30,7 @@ public class OpenPartyListingElection extends Election {
 
 	public OpenPartyListingElection(Scanner ballotFile) {
 		initializeParameters();
+		seatedCandidates = new LinkedList<>();
 		readBallotFile(ballotFile);
 		determineWinner(ballotFile);
 	}
@@ -42,12 +44,12 @@ public class OpenPartyListingElection extends Election {
 	 */
 	@Override
 	protected void readBallotFile(Scanner ballotFile) {
-		numCandidates = Integer.parseInt(ballotFile.nextLine());
-		setCandidatesAndParties(ballotFile.nextLine());
-		seats = Integer.parseInt(ballotFile.nextLine());
-		numBallots = Integer.parseInt(ballotFile.nextLine());
+		numCandidates = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
+		setCandidatesAndParties(ballotFile.nextLine().replaceAll("\\s+", ""));
+		seats = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
+		numBallots = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
 		while (ballotFile.hasNextLine()) {
-			Ballot ballot = new Ballot(candidates, ballotFile.nextLine());
+			Ballot ballot = new Ballot(candidates, ballotFile.nextLine().replaceAll("\\s+", ""));
 
 			// Tally candidate vote count
 			ballot.getPreferredCandidate().incrementVoteCount();
@@ -173,6 +175,12 @@ public class OpenPartyListingElection extends Election {
 	 */
 	@Override
 	protected void determineWinner(Scanner ballotFile) {
+
+		System.out.println(participatingParties.size()); //d
+		for (Party party : participatingParties) {
+			System.out.println(party.getPartyName()); //d
+		}
+
 		determineQuota(); // Get quota set
 		writeAuditFileHeader(); // write the audit file header
 		seatsRemaining = seats; // seatsRemaining should initially be equal to the seats read in from the file
