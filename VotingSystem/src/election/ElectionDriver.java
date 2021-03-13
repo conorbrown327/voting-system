@@ -20,11 +20,11 @@ import java.util.Scanner;
 public class ElectionDriver {
 	public static void main(String[] args) {
 		String fileName = args[0];
-		File ballotsFile = new File(fileName);
+		Scanner ballotFile = new Scanner(fileName);
 		Scanner readNewFile = new Scanner(System.in);
 
 		// if the file is not found prompt the user to enter a new file or "quit"
-		while(ballotsFile == null)
+		while(ballotFile == null)
 		{
 			if(fileName == "quit")
 				System.exit(1);
@@ -32,7 +32,20 @@ public class ElectionDriver {
 								+ "the correct directory and the entered name is correct.\n");
 			System.out.println("Please enter a valid file name or type \"quit\" to terminate the program.\n");
 			fileName = readNewFile.nextLine();
-			ballotsFile = new File(fileName);
+			ballotFile = new Scanner(fileName);
+		}
+
+		Election heldElection;
+		String electionType = ballotFile.nextLine();
+		if (electionType.equals("IR")) {
+			heldElection = new InstantRunoffElection(ballotFile);
+			heldElection.determineWinner(ballotFile);
+		} else if (electionType.equals("OPL")) {
+			heldElection = new OpenPartyListingElection(ballotFile);
+			heldElection.determineWinner(ballotFile);
+		} else {
+			System.out.println(String.format("Invalid election type '%s'", electionType));
+			System.exit(1);
 		}
 	}
 }
