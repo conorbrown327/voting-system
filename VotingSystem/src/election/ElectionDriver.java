@@ -35,6 +35,7 @@ public class ElectionDriver {
 			ballotFile = new Scanner(fileName);
 		}
 
+		// Dispatch to the appropriate election type
 		Election heldElection;
 		String electionType = ballotFile.nextLine();
 		if (electionType.equals("IR")) {

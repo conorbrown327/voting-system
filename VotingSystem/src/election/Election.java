@@ -101,6 +101,8 @@ public abstract class Election {
 
 	// FILE INPUT HELPER METHODS //
 
+	// Definitely can be done better - will get back around to this
+	// when I can test the changes
 	protected void setCandidatesAndParties(String candidateLine) {
 		String nextCandidateName = "";
 		String nextCandidateParty = "";

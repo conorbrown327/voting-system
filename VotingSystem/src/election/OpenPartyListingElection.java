@@ -22,9 +22,15 @@ public class OpenPartyListingElection extends Election {
 	private List<Candidate> seatedCandidates;
 	
 	public OpenPartyListingElection(Scanner ballotFile) {
+		readBallotFile(ballotFile);
 		determineWinner(ballotFile);
 	}
 
+	/**
+	 * Initialize election parameters from ballot file. See SRS for file format details.
+	 * 
+	 * @param ballotFile: Input file in Scanner form, pointed to second line of data.
+	 */
 	@Override
 	protected void readBallotFile(Scanner ballotFile) {
 		numCandidates = Integer.parseInt(ballotFile.nextLine());
@@ -32,6 +38,8 @@ public class OpenPartyListingElection extends Election {
 		numBallots = Integer.parseInt(ballotFile.nextLine());
 		while (ballotFile.hasNextLine()) {
 			Ballot ballot = new Ballot(candidates, ballotFile.nextLine());
+
+			// Tally candidate vote count
 			ballot.getPreferredCandidate().incrementVoteCount();
 		}
 	}

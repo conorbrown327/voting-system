@@ -14,6 +14,13 @@ import java.util.Queue;
 
 public class Ballot {
 
+	/**
+	 * Ballot constructor. See SRS for details regarding file format.
+	 * 
+	 * @param candidates: List of candidates in order of appearance on-file
+	 * @param ballotLine: Comma-delimited vote rankings for one ballot
+	 * @return Corresponding ballot object
+	 */
 	public Ballot(List<Candidate> candidates, String ballotLine) {
 		List<int[]> rankings = getRankings(ballotLine);
 		rankings.sort((a, b) -> a[1] - b[1]);
@@ -22,10 +29,16 @@ public class Ballot {
 		}
 	}
 
+	/**
+	 * @return This ballot's highest-rated remaining candidate
+	 */
 	public Candidate getPreferredCandidate() {
 		return votePreferences.peek();
 	}
 
+	/**
+	 * Eliminate this ballot's highest-rated remaining candidate
+	 */
 	public void eliminatePreferredCandidate() {
 		votePreferences.poll();
 	}

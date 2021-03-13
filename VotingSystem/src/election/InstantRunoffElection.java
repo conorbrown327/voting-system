@@ -28,9 +28,15 @@ public class InstantRunoffElection extends Election {
 	private Candidate winner;
 
 	public InstantRunoffElection(Scanner ballotFile) {
+		readBallotFile(ballotFile);
 		determineWinner(ballotFile);
 	}
 
+	/**
+	 * Initialize election parameters from ballot file. See SRS for file format details.
+	 * 
+	 * @param ballotFile: Input file in Scanner form, pointed to second line of data.
+	 */
 	@Override
 	protected void readBallotFile(Scanner ballotFile) {
 		numCandidates = Integer.parseInt(ballotFile.nextLine());
@@ -41,6 +47,8 @@ public class InstantRunoffElection extends Election {
 		numBallots = Integer.parseInt(ballotFile.nextLine());
 		while (ballotFile.hasNextLine()) {
 			Ballot ballot = new Ballot(candidates, ballotFile.nextLine());
+
+			// Assign candidate ballots
 			candidatesBallots.get(ballot.getPreferredCandidate()).add(ballot);
 		}
 	}
