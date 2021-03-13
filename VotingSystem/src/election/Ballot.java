@@ -8,12 +8,11 @@
 
 package election;
 
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class Ballot {
 
-	private PriorityQueue<Candidate> votePreferences;
+	private Queue<Candidate> votePreferences;
 
 	public Candidate findNextPreferredCandidate() {
 
