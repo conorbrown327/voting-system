@@ -10,7 +10,6 @@
  */
 package election;
 
-import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,7 +18,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
+import java.util.Scanner;
 
 public class InstantRunoffElection extends Election {
 
@@ -33,9 +32,11 @@ public class InstantRunoffElection extends Election {
 	}
 
 	/**
-	 * Initialize election parameters from ballot file. See SRS for file format details.
+	 * Initialize election parameters from ballot file. See SRS for file format
+	 * details.
 	 * 
-	 * @param ballotFile: Input file in Scanner form, pointed to second line of data.
+	 * @param ballotFile: Input file in Scanner form, pointed to second line of
+	 *                    data.
 	 */
 	@Override
 	protected void readBallotFile(Scanner ballotFile) {
@@ -150,9 +151,10 @@ public class InstantRunoffElection extends Election {
 		System.out.println("A media file with the name " + mediaFileName + ".txt has been produced in "
 				+ System.getProperty("user.dir"));
 	}
-	
-	//Accomplishes what you did before, but uses the more general determineWinner
-	
+
+	// Accomplishes what you did before, but uses the more general determineWinner
+
+	@Override
 	protected void determineWinner(Scanner ballotFile) {
 		readBallotFile(ballotFile);
 		writeAuditFileHeader();
@@ -216,12 +218,10 @@ public class InstantRunoffElection extends Election {
 	}
 
 	private void redistributeBallotVote(Ballot ballot, Map<Candidate, Integer> newlyAddedVotes) {
-		/*
 		// TODO If the ballot queue is empty, toss the vote and decrement numBallots
-		Queue<Candidate> ballotQueue = ballot.getBallotQueue();
-		Candidate nextPreferredCandidate = ballotQueue.poll();
+		Candidate nextPreferredCandidate = ballot.eliminatePreferredCandidate();
 		while (nextPreferredCandidate != null && eliminatedCandidates.contains(nextPreferredCandidate)) {
-			nextPreferredCandidate = ballotQueue.poll();
+			nextPreferredCandidate = ballot.eliminatePreferredCandidate();
 		}
 		if (nextPreferredCandidate != null) {
 			candidatesBallots.get(nextPreferredCandidate).add(ballot);
@@ -232,7 +232,6 @@ public class InstantRunoffElection extends Election {
 			// TODO Remove else statement if not needed
 			// Toss the ballot and write to audit file that ballot was tossed??
 		}
-		*/
 	}
 
 	private void eliminateCandidate(Candidate eliminatedCandidate) {

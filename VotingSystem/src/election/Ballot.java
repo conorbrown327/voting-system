@@ -8,8 +8,8 @@
 
 package election;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 public class Ballot {
@@ -39,8 +39,8 @@ public class Ballot {
 	/**
 	 * Eliminate this ballot's highest-rated remaining candidate
 	 */
-	public void eliminatePreferredCandidate() {
-		votePreferences.poll();
+	public Candidate eliminatePreferredCandidate() {
+		return votePreferences.poll();
 	}
 
 	private List<int[]> getRankings(String ballotLine) {
@@ -52,7 +52,7 @@ public class Ballot {
 			if (ballotLine.charAt(i) == ',') {
 				++candidateIndex;
 				if (strRanking != "") {
-					int[] nextRanking = {candidateIndex, Integer.parseInt(strRanking)};
+					int[] nextRanking = { candidateIndex, Integer.parseInt(strRanking) };
 					result.add(nextRanking);
 				}
 			} else {
