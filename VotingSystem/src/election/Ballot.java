@@ -9,6 +9,7 @@
 package election;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -22,6 +23,7 @@ public class Ballot {
 	 * @return Corresponding ballot object
 	 */
 	public Ballot(List<Candidate> candidates, String ballotLine) {
+		votePreferences = new LinkedList<>();
 		List<int[]> rankings = getRankings(ballotLine);
 		rankings.sort((a, b) -> a[1] - b[1]);
 		for (int[] ranking : rankings) {

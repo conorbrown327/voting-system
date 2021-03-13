@@ -22,6 +22,7 @@ public class OpenPartyListingElection extends Election {
 	private List<Candidate> seatedCandidates;
 	
 	public OpenPartyListingElection(Scanner ballotFile) {
+		initializeParameters();
 		readBallotFile(ballotFile);
 		determineWinner(ballotFile);
 	}
