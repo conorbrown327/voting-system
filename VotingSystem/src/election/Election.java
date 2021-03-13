@@ -44,6 +44,11 @@ public abstract class Election {
 	 *         simulated coin 99 times
 	 */
 
+	protected void initalizeParameters() {
+		candidates = new LinkedList<>();
+		participatingParties = new LinkedList<>();
+	}
+
 	protected Candidate breakTie(Candidate candidate1, Candidate candidate2) {
 		int c1Wins = 0;
 		int c2Wins = 0;
