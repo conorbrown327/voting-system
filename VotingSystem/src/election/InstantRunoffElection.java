@@ -21,22 +21,7 @@ public class InstantRunoffElection extends Election {
 		// TODO Auto-generated method stub
 
 	}
-	/**
-	 * Takes in String parameter line and writes that line to the audit file.
-	 * Has no return type
-	 */
-	@Override
-	protected void writeToAuditFile(String line) {
-		try
-		{
-			auditFileWriter.write(line);
-			auditFileWriter.flush();
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
+	
 
 	/**
 	 * Function will create the audit file and audit file writer and write the audit file head after

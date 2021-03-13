@@ -62,7 +62,21 @@ public abstract class Election {
 
 	protected abstract void readBallotFile(String filePath);
 
-	protected abstract void writeToAuditFile(String line);
+	/**
+	 * Takes in String parameter line and writes that line to the audit file.
+	 * Has no return type
+	 */
+	protected void writeToAuditFile(String line) {
+		try
+		{
+			auditFileWriter.write(line);
+			auditFileWriter.flush();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
 
 	// added func to write the audit file header should be called once csv inital info has been read
 	protected abstract void writeAuditFileHeader();
