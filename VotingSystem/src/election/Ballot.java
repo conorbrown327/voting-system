@@ -1,3 +1,11 @@
+/**
+ * Ballot.java
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * 
+ * Ballot.java is used to store individual ballots read in from the 
+ * ballots csv file. It keeps track of each ballots rankings of candidates.
+ */
+
 package election;
 
 import java.util.List;

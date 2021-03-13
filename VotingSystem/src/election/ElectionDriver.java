@@ -1,30 +1,38 @@
+/**
+ * ElectionDriver.java
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * 
+ * ElectionDriver contains the main function. In main the ballots csv
+ * file will be opened from the file provided in the cmd args and the
+ * first line will be read to gather the election type. Then either an
+ * instance of the InstantRunoffElection class or OpenPartyListingElection 
+ * class will be creeated and determineWinner() will be called inside the
+ * constuctor.
+ * 
+ */
+
 package election;
+
+import java.util.*;
+import java.io.*;
+import java.util.Scanner;
 
 public class ElectionDriver {
 	public static void main(String[] args) {
-		/*
-		Party p1 = new Party("Republican");
-		Candidate c1 = new Candidate("Bob", p1);
-		Candidate c2 = new Candidate("Jill", p1);
-		Candidate c3 = new Candidate("Jack", p1);
-		
-		for (int i = 0; i < 3; i++) {
-			c3.incrementVoteCount();
-		}
-		
-		for (int i = 0; i < 2; i++) {
-			c2.incrementVoteCount();
-		}
-		
-		p1.addCandidate(c1);
-		p1.addCandidate(c3);
-		p1.addCandidate(c2);
-		
-		p1.sortPartyMembersByVote();
-		
-		System.out.println(p1.getPartyMembers());
-		*/
+		String fileName = args[0];
+		File ballotsFile = new File(fileName);
+		Scanner readNewFile = new Scanner(System.in);
 
-		// TODO: OPEN FILE, DETERMINE ELECTION TYPE AND DISPATCH //
+		// if the file is not found prompt the user to enter a new file or "quit"
+		while(ballotsFile == null)
+		{
+			if(fileName == "quit")
+				System.exit(1);
+			System.out.println(fileName + " not found. Please confirm the file is in "
+								+ "the correct directory and the entered name is correct.\n");
+			System.out.println("Please enter a valid file name or type \"quit\" to terminate the program.\n");
+			fileName = readNewFile.nextLine();
+			ballotsFile = new File(fileName);
+		}
 	}
 }

@@ -1,3 +1,13 @@
+/**
+ * OpenPartyListingElection.java
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * 
+ * OpenPartyListingElection process the Instant runoff election type and
+ * produces results. determineWinner() is the main function beinging run
+ * and will call various helper functions to parse the ballots file and store
+ * needed info, create media and audit files and to display results to the
+ * terminal.
+ */
 package election;
 
 import java.util.*;
@@ -25,18 +35,6 @@ public class OpenPartyListingElection extends Election {
 		}
 	}
 
-	@Override
-	protected void writeToAuditFile(String line) {
-		try{
-			auditFileWriter.write(line);
-			auditFileWriter.flush();
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
 	/**
 	 * Function will create the audit file and audit file writer and write the audit file head after
 	 * the ballots file has been processed and initial information is stored. This function takes
@@ -46,7 +44,7 @@ public class OpenPartyListingElection extends Election {
 	protected void writeAuditFileHeader() {
 		try{
 
-		auditFile = new File("AuditFile-" + dateTime.format(formatObj) + ".txt");
+		auditFile = new File(auditFileName);
 		auditFile.createNewFile();
 		auditFileWriter = new FileWriter(auditFile);
 
@@ -94,7 +92,7 @@ public class OpenPartyListingElection extends Election {
 	protected void writeMediaFile() {
 		try{
 
-		File mediaFile = new File("MediaFile-" + dateTime.format(formatObj) + ".txt");
+		File mediaFile = new File(mediaFileName);
 		mediaFile.createNewFile();
 		FileWriter writer = new FileWriter(mediaFile);
 
@@ -150,8 +148,8 @@ public class OpenPartyListingElection extends Election {
 			System.out.println(c.getName() + ": " + c.getParty().getPartyName());
 		}
 
-		System.out.println("An audit file with the name AuditFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
-		System.out.println("A media file with the name MediaFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
+		System.out.println("An audit file with the name " + auditFileName + ".txt has been produced in " + System.getProperty("user.dir"));
+		System.out.println("A media file with the name " + mediaFileName + ".txt has been produced in " + System.getProperty("user.dir"));
 
 	}
 	
@@ -271,6 +269,7 @@ public class OpenPartyListingElection extends Election {
 			if(sortedList.size() > (i + 1) && sortedList.get(i).getVoteCount() == sortedList.get(i + 1).getVoteCount()) {
 				Candidate tieWinner = breakTie(sortedList.get(i), sortedList.get(i+1));
 				seatedCandidates.add(tieWinner);
+				writeToAuditFile("Breaking tie, tie winner: " + tieWinner.getName());
 			}
 			else {
 				seatedCandidates.add(sortedList.get(i));
