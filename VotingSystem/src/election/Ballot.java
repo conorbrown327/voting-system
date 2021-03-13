@@ -59,6 +59,7 @@ public class Ballot {
 					int[] nextRanking = { candidateIndex, Integer.parseInt(strRanking) };
 					System.out.println(String.format("Giving candidate %d rank %s", candidateIndex, strRanking)); //d
 					result.add(nextRanking);
+					strRanking = "";
 				}
 			} else {
 				strRanking += ballotLine.charAt(i);

@@ -27,7 +27,7 @@ public class InstantRunoffElection extends Election {
 	private Candidate winner;
 
 	public InstantRunoffElection(Scanner ballotFile) {
-		initalizeParameters();
+		initializeParameters();
 		candidatesBallots = new HashMap<>();
 		eliminatedCandidates = new LinkedList<>();
 		readBallotFile(ballotFile);

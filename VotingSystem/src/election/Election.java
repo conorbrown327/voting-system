@@ -44,7 +44,7 @@ public abstract class Election {
 	 *         simulated coin 99 times
 	 */
 
-	protected void initalizeParameters() {
+	protected void initializeParameters() {
 		candidates = new LinkedList<>();
 		participatingParties = new LinkedList<>();
 	}
