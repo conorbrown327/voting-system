@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.LinkedList;
+import java.util.*;
 
 public abstract class Election {
 

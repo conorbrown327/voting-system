@@ -18,9 +18,9 @@ import java.io.*;
 import java.util.Scanner;
 
 public class ElectionDriver {
-	public static void main(String[] args) {
-		String fileName = args[0];
-		Scanner ballotFile = new Scanner(fileName);
+	public static void main(String[] args) throws FileNotFoundException {
+		String fileName = ElectionDriver.class.getResource(args[0]).getPath();
+		Scanner ballotFile = new Scanner(new File(fileName));
 		Scanner readNewFile = new Scanner(System.in);
 
 		// if the file is not found prompt the user to enter a new file or "quit"
@@ -38,6 +38,7 @@ public class ElectionDriver {
 		// Dispatch to the appropriate election type
 		Election heldElection;
 		String electionType = ballotFile.nextLine();
+		// System.out.println(electionType);
 		if (electionType.equals("IR")) {
 			heldElection = new InstantRunoffElection(ballotFile);
 			heldElection.determineWinner(ballotFile);
