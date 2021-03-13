@@ -28,10 +28,11 @@ public class OpenPartyListingElection extends Election {
 	@Override
 	protected void readBallotFile(Scanner ballotFile) {
 		numCandidates = Integer.parseInt(ballotFile.nextLine());
-		// TODO: CANDIDATES AND PARTIES //SS
+		setCandidatesAndParties(ballotFile.nextLine());
 		numBallots = Integer.parseInt(ballotFile.nextLine());
 		while (ballotFile.hasNextLine()) {
-			// TODO: TALLY VOTES //
+			Ballot ballot = new Ballot(candidates, ballotFile.nextLine());
+			ballot.getPreferredCandidate().incrementVoteCount();
 		}
 	}
 

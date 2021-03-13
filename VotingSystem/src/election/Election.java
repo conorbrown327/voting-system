@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.LinkedList;
 
 public abstract class Election {
 
@@ -99,4 +100,29 @@ public abstract class Election {
 	protected abstract void displayResultsToTerminal();
 
 	// FILE INPUT HELPER METHODS //
+
+	protected void setCandidatesAndParties(String candidateLine) {
+		String nextCandidateName = "";
+		String nextCandidateParty = "";
+		boolean haveCandidateName = false;
+		for (int i = 0; i < candidateLine.length(); ++i) {
+			if (Character.isLetter(candidateLine.charAt(i))) {
+				if (!haveCandidateName) {
+					nextCandidateName += candidateLine.charAt(i);
+				} else {
+					nextCandidateParty += candidateLine.charAt(i);
+				}
+			} else if (!nextCandidateName.equals("")) {
+				if (!nextCandidateParty.equals("")) {
+					participatingParties.add(new Party(nextCandidateParty));
+					candidates.add(new Candidate(nextCandidateName, new Party(nextCandidateParty)));
+					nextCandidateName = "";
+					nextCandidateParty = "";
+					haveCandidateName = false;
+				} else {
+					haveCandidateName = true;
+				}
+			}
+		}
+	}
 }

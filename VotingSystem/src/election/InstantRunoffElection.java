@@ -16,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -33,10 +34,14 @@ public class InstantRunoffElection extends Election {
 	@Override
 	protected void readBallotFile(Scanner ballotFile) {
 		numCandidates = Integer.parseInt(ballotFile.nextLine());
-		// TODO: CANDIDATES AND PARTIES //
+		setCandidatesAndParties(ballotFile.nextLine());
+		for (Candidate candidate : candidates) {
+			candidatesBallots.put(candidate, new LinkedList<Ballot>());
+		}
 		numBallots = Integer.parseInt(ballotFile.nextLine());
 		while (ballotFile.hasNextLine()) {
-			// TODO: ASSIGN BALLOTS TO CANDIDATES //
+			Ballot ballot = new Ballot(candidates, ballotFile.nextLine());
+			candidatesBallots.get(ballot.getPreferredCandidate()).add(ballot);
 		}
 	}
 
