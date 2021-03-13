@@ -50,20 +50,28 @@ public class Ballot {
 
 		int candidateIndex = 0;
 		String strRanking = "";
+		System.out.println(ballotLine); //d
 		for (int i = 0; i < ballotLine.length(); ++i) {
 			System.out.println("candidateIndex: " + candidateIndex); //d
-			System.out.println("strRanking: " + candidateIndex); //d
+			System.out.println("strRanking: " + strRanking); //d
 			if (ballotLine.charAt(i) == ',') {
-				++candidateIndex;
 				if (strRanking != "") {
 					int[] nextRanking = { candidateIndex, Integer.parseInt(strRanking) };
 					System.out.println(String.format("Giving candidate %d rank %s", candidateIndex, strRanking)); //d
 					result.add(nextRanking);
 					strRanking = "";
 				}
+				++candidateIndex;
 			} else {
 				strRanking += ballotLine.charAt(i);
 			}
+		}
+
+		if (strRanking != "") {
+			int[] nextRanking = { candidateIndex, Integer.parseInt(strRanking) };
+			System.out.println(String.format("Giving candidate %d rank %s", candidateIndex, strRanking)); //d
+			result.add(nextRanking);
+			strRanking = "";
 		}
 
 		return result;

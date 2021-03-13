@@ -173,7 +173,6 @@ public class OpenPartyListingElection extends Election {
 	 */
 	@Override
 	protected void determineWinner(Scanner ballotFile) {
-		readBallotFile(ballotFile); // Read all of the necessary information/data into the proper locations
 		determineQuota(); // Get quota set
 		writeAuditFileHeader(); // write the audit file header
 		seatsRemaining = seats; // seatsRemaining should initially be equal to the seats read in from the file
