@@ -14,14 +14,15 @@ public abstract class Election {
 
 	protected List<Candidate> candidates;
 	protected FileWriter auditFileWriter;
-	// audit file File type
 	protected File auditFile;
 	protected int numCandidates;
 	protected int numBallots;
 	protected List<Party> participatingParties;
-	// date and time formatting for file creating and display
+	// date and time formatting for file names and display to terminal
 	protected LocalDateTime dateTime = LocalDateTime.now();
     protected DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+	protected String mediaFileName  = "MediaFile-" + dateTime.format(formatObj) + ".txt";
+    protected String auditFileName = "AuditFile-" + dateTime.format(formatObj) + ".txt";
 	
 	/**
 	 * Breaks a tie between two candidates by using a random number generator to simulate flipping a coin 99 times.

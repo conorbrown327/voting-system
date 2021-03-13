@@ -32,7 +32,7 @@ public class InstantRunoffElection extends Election {
 	protected void writeAuditFileHeader() {
 		try{
 
-		auditFile = new File("AuditFile-" + dateTime.format(formatObj) + ".txt");
+		auditFile = new File(auditFileName);
 		auditFile.createNewFile();
 		auditFileWriter = new FileWriter(auditFile);	// would need to close once done writing to audit file
 
@@ -68,7 +68,7 @@ public class InstantRunoffElection extends Election {
 	@Override
 	protected void writeMediaFile() {
 		try{
-		File mediaFile = new File("MediaFile-" + dateTime.format(formatObj) + ".txt");
+		File mediaFile = new File(mediaFileName);
         mediaFile.createNewFile();
 		FileWriter writer;
 		writer = new FileWriter(mediaFile);
@@ -126,8 +126,8 @@ public class InstantRunoffElection extends Election {
 			counter++;
 		}
 
-		System.out.println("An audit file with the name AuditFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
-		System.out.println("A media file with the name MediaFile-" + dateTime.format(formatObj) + ".txt has been produced in " + System.getProperty("user.dir"));
+		System.out.println("An audit file with the name " + auditFileName + ".txt has been produced in " + System.getProperty("user.dir"));
+		System.out.println("A media file with the name " + mediaFileName + ".txt has been produced in " + System.getProperty("user.dir"));
 	}
 	
 	//Accomplishes what you did before, but uses the more general determineWinner
