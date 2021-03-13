@@ -23,13 +23,14 @@ public class ElectionDriver {
 		File ballotsFile = new File(fileName);
 		Scanner readNewFile = new Scanner(System.in);
 
+		// if the file is not found prompt the user to enter a new file or "quit"
 		while(ballotsFile == null)
 		{
 			if(fileName == "quit")
 				System.exit(1);
-			System.out.println(args[0] + " not found. Please confirm the file is in "
+			System.out.println(fileName + " not found. Please confirm the file is in "
 								+ "the correct directory and the entered name is correct.\n");
-			System.out.println("Please enter a valid file name or type quit to terminate the program.\n");
+			System.out.println("Please enter a valid file name or type \"quit\" to terminate the program.\n");
 			fileName = readNewFile.nextLine();
 			ballotsFile = new File(fileName);
 		}
@@ -47,6 +48,7 @@ public class ElectionDriver {
 			else if(firstLine == "OPL")
 				electionTypeToRun = new OpenPartyListingElection(fileName);
 		}
+		// here for semantics, know that the file will be found
 		catch(FileNotFoundException f)
 		{
 		}
