@@ -1,3 +1,13 @@
+/**
+ * OpenPartyListingElection.java
+ * Authors: Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * 
+ * OpenPartyListingElection process the Instant runoff election type and
+ * produces results. determineWinner() is the main function beinging run
+ * and will call various helper functions to parse the ballots file and store
+ * needed info, create media and audit files and to display results to the
+ * terminal.
+ */
 package election;
 
 import java.util.*;
