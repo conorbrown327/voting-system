@@ -51,10 +51,13 @@ public class Ballot {
 		int candidateIndex = 0;
 		String strRanking = "";
 		for (int i = 0; i < ballotLine.length(); ++i) {
+			System.out.println("candidateIndex: " + candidateIndex); //d
+			System.out.println("strRanking: " + candidateIndex); //d
 			if (ballotLine.charAt(i) == ',') {
 				++candidateIndex;
 				if (strRanking != "") {
 					int[] nextRanking = { candidateIndex, Integer.parseInt(strRanking) };
+					System.out.println(String.format("Giving candidate %d rank %s", candidateIndex, strRanking)); //d
 					result.add(nextRanking);
 				}
 			} else {
