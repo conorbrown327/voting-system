@@ -38,9 +38,9 @@ public class OpenPartyListingElection extends Election {
 	
 	public OpenPartyListingElection(Scanner ballotFile) {
 		try {
-		auditFile = new File(auditFileName);
-		auditFile.createNewFile();
-		auditFileWriter = new FileWriter(auditFile);
+			auditFile = new File(auditFileName);
+			auditFile.createNewFile();
+			auditFileWriter = new FileWriter(auditFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -48,24 +48,6 @@ public class OpenPartyListingElection extends Election {
 		seatedCandidates = new LinkedList<>();
 		readBallotFile(ballotFile);
 		determineWinner(ballotFile);
-	}
-	
-	/**
-	 * Getter function for the list of candidates who end up being seated by the election.
-	 * @return seatedCandidates: The list of candidates who are placed into seats by the election
-	 */
-	
-	public List<Candidate> getSeatedCandidates(){
-		return seatedCandidates;
-	}
-	
-	/**
-	 * Getter function for the number of seats to be assigned during the election.
-	 * @return
-	 */
-	
-	public int getSeats() {
-		return seats;
 	}
 
 	/**
@@ -75,7 +57,6 @@ public class OpenPartyListingElection extends Election {
 	 * @param ballotFile: Input file in Scanner form, pointed to second line of
 	 *                    data.
 	 */
-	
 	@Override
 	protected void readBallotFile(Scanner ballotFile) {
 		// read the ballots file header
@@ -222,7 +203,7 @@ public class OpenPartyListingElection extends Election {
 		seatsRemaining = seats; // seatsRemaining should initially be equal to the seats read in from the file
 		List<Party> manipulatedList = new ArrayList<Party>(participatingParties);
 		// Initial distribution of seats to all of the parties in the election
-		for (Party p : participatingParties) {
+		for (Party p : manipulatedList) {
 			int partySeats = calculateSeats(p);
 			int partyRemainder = calculateRemainder(p);
 			p.setRemainder(partyRemainder);
@@ -313,7 +294,6 @@ public class OpenPartyListingElection extends Election {
 	private void determineQuota() {
 		quota = numBallots / seats;
 	}
-	
 
 	private void distributeSeats(int numSeats, Party p) {
 		p.sortPartyMembersByVote();

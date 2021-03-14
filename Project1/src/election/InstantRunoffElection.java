@@ -33,12 +33,11 @@ public class InstantRunoffElection extends Election {
 	 * The constructor for an IR election. Will initialize all of the necessary parameters and then run the election. Essentially doubles as a driver for this class.
 	 * @param ballotFile
 	 */
-	
 	public InstantRunoffElection(Scanner ballotFile) {
 		try {
 			auditFile = new File(auditFileName);
 			auditFile.createNewFile();
-			auditFileWriter = new FileWriter(auditFile); // would need to close once done writing to audit file
+			auditFileWriter = new FileWriter(auditFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +52,6 @@ public class InstantRunoffElection extends Election {
 	 * A getter method for the winner of an Instant Runoff election.
 	 * @return winner: The winner of this election
 	 */
-
 	public Candidate getElectionWinner() {
 		return winner;
 	}
@@ -62,7 +60,6 @@ public class InstantRunoffElection extends Election {
 	 * A getter method for the candidates who were eliminated throughout the course of this election.
 	 * @return eliminatedCandidates: The list of candidates who were eliminated throughout this election
 	 */
-
 	public List<Candidate> getEliminatedCandidates() {
 		return eliminatedCandidates;
 	}

@@ -1,3 +1,10 @@
+/**
+ * Election.java
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * 
+ * Election is the parent class that InstantRunoffElection.java and OpenPartyListingElection.java
+ * inherit from. It defines attributes and methods needed in both election scenarios.
+ */
 
 package election;
 
@@ -7,18 +14,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
-//import java.util.Map;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
-/**
- * Election.java
- * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
- * 
- * Election is the parent class that InstantRunoffElection.java and OpenPartyListingElection.java
- * inherit from. It defines attributes and methods needed in both election scenarios.
- */
 
 public abstract class Election {
 
@@ -104,17 +102,12 @@ public abstract class Election {
 		}
 	}
 
-	// I changed determineWinner to be void. This matches our UML, and also I feel
-	// like allows for the flexibility we need in running the elections
-
 	/**
 	 * Function that handles the main algorithm in determining the election winner.
 	 * 
 	 * @param ballotFile The file containing all of the voter information.
 	 */
 	protected abstract void determineWinner(Scanner ballotFile);
-
-	// protected abstract Candidate getWinner();
 
 	/**
 	 * Function that handles the parsing and storage of the election data contained
@@ -138,18 +131,10 @@ public abstract class Election {
 		}
 	}
 
-	// added func to write the audit file header should be called once csv initial
-	// info has been read
-
 	/**
 	 * Function that writes the header information for the audit file.
 	 */
 	protected abstract void writeAuditFileHeader();
-
-	// I took out the arguments for winner and instead made it a private variable in
-	// the IR class, since the other class doesn't have a "winner"
-	// This way, they are more general, and the private variable can just be used
-	// wherever the winner was needed anyways.
 
 	/**
 	 * Function that writes the media file with all of the election statistics.

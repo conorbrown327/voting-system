@@ -1,12 +1,3 @@
-
-
-package election;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-
 /**
  * ElectionDriver.java
  * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
@@ -20,15 +11,23 @@ import java.util.Scanner;
  * 
  */
 
+package election;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
 public class ElectionDriver {
 	public static void main(String[] args) throws FileNotFoundException {
 		String fileName = "";
+		// attempt to find the file path if not found throw exception and terminate
 		try {
 			fileName = ElectionDriver.class.getResource(args[0]).getPath();
 		} catch (NullPointerException e) {
-			System.out.println("Please enter a valid file name.");
-			throw new IllegalArgumentException("Invalid file name");
+			throw new IllegalArgumentException("Please enter a valid file name.\n");
 		}
+		// file found open file and scanner to read file 
 		System.out.println("Ballots file found, tallying votes...");
 		File file = new File(fileName);
 		Scanner ballotFile = new Scanner(file);
@@ -42,12 +41,12 @@ public class ElectionDriver {
 			} else if (electionType.equals("OPL")) {
 				new OpenPartyListingElection(ballotFile);
 			} else {
-				System.out.println(String.format("Invalid election type '%s'", electionType));
+				System.out.println("Invalid election type " + electionType);
 				System.exit(1);
 			}
 
 		} catch (NoSuchElementException e) {
-			System.out.println(String.format("Error: file '%s' is empty", fileName));
+			System.out.println("Error: file " + fileName + " is empty");
 			System.exit(1);
 		}
 	}

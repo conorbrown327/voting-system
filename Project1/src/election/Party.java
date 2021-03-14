@@ -1,5 +1,3 @@
-package election;
-
 /**
  * Party.java
 
@@ -8,6 +6,8 @@ package election;
  * Candidate stores info about each candidate read in from the ballots file.
  * This includes their votes and party affiliation.
  */
+ 
+ package election;
 
 import java.util.ArrayList;
 import java.util.Collections;

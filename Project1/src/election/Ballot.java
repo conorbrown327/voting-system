@@ -15,6 +15,9 @@ import java.util.Queue;
 
 public class Ballot {
 
+	private Queue<Candidate> votePreferences;
+	private String ballotInfo;
+	
 	/**
 	 * Ballot constructor. See SRS for details regarding file format.
 	 * 
@@ -56,7 +59,6 @@ public class Ballot {
 	 * Eliminates this ballot's highest-rated remaining candidate.
 	 * @return The candidate to be eliminated. Gathered using votePreferences.poll()
 	 */
-	
 	public Candidate eliminatePreferredCandidate() {
 		return votePreferences.poll();
 	}
@@ -93,6 +95,4 @@ public class Ballot {
 		return result;
 	}
 
-	private Queue<Candidate> votePreferences;
-	private String ballotInfo;
 }

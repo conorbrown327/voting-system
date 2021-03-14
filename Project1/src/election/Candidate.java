@@ -6,14 +6,9 @@
  * Candidate stores info about each candidate read in from the ballots file.
  * This includes their votes and party affiliation.
  */
+ 
 package election;
 
-/**
- * Class to represent an individual candidate in an election.
- * 
- * @author Jack Soderwall (soder365)
- *
- */
 public class Candidate implements Comparable<Candidate> {
 	private String name;
 	private Party party;
