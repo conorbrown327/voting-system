@@ -21,13 +21,13 @@ import java.util.Scanner;
 public class ElectionDriver {
 	public static void main(String[] args) throws FileNotFoundException {
 		String fileName = "";
-		// attempt to find the file path if not found throw exception and terminate
+		// Attempt to find the file path if not found throw exception and terminate
 		try {
 			fileName = ElectionDriver.class.getResource(args[0]).getPath();
 		} catch (NullPointerException e) {
 			throw new IllegalArgumentException("Please enter a valid file name.\n");
 		}
-		// file found open file and scanner to read file 
+		// File found open file and scanner to read file 
 		System.out.println("Ballots file found, tallying votes...");
 		File file = new File(fileName);
 		Scanner ballotFile = new Scanner(file);
@@ -45,6 +45,7 @@ public class ElectionDriver {
 				System.exit(1);
 			}
 
+		// Catch when file is empty
 		} catch (NoSuchElementException e) {
 			System.out.println("Error: file " + fileName + " is empty");
 			System.exit(1);

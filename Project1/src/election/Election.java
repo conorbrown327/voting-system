@@ -169,22 +169,19 @@ public abstract class Election {
 			boolean partyFound = false;
 
 			for (Party party : participatingParties) {
-				if (candidate.getParty().getPartyName().equals(party.getPartyName())) {
-					candidate.setParty(party);
+				if (candidate.getParty().getPartyName().equals(party.getPartyName())) { // Candidate party has been stored
+					candidate.setParty(party); // Add party to its candidate
 					partyFound = true;
 				}
 			}
 
-			if (!partyFound) {
-				participatingParties.add(candidate.getParty());
+			if (!partyFound) { // Candidate party has not been stored
+				participatingParties.add(candidate.getParty()); // Store candidate party
 			}
 
-			candidate.getParty().addCandidate(candidate);
+			candidate.getParty().addCandidate(candidate); // Add candidate to its party
 		}
 	}
-
-	// Definitely can be done better - will get back around to this
-	// when I can test the changes
 	
 	/**
 	 * Helper function for file input that parses candidates and parties from the file line
@@ -197,19 +194,19 @@ public abstract class Election {
 		String nextCandidateParty = "";
 		boolean haveCandidateName = false;
 		for (int i = 0; i < candidateLine.length(); ++i) {
-			if (Character.isLetter(candidateLine.charAt(i))) {
-				if (!haveCandidateName) {
+			if (Character.isLetter(candidateLine.charAt(i))) { // Char is part of candidate or party name
+				if (!haveCandidateName) { // Char is part of candidate name
 					nextCandidateName += candidateLine.charAt(i);
-				} else {
+				} else { // Char is part of party name
 					nextCandidateParty += candidateLine.charAt(i);
 				}
-			} else if (!nextCandidateName.equals("")) {
-				if (!nextCandidateParty.equals("")) {
+			} else if (!nextCandidateName.equals("")) { // Full candidate name has been stored
+				if (!nextCandidateParty.equals("")) { // Full party name has been stored
 					candidates.add(new Candidate(nextCandidateName, new Party(nextCandidateParty)));
 					nextCandidateName = "";
 					nextCandidateParty = "";
 					haveCandidateName = false;
-				} else {
+				} else { // Only full candidate name has been stored - scan for party name
 					haveCandidateName = true;
 				}
 			}

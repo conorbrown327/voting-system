@@ -63,17 +63,18 @@ public class Ballot {
 		return votePreferences.poll();
 	}
 
+	// Parses line of ballot data into list of rankings by order of candidate appearance
 	private List<int[]> getRankings(String ballotLine) {
 		List<int[]> result = new ArrayList<int[]>();
 
 		int candidateIndex = 0;
 		String strRanking = "";
 		for (int i = 0; i < ballotLine.length(); ++i) {
-			if (ballotLine.charAt(i) == ',') {
-				if (strRanking != "") {
+			if (ballotLine.charAt(i) == ',') { // Ranking has been fully stored in strRanking
+				if (strRanking != "") { // Ranking is non-empty
 					int[] nextRanking = { candidateIndex, Integer.parseInt(strRanking) };
-					result.add(nextRanking);
-					strRanking = "";
+					result.add(nextRanking); // Store ranking as int[2]
+					strRanking = ""; // Reset strRanking
 				}
 				++candidateIndex;
 			} else {
@@ -81,6 +82,7 @@ public class Ballot {
 			}
 		}
 
+		// Store last ranking  (it's a kludge but it works)
 		if (strRanking != "") {
 			int[] nextRanking = { candidateIndex, Integer.parseInt(strRanking) };
 			result.add(nextRanking);
@@ -89,5 +91,4 @@ public class Ballot {
 
 		return result;
 	}
-
 }

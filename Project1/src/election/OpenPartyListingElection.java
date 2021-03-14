@@ -285,6 +285,7 @@ public class OpenPartyListingElection extends Election {
 		displayResultsToTerminal();
 	}
 
+	// Calculate number of seats to award to party p
 	private int calculateSeats(Party p) {
 		int partyVotes = p.getTotalPartyVote();
 		if (partyVotes < quota) {
@@ -294,6 +295,7 @@ public class OpenPartyListingElection extends Election {
 		}
 	}
 
+	// Calculate party votes not going toward a seat
 	private int calculateRemainder(Party p) {
 		int partyVotes = p.getTotalPartyVote();
 		if (partyVotes < quota) {
@@ -303,14 +305,17 @@ public class OpenPartyListingElection extends Election {
 		}
 	}
 
+	// Subtract seatsToSubtract seats from seatsRemaining
 	private void updateSeatsRemaining(int seatsToSubtract) {
 		seatsRemaining -= seatsToSubtract;
 	}
 
+	// Calculate election seat quota
 	private void determineQuota() {
 		quota = numBallots / seats;
 	}
 
+	// Distribute numSeats seats to Party p
 	private void distributeSeats(int numSeats, Party p) {
 		p.sortPartyMembersByVote();
 		List<Candidate> sortedList = p.getPartyMembers();

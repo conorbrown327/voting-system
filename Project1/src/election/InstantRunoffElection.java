@@ -92,11 +92,11 @@ public class InstantRunoffElection extends Election {
 			// write each ballot and who it is being awarded to to the audit file
 			writeToAuditFile(ballot.getBallotInfo() + " awarded to " + preferredCandidate.getName() + "\n");
 		}
-		// tally each candidates vote count
+		// tally each candidate's vote count
 		for (Candidate candidate : candidates) {
 			candidate.incrementVoteCount(candidatesBallots.get(candidate).size());
 		}
-		// write each candidates initial vote count after it has been tallied
+		// write each candidate's initial vote count after it has been tallied
 		writeToAuditFile("\nInitial votes per candidate: \n");
 		for (Candidate c : candidates) {
 			writeToAuditFile("-" + c.toString() + "\n");
@@ -227,6 +227,7 @@ public class InstantRunoffElection extends Election {
 		displayResultsToTerminal();
 	}
 
+	// Return winner of election
 	private Candidate getWinner() {
 		candidates.sort(null); // Should sort using Comparable's compareTo()
 		if (existsMajority()) {
@@ -246,6 +247,7 @@ public class InstantRunoffElection extends Election {
 		return getWinner();
 	}
 
+	// Check for candidate with majority of allocated votes
 	private boolean existsMajority() {
 		if (candidates.size() < 2)
 			return true;
@@ -254,6 +256,7 @@ public class InstantRunoffElection extends Election {
 		return false;
 	}
 
+	// Return a list of candidates tied for last place
 	private List<Candidate> getLastPlaceCandidates() {
 		List<Candidate> lastPlaceCandidates = new ArrayList<>();
 		lastPlaceCandidates.add(candidates.get(candidates.size() - 1));
@@ -264,6 +267,7 @@ public class InstantRunoffElection extends Election {
 		return lastPlaceCandidates;
 	}
 
+	// Generate a map of candidates to their newly added votes
 	private Map<Candidate, Integer> initializeMap() {
 		Map<Candidate, Integer> newlyAddedVotes = new HashMap<>();
 		for (Candidate c : candidates) {
@@ -272,21 +276,19 @@ public class InstantRunoffElection extends Election {
 		return newlyAddedVotes;
 	}
 
+	// Update a map of candidates to their newly added votes
 	private void updateMap(Candidate c, Map<Candidate, Integer> newlyAddedVotes) {
 		newlyAddedVotes.put(c, newlyAddedVotes.get(c) + 1);
 	}
 
+	// Redistribute ballot vote to next preferred candidate
 	private void redistributeBallotVote(Ballot ballot, Map<Candidate, Integer> newlyAddedVotes) {
-		// TODO If the ballot queue is empty, toss the vote and decrement numBallots
 		Candidate nextPreferredCandidate = ballot.eliminatePreferredCandidate();
 		while (nextPreferredCandidate != null && eliminatedCandidates.contains(nextPreferredCandidate)) {
 			nextPreferredCandidate = ballot.eliminatePreferredCandidate();
 		}
 		if (nextPreferredCandidate != null) {
-			System.out.println("Next preferred candidate: " + nextPreferredCandidate.getName()); // d
 			candidatesBallots.get(nextPreferredCandidate).add(ballot);
-			// TODO: Remove comment. Moved to eliminateCandidate()
-			// nextPreferredCandidate.incrementVoteCount();
 			updateMap(nextPreferredCandidate, newlyAddedVotes);
 			writeToAuditFile(
 					ballot.getBallotInfo() + " ballot transfered to " + nextPreferredCandidate.getName() + "\n");
@@ -297,6 +299,7 @@ public class InstantRunoffElection extends Election {
 		System.out.println("Num ballots: " + numBallots);
 	}
 
+	// Eliminate candidate from race
 	private void eliminateCandidate(Candidate eliminatedCandidate) {
 		// A data structure to keep track of how many votes each Candidate receives
 		// after ballot redistribution
@@ -306,7 +309,6 @@ public class InstantRunoffElection extends Election {
 
 		Map<Candidate, Integer> newlyAddedVotes = initializeMap();
 		for (Ballot ballot : candidatesBallots.get(eliminatedCandidate)) {
-			System.out.println("Eliminated candidate " + eliminatedCandidate.getName()); // d
 			redistributeBallotVote(ballot, newlyAddedVotes);
 		}
 		candidates.remove(eliminatedCandidate);
