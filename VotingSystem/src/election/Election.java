@@ -34,6 +34,15 @@ public abstract class Election {
 	protected String auditFileName = "AuditFile-" + dateTime.format(formatObj) + ".txt";
 
 	/**
+	 * Helper function that initializes the necessary data structures for a given
+	 * election.
+	 */
+	protected void initializeParameters() {
+		candidates = new LinkedList<>();
+		participatingParties = new LinkedList<>();
+	}
+
+	/**
 	 * Breaks a tie between two candidates by using a random number generator to
 	 * simulate flipping a coin 99 times. This way, there will always be a winner,
 	 * as the odd number of tosses removes the possibility of ties.
@@ -43,12 +52,6 @@ public abstract class Election {
 	 * @return Either candidate1 or candidate2 based on the results of flipping a
 	 *         simulated coin 99 times
 	 */
-
-	protected void initializeParameters() {
-		candidates = new LinkedList<>();
-		participatingParties = new LinkedList<>();
-	}
-
 	protected Candidate breakTie(Candidate candidate1, Candidate candidate2) {
 		int c1Wins = 0;
 		int c2Wins = 0;
