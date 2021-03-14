@@ -122,6 +122,6 @@ public class Party {
 	 * Function that sorts the affiliated party members by votes received.
 	 */
 	public void sortPartyMembersByVote() {
-		Collections.sort(affiliatedPartyMembers, Collections.reverseOrder());
+		Collections.sort(affiliatedPartyMembers);
 	}
 }
