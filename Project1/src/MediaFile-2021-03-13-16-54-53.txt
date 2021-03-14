@@ -1,0 +1,13 @@
+2021-03-13-16-54-53 Instant Runoff Election Results
+--------------------------------
+Candidates (4): 
+-Rosen
+-Chou
+-Kleinberg
+-Royce
+Elimination Order
+-----------------
+
+Final votes garnered by each candidate
+--------------------------------------
+-Rosen Votes: 5-Chou Votes: 1-Kleinberg Votes: 0-Royce Votes: 0

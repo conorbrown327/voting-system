@@ -1,0 +1,25 @@
+Election Type: Open Party Listing
+Number of ballots: 6
+Open Seats: 2
+Quota: 3 votesCandidates by party: 
+R
+R
+D
+I
+Initial votes summary for party and each candidate: 
+R, Total Party Votes: 0
+---------------------R, Total Party Votes: 0
+---------------------D, Total Party Votes: 0
+---------------------I, Total Party Votes: 0
+---------------------Initial Seats Awarded: 
+
+R: 0with 0 votes remaining
+R: 0with 0 votes remaining
+D: 0with 0 votes remaining
+I: 0with 0 votes remaining
+Updated Seats Awarded after remainder distrubution: 
+
+R: 1with 0 votes remaining
+R: 1with 0 votes remaining
+D: 0with 0 votes remaining
+I: 0with 0 votes remaining

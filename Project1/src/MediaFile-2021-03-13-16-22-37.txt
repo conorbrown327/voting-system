@@ -1,0 +1,16 @@
+2021-03-13-16-22-37 Open Party Election Election Results
+--------------------------------
+Candidates (4) and votes by party: 
+R, Total Party Votes: 0
+---------------------	-Bob Votes: 2
+	-Dan Votes: 1
+R, Total Party Votes: 0
+---------------------	-Bob Votes: 2
+	-Dan Votes: 1
+D, Total Party Votes: 0
+---------------------	-Billy Votes: 2
+I, Total Party Votes: 0
+---------------------	-Jane Votes: 1
+
+Awarded Seats: 
+-Bob Votes: 2-Dan Votes: 1-Bob Votes: 2-Dan Votes: 1

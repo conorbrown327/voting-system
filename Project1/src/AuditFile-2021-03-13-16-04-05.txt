@@ -1,0 +1,7 @@
+Election Type: Open Party Listing
+Number of ballots: 6
+Open Seats: 2
+Quota: 3 votesCandidates by party: 
+Initial votes summary for party and each candidate: 
+Initial Seats Awarded: 
+

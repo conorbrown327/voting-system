@@ -1,0 +1,15 @@
+Election Type: Instant Runoff
+Number of ballots: 6
+Number of candidates: 4
+Candidates: 
+	-Rosen, Party: D
+	-Kleinberg, Party: R
+	-Chou, Party: I
+	-Royce, Party: L
+Initial votes per candidate: 
+	-Rosen Votes: 18
+	-Kleinberg Votes: 0
+	-Chou Votes: 3
+	-Royce Votes: 0
+No majority
+

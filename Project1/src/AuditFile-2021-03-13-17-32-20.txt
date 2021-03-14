@@ -1,0 +1,10 @@
+Election Type: Instant Runoff
+Number of ballots: 6
+Number of candidates: 4
+Candidates: 
+	-Kleinberg, Party: R
+Initial votes per candidate: 
+	-Kleinberg Votes: 6
+Majority found, Winner declared: 
+
+Winner: Kleinberg Votes: 6
