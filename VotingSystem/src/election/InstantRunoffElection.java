@@ -1,13 +1,4 @@
-/**
- * InstantRuboffElection.java
- * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
- * 
- * InstantRunoffElection process the Instant runoff election type and
- * produces results. determineWinner() is the main function beinging run
- * and will call various helper functions to parse the ballots file and store
- * needed info, create media and audit files and to display results to the
- * terminal.
- */
+
 package election;
 
 import java.io.File;
@@ -20,12 +11,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * InstantRunoffElection.java
+
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * 
+ * InstantRunoffElection process the Instant runoff election type and
+ * produces results. determineWinner() is the main function being run
+ * and will call various helper functions to parse the ballots file and store
+ * needed info, create media and audit files and to display results to the
+ * terminal.
+ */
+
 public class InstantRunoffElection extends Election {
 
 	private Map<Candidate, List<Ballot>> candidatesBallots;
 	private List<Candidate> eliminatedCandidates;
 	private Candidate winner;
-
+	
+	/**
+	 * The constructor for an IR election. Will initialize all of the necessary parameters and then run the election. Essentially doubles as a driver for this class.
+	 * @param ballotFile
+	 */
+	
 	public InstantRunoffElection(Scanner ballotFile) {
 		try {
 			auditFile = new File(auditFileName);
@@ -40,10 +48,20 @@ public class InstantRunoffElection extends Election {
 		readBallotFile(ballotFile);
 		determineWinner(ballotFile);
 	}
+	
+	/**
+	 * A getter method for the winner of an Instant Runoff election.
+	 * @return winner: The winner of this election
+	 */
 
 	public Candidate getElectionWinner() {
 		return winner;
 	}
+	
+	/**
+	 * A getter method for the candidates who were eliminated throughout the course of this election.
+	 * @return eliminatedCandidates: The list of candidates who were eliminated throughout this election
+	 */
 
 	public List<Candidate> getEliminatedCandidates() {
 		return eliminatedCandidates;
@@ -79,9 +97,7 @@ public class InstantRunoffElection extends Election {
 		}
 		// tally each candidates vote count
 		for (Candidate candidate : candidates) {
-			System.out.print(candidate.getName() + " votes: "); // d
 			candidate.incrementVoteCount(candidatesBallots.get(candidate).size());
-			System.out.println(candidate.getVoteCount()); // d
 		}
 		// write each candidates initial vote count after it has been tallied
 		writeToAuditFile("\nInitial votes per candidate: \n");
@@ -187,6 +203,11 @@ public class InstantRunoffElection extends Election {
 	}
 
 	// Accomplishes what you did before, but uses the more general determineWinner
+	
+	/**
+	 * The main algorithm for an Instant Runoff election. Will determine the winner of the election and then display necessary information to the screen.
+	 * @param ballotFile: The scanner for the election file that is passed into the program
+	 */
 
 	@Override
 	protected void determineWinner(Scanner ballotFile) {
@@ -237,18 +258,12 @@ public class InstantRunoffElection extends Election {
 	}
 
 	private List<Candidate> getLastPlaceCandidates() {
-		System.out.println(candidates.size()); // d
-		for (Candidate candidate : candidates) {
-			System.out.print(candidate.getName() + " "); // d
-			System.out.println(candidate.getVoteCount()); // d
-		}
 		List<Candidate> lastPlaceCandidates = new ArrayList<>();
 		lastPlaceCandidates.add(candidates.get(candidates.size() - 1));
 		int lastPlaceVoteCount = lastPlaceCandidates.get(0).getVoteCount();
 		for (int i = candidates.size() - 2; i >= 0 && candidates.get(i).getVoteCount() == lastPlaceVoteCount; i--) {
 			lastPlaceCandidates.add(candidates.get(i));
 		}
-		System.out.println("Last place candidates: " + lastPlaceCandidates.toString()); // d
 		return lastPlaceCandidates;
 	}
 

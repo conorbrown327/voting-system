@@ -1,13 +1,4 @@
-/**
- * OpenPartyListingElection.java
- * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
- * 
- * OpenPartyListingElection process the Instant runoff election type and
- * produces results. determineWinner() is the main function beginning run
- * and will call various helper functions to parse the ballots file and store
- * needed info, create media and audit files and to display results to the
- * terminal.
- */
+
 package election;
 
 import java.io.File;
@@ -20,6 +11,18 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.LinkedList;
 
+/**
+ * OpenPartyListingElection.java
+
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * 
+ * OpenPartyListingElection process the Instant runoff election type and
+ * produces results. determineWinner() is the main function beginning run
+ * and will call various helper functions to parse the ballots file and store
+ * needed info, create media and audit files and to display results to the
+ * terminal.
+ */
+
 public class OpenPartyListingElection extends Election {
 
 	private int seatsRemaining; // This will initially be set to equal the seats, but will be decremented as
@@ -27,7 +30,12 @@ public class OpenPartyListingElection extends Election {
 	private int seats; // This is where the initial seats will be read in from the file
 	private int quota;
 	private List<Candidate> seatedCandidates;
-
+	
+	/**
+	 * Constructor for an OpenPartyListingElection class. Initializes all parameters and then runs an election. Essentially also doubles as a driver for this class.
+	 * @param ballotFile: The Scanner object for the election file that was given to start this election
+	 */
+	
 	public OpenPartyListingElection(Scanner ballotFile) {
 		try {
 		auditFile = new File(auditFileName);
@@ -187,17 +195,10 @@ public class OpenPartyListingElection extends Election {
 	 * function that determines which parties get which seats, and which seats go to
 	 * which candidates.
 	 * 
-	 * @param String filePath: The filePath to the election file that is currently
-	 *               being run
-	 * @return void
+	 * @param Scanner ballotFile: The Scanner object responsible for reading the ballot file that drives the entire election.
 	 */
 	@Override
 	protected void determineWinner(Scanner ballotFile) {
-
-		System.out.println(participatingParties.size()); //d
-		for (Party party : participatingParties) {
-			System.out.println(party.getPartyName()); //d
-		}
 
 		seatsRemaining = seats; // seatsRemaining should initially be equal to the seats read in from the file
 		List<Party> manipulatedList = new ArrayList<Party>(participatingParties);

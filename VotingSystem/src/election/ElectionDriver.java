@@ -1,3 +1,12 @@
+
+
+package election;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
 /**
  * ElectionDriver.java
  * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
@@ -6,17 +15,10 @@
  * file will be opened from the file provided in the cmd args and the
  * first line will be read to gather the election type. Then either an
  * instance of the InstantRunoffElection class or OpenPartyListingElection 
- * class will be creeated and determineWinner() will be called inside the
- * constuctor.
+ * class will be created and determineWinner() will be called inside the
+ * constructor.
  * 
  */
-
-package election;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class ElectionDriver {
 	public static void main(String[] args) throws FileNotFoundException {

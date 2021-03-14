@@ -53,8 +53,10 @@ public class Ballot {
 	}
 
 	/**
-	 * Eliminate this ballot's highest-rated remaining candidate.
+	 * Eliminates this ballot's highest-rated remaining candidate.
+	 * @return The candidate to be eliminated. Gathered using votePreferences.poll()
 	 */
+	
 	public Candidate eliminatePreferredCandidate() {
 		return votePreferences.poll();
 	}

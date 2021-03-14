@@ -54,7 +54,7 @@ public class Party {
 	/**
 	 * Function that adds a candidate to the list of affiliated party members.
 	 * 
-	 * @param c The Candidate object to be added to the party member list.
+	 * @param candidate: The Candidate object to be added to the party member list.
 	 */
 	public void addCandidate(Candidate candidate) {
 		affiliatedPartyMembers.add(candidate);

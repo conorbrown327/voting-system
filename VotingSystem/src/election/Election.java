@@ -1,10 +1,3 @@
-/**
- * Election.java
- * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
- * 
- * Election is the parent class that InstantRunoffElection.java and OpenPartyListingElection.java
- * inherit from. It defines attributes and methods needed in both election scenarios.
- */
 
 package election;
 
@@ -19,6 +12,14 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Election.java
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * 
+ * Election is the parent class that InstantRunoffElection.java and OpenPartyListingElection.java
+ * inherit from. It defines attributes and methods needed in both election scenarios.
+ */
+
 public abstract class Election {
 
 	protected List<Candidate> candidates;
@@ -32,14 +33,29 @@ public abstract class Election {
 	protected DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
 	protected String mediaFileName = "MediaFile-" + dateTime.format(formatObj) + ".txt";
 	protected String auditFileName = "AuditFile-" + dateTime.format(formatObj) + ".txt";
+	
+	/**
+	 * Getter function for the participating parties in an election.
+	 * @return participatingParties: The list of parties participating in the given election
+	 */
 
 	public List<Party> getParticipatingParties() {
 		return participatingParties;
 	}
+	
+	/**
+	 * Getter function for the candidates of a given election.
+	 * @return candidates: The list of candidates for this election
+	 */
 
 	public List<Candidate> getCandidates() {
 		return candidates;
 	}
+	
+	/**
+	 * Getter function for the number of total ballots for an election.
+	 * @return numBallots: The total number of ballots for a given election
+	 */
 
 	public int getNumBallots() {
 		return numBallots;
@@ -109,8 +125,9 @@ public abstract class Election {
 	protected abstract void readBallotFile(Scanner ballotFile);
 
 	/**
-	 * Takes in String parameter line and writes that line to the audit file. Has no
+	 * Takes in String and writes that line to the audit file. Has no
 	 * return type.
+	 * @param line: A string that is a line to be written to the audit file
 	 */
 	protected void writeToAuditFile(String line) {
 		try {
@@ -145,17 +162,20 @@ public abstract class Election {
 	protected abstract void displayResultsToTerminal();
 
 	// FILE INPUT HELPER METHODS //
+	
+	/**
+	 * A helper function for file input that will set up candidates and parties for a given election. There is no return type.
+	 * @param candidateLine: A line from the file
+	 */
 
 	protected void setCandidatesAndParties(String candidateLine) {
 		setCandidates(candidateLine);
 		consolidateParties();
-		System.out.println("Parties consolidated:"); // d
-		for (Party party : participatingParties) {
-			System.out.println(party.getPartyName()); // d
-			System.out.println(party.getPartyMembers()); // d
-			System.out.println(); // d
-		}
 	}
+	
+	/**
+	 * A helper function for file input that sets up candidates and parties. It takes no arguments and has no return type.
+	 */
 
 	protected void consolidateParties() {
 		for (Candidate candidate : candidates) {
@@ -179,6 +199,12 @@ public abstract class Election {
 
 	// Definitely can be done better - will get back around to this
 	// when I can test the changes
+	
+	/**
+	 * Helper function for file input that sets the candidates for a given party
+	 * @param candidateLine: The line from the file containing the candidate
+	 */
+	
 	protected void setCandidates(String candidateLine) {
 		String nextCandidateName = "";
 		String nextCandidateParty = "";
