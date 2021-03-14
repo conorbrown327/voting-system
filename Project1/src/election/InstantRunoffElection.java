@@ -296,7 +296,6 @@ public class InstantRunoffElection extends Election {
 			writeToAuditFile(ballot.getBallotInfo() + " no next ranked candidate. ballot tossed\n");
 			--numBallots;
 		}
-		System.out.println("Num ballots: " + numBallots);
 	}
 
 	// Eliminate candidate from race
