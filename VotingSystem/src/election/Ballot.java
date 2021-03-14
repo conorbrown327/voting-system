@@ -33,17 +33,27 @@ public class Ballot {
 	}
 
 	/**
+	 * Function that gets the Candidate that is currently the most preferred
+	 * eligible according to the voter preferences.
+	 * 
 	 * @return This ballot's highest-rated remaining candidate
 	 */
 	public Candidate getPreferredCandidate() {
 		return votePreferences.peek();
 	}
 
+	/**
+	 * Function that returns the ballot info as written in the initial audit file.
+	 * 
+	 * @return ballotInfo: the ballot information as written in the initial audit
+	 *         file.
+	 */
 	public String getBallotInfo() {
 		return ballotInfo;
 	}
+
 	/**
-	 * Eliminate this ballot's highest-rated remaining candidate
+	 * Eliminate this ballot's highest-rated remaining candidate.
 	 */
 	public Candidate eliminatePreferredCandidate() {
 		return votePreferences.poll();
@@ -54,14 +64,14 @@ public class Ballot {
 
 		int candidateIndex = 0;
 		String strRanking = "";
-		System.out.println(ballotLine); //d
+		System.out.println(ballotLine); // d
 		for (int i = 0; i < ballotLine.length(); ++i) {
-			System.out.println("candidateIndex: " + candidateIndex); //d
-			System.out.println("strRanking: " + strRanking); //d
+			System.out.println("candidateIndex: " + candidateIndex); // d
+			System.out.println("strRanking: " + strRanking); // d
 			if (ballotLine.charAt(i) == ',') {
 				if (strRanking != "") {
 					int[] nextRanking = { candidateIndex, Integer.parseInt(strRanking) };
-					System.out.println(String.format("Giving candidate %d rank %s", candidateIndex, strRanking)); //d
+					System.out.println(String.format("Giving candidate %d rank %s", candidateIndex, strRanking)); // d
 					result.add(nextRanking);
 					strRanking = "";
 				}
@@ -73,7 +83,7 @@ public class Ballot {
 
 		if (strRanking != "") {
 			int[] nextRanking = { candidateIndex, Integer.parseInt(strRanking) };
-			System.out.println(String.format("Giving candidate %d rank %s", candidateIndex, strRanking)); //d
+			System.out.println(String.format("Giving candidate %d rank %s", candidateIndex, strRanking)); // d
 			result.add(nextRanking);
 			strRanking = "";
 		}

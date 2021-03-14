@@ -13,11 +13,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
 //import java.util.Map;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.LinkedList;
 
 public abstract class Election {
 
@@ -34,6 +34,15 @@ public abstract class Election {
 	protected String auditFileName = "AuditFile-" + dateTime.format(formatObj) + ".txt";
 
 	/**
+	 * Helper function that initializes the necessary data structures for a given
+	 * election.
+	 */
+	protected void initializeParameters() {
+		candidates = new LinkedList<>();
+		participatingParties = new LinkedList<>();
+	}
+
+	/**
 	 * Breaks a tie between two candidates by using a random number generator to
 	 * simulate flipping a coin 99 times. This way, there will always be a winner,
 	 * as the odd number of tosses removes the possibility of ties.
@@ -43,12 +52,6 @@ public abstract class Election {
 	 * @return Either candidate1 or candidate2 based on the results of flipping a
 	 *         simulated coin 99 times
 	 */
-
-	protected void initializeParameters() {
-		candidates = new LinkedList<>();
-		participatingParties = new LinkedList<>();
-	}
-
 	protected Candidate breakTie(Candidate candidate1, Candidate candidate2) {
 		int c1Wins = 0;
 		int c2Wins = 0;
@@ -72,18 +75,30 @@ public abstract class Election {
 			return candidate1;
 		}
 	}
-	
-	//I changed determineWinner to be void. This matches our UML, and also I feel like allows for the flexibility we need in running the elections
-	
+
+	// I changed determineWinner to be void. This matches our UML, and also I feel
+	// like allows for the flexibility we need in running the elections
+
+	/**
+	 * Function that handles the main algorithm in determining the election winner.
+	 * 
+	 * @param ballotFile The file containing all of the voter information.
+	 */
 	protected abstract void determineWinner(Scanner ballotFile);
-	
+
 	// protected abstract Candidate getWinner();
 
+	/**
+	 * Function that handles the parsing and storage of the election data contained
+	 * by the ballot file.
+	 * 
+	 * @param ballotFile The file containing all of the voter information.
+	 */
 	protected abstract void readBallotFile(Scanner ballotFile);
 
 	/**
 	 * Takes in String parameter line and writes that line to the audit file. Has no
-	 * return type
+	 * return type.
 	 */
 	protected void writeToAuditFile(String line) {
 		try {
@@ -94,8 +109,12 @@ public abstract class Election {
 		}
 	}
 
-	// added func to write the audit file header should be called once csv inital
+	// added func to write the audit file header should be called once csv initial
 	// info has been read
+
+	/**
+	 * Function that writes the header information for the audit file.
+	 */
 	protected abstract void writeAuditFileHeader();
 
 	// I took out the arguments for winner and instead made it a private variable in
@@ -103,8 +122,14 @@ public abstract class Election {
 	// This way, they are more general, and the private variable can just be used
 	// wherever the winner was needed anyways.
 
+	/**
+	 * Function that writes the media file with all of the election statistics.
+	 */
 	protected abstract void writeMediaFile();
 
+	/**
+	 * Function that writes the election results and statistics to the terminal.
+	 */
 	protected abstract void displayResultsToTerminal();
 
 	// FILE INPUT HELPER METHODS //
@@ -112,11 +137,11 @@ public abstract class Election {
 	protected void setCandidatesAndParties(String candidateLine) {
 		setCandidates(candidateLine);
 		consolidateParties();
-		System.out.println("Parties consolidated:"); //d
+		System.out.println("Parties consolidated:"); // d
 		for (Party party : participatingParties) {
-			System.out.println(party.getPartyName()); //d
-			System.out.println(party.getPartyMembers()); //d
-			System.out.println(); //d
+			System.out.println(party.getPartyName()); // d
+			System.out.println(party.getPartyMembers()); // d
+			System.out.println(); // d
 		}
 	}
 
@@ -131,7 +156,7 @@ public abstract class Election {
 					partyFound = true;
 				}
 			}
-			
+
 			if (!partyFound) {
 				participatingParties.add(candidate.getParty());
 			}
