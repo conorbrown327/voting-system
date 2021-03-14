@@ -102,6 +102,11 @@ public class Candidate implements Comparable<Candidate> {
 		return name + " Votes: " + voteCount;
 	}
 
+	/**
+	 * Function that sets the party for a given Candidate.
+	 * 
+	 * @param party The party to assign the Candidate to.
+	 */
 	public void setParty(Party party) {
 		this.party = party;
 	}
