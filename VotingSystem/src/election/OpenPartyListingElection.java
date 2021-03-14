@@ -203,7 +203,7 @@ public class OpenPartyListingElection extends Election {
 		seatsRemaining = seats; // seatsRemaining should initially be equal to the seats read in from the file
 		List<Party> manipulatedList = new ArrayList<Party>(participatingParties);
 		// Initial distribution of seats to all of the parties in the election
-		for (Party p : manipulatedList) {
+		for (Party p : participatingParties) {
 			int partySeats = calculateSeats(p);
 			int partyRemainder = calculateRemainder(p);
 			p.setRemainder(partyRemainder);
