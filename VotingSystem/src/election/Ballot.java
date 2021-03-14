@@ -23,6 +23,7 @@ public class Ballot {
 	 * @return Corresponding ballot object
 	 */
 	public Ballot(List<Candidate> candidates, String ballotLine) {
+		ballotInfo = ballotLine;
 		votePreferences = new LinkedList<>();
 		List<int[]> rankings = getRankings(ballotLine);
 		rankings.sort((a, b) -> a[1] - b[1]);
@@ -38,6 +39,9 @@ public class Ballot {
 		return votePreferences.peek();
 	}
 
+	public String getBallotInfo() {
+		return ballotInfo;
+	}
 	/**
 	 * Eliminate this ballot's highest-rated remaining candidate
 	 */
@@ -78,4 +82,5 @@ public class Ballot {
 	}
 
 	private Queue<Candidate> votePreferences;
+	private String ballotInfo;
 }

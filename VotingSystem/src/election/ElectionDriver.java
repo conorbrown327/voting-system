@@ -19,23 +19,18 @@ import java.util.Scanner;
 
 public class ElectionDriver {
 	public static void main(String[] args) throws FileNotFoundException {
-		String fileName = ElectionDriver.class.getResource(args[0]).getPath();
-		Scanner ballotFile = new Scanner(new File(fileName));
-		Scanner readNewFile = new Scanner(System.in);
-
-		// TODO: Validate file
-		// if the file is not found prompt the user to enter a new file or "quit"
-		while(ballotFile == null)
-		{
-			if(fileName == "quit")
-				System.exit(1);
-			System.out.println(fileName + " not found. Please confirm the file is in "
-								+ "the correct directory and the entered name is correct.\n");
-			System.out.println("Please enter a valid file name or type \"quit\" to terminate the program.\n");
-			fileName = readNewFile.nextLine();
-			ballotFile = new Scanner(fileName);
+		String fileName = "";
+		try{
+			fileName = ElectionDriver.class.getResource(args[0]).getPath();
 		}
-
+		catch(NullPointerException e)
+		{
+			System.out.println("Please enter a valid file name.");
+			System.exit(1);
+		}
+		File file = new File(fileName);
+		Scanner ballotFile = new Scanner(file);
+		
 		// Dispatch to the appropriate election type
 		try {
 			String electionType = ballotFile.nextLine().replaceAll("\\s+", "");
@@ -49,7 +44,7 @@ public class ElectionDriver {
 				System.exit(1);
 			}
 
-		} catch (Exception e) {
+		} catch (NoSuchElementException e) {
 			System.out.println(String.format("Error: file '%s' is empty", fileName));
 			System.exit(1);
 		}

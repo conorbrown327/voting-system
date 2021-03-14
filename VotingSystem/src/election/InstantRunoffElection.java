@@ -27,6 +27,13 @@ public class InstantRunoffElection extends Election {
 	private Candidate winner;
 
 	public InstantRunoffElection(Scanner ballotFile) {
+		try {
+		auditFile = new File(auditFileName);
+		auditFile.createNewFile();
+		auditFileWriter = new FileWriter(auditFile); // would need to close once done writing to audit file
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		initializeParameters();
 		candidatesBallots = new HashMap<>();
 		eliminatedCandidates = new LinkedList<>();
@@ -49,11 +56,16 @@ public class InstantRunoffElection extends Election {
 			candidatesBallots.put(candidate, new LinkedList<Ballot>());
 		}
 		numBallots = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
+		
+		writeToAuditFile("Initial ballot awarding: \n\n");
 		while (ballotFile.hasNextLine()) {
-			Ballot ballot = new Ballot(candidates, ballotFile.nextLine().replaceAll("\\s+", ""));
-
+			String ballotLine = ballotFile.nextLine().replaceAll("\\s+", "");
+			Ballot ballot = new Ballot(candidates, ballotLine);
+			
 			// Assign candidate ballots
-			candidatesBallots.get(ballot.getPreferredCandidate()).add(ballot);
+			Candidate preferredCandidate = ballot.getPreferredCandidate();
+			candidatesBallots.get(preferredCandidate).add(ballot);
+			writeToAuditFile(ballot.getBallotInfo() + " awarded to " + preferredCandidate.getName() + "\n");
 		}
 
 		for (Candidate candidate : candidates) {
@@ -71,12 +83,7 @@ public class InstantRunoffElection extends Election {
 	@Override
 	protected void writeAuditFileHeader() {
 		try {
-
-			auditFile = new File(auditFileName);
-			auditFile.createNewFile();
-			auditFileWriter = new FileWriter(auditFile); // would need to close once done writing to audit file
-
-			auditFileWriter.write("Election Type: Instant Runoff\n");
+			auditFileWriter.write("\nElection Type: Instant Runoff\n");
 			auditFileWriter.write("Number of ballots: " + numBallots + "\n");
 			auditFileWriter.write("Number of candidates: " + numCandidates + "\n");
 
@@ -167,7 +174,16 @@ public class InstantRunoffElection extends Election {
 	protected void determineWinner(Scanner ballotFile) {
 		writeAuditFileHeader();
 		winner = getWinner();
-		writeToAuditFile("Winner: " + winner.toString());
+		writeToAuditFile("Final Vote Count: \n\n");
+		writeToAuditFile("Winner: " + winner.toString() + "\n");
+		writeToAuditFile("Runner up(s): \n");
+		for(Candidate candidate : candidates)
+		{
+			if(!candidate.equals(winner))
+			{
+				writeToAuditFile("\t" + candidate.toString() + "\n");
+			}
+		}
 		try {
 			auditFileWriter.close();
 		} catch (IOException e) {
@@ -180,10 +196,11 @@ public class InstantRunoffElection extends Election {
 	private Candidate getWinner() {
 		candidates.sort(null); // Should sort using Comparable's compareTo()
 		if (existsMajority()) {
-			writeToAuditFile("Majority found, Winner declared: \n\n");
+			writeToAuditFile("\nMajority found, Winner declared: \n\n");
 			return candidates.get(0);
 		}
-		writeToAuditFile("No majority\n\n");
+		writeToAuditFile("\n---------------------------\n");
+		writeToAuditFile("\nNo majority, redistributing votes...\n\n");
 		List<Candidate> lastPlaceCandidates = getLastPlaceCandidates();
 		Candidate candidateToBeEliminated = lastPlaceCandidates.remove(0);
 		if (!lastPlaceCandidates.isEmpty()) {
@@ -243,9 +260,9 @@ public class InstantRunoffElection extends Election {
 			// TODO: Remove comment. Moved to eliminateCandidate()
 			// nextPreferredCandidate.incrementVoteCount();
 			updateMap(nextPreferredCandidate, newlyAddedVotes);
+			writeToAuditFile(ballot.getBallotInfo() + " ballot transfered to " + nextPreferredCandidate.getName() + "\n");
 		} else {
-			// TODO Remove else statement if not needed
-			// Toss the ballot and write to audit file that ballot was tossed??
+			writeToAuditFile(ballot.getBallotInfo() + " no next ranked candidate. ballot tossed\n");
 			--numBallots;
 		}
 		System.out.println("Num ballots: " + numBallots);
@@ -255,6 +272,7 @@ public class InstantRunoffElection extends Election {
 		// A data structure to keep track of how many votes each Candidate receives
 		// after ballot redistribution
 	
+		writeToAuditFile("\n" + eliminatedCandidate.getName() + " eliminated\n\n");
 		eliminatedCandidates.add(eliminatedCandidate);
 
 		Map<Candidate, Integer> newlyAddedVotes = initializeMap();
@@ -265,13 +283,13 @@ public class InstantRunoffElection extends Election {
 		candidates.remove(eliminatedCandidate);
 		candidatesBallots.remove(eliminatedCandidate);
 
-		writeToAuditFile(eliminatedCandidate.getName() + " eliminated, redistributing votes...\n");
 		for (Candidate candidate : newlyAddedVotes.keySet()) {
-			// TODO Add write to audit file call with newly added votes
-			// writeToAuditFile();
-			candidate.incrementVoteCount(newlyAddedVotes.get(candidate));
+			if(!candidate.equals(eliminatedCandidate))
+			{
+				writeToAuditFile(candidate.toString() + " + " + newlyAddedVotes.get(candidate) + "\n");
+				candidate.incrementVoteCount(newlyAddedVotes.get(candidate));
+			}
 		}
-
 	}
 
 }

@@ -53,6 +53,7 @@ public abstract class Election {
 		int c1Wins = 0;
 		int c2Wins = 0;
 		Random rand = new Random();
+		writeToAuditFile("Tie between: " + candidate1.getName() + " and " + candidate2.getName() + "\n");
 
 		for (int i = 0; i < 99; i++) {
 			int coinFlip = rand.nextInt(2);
@@ -64,8 +65,10 @@ public abstract class Election {
 		}
 
 		if (c1Wins > c2Wins) {
+			writeToAuditFile("Tie broken: " + candidate2.getName() + " eliminated\n");
 			return candidate2;
 		} else {
+			writeToAuditFile("Tie broken: " + candidate1.getName() + " eliminated\n");
 			return candidate1;
 		}
 	}

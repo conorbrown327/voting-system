@@ -157,9 +157,9 @@ public class OpenPartyListingElection extends Election {
 			System.out.println(c.getName() + ": " + c.getParty().getPartyName());
 		}
 
-		System.out.println("An audit file with the name " + auditFileName + ".txt has been produced in "
+		System.out.println("An audit file with the name " + auditFileName + " has been produced in "
 				+ System.getProperty("user.dir"));
-		System.out.println("A media file with the name " + mediaFileName + ".txt has been produced in "
+		System.out.println("A media file with the name " + mediaFileName + " has been produced in "
 				+ System.getProperty("user.dir"));
 
 	}
