@@ -1,26 +1,19 @@
 package election.tests;
 
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import org.junit.jupiter.api.Test;
-
-import election.Candidate;
-import election.Election;
-import election.InstantRunoffElection;
-import election.OpenPartyListingElection;
-import election.Party;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import org.junit.jupiter.api.Test;
+
+import election.OpenPartyListingElection;
+
 class OPLTest {
 
 	@Test
-	void OPLTest1() throws FileNotFoundException{
+	void OPLTest1() throws FileNotFoundException {
 		String path = IRElectionTest.class.getResource("/election.files/OPLTest1.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
@@ -34,9 +27,9 @@ class OPLTest {
 		assertEquals(1, seatedCandidates.get(1).getParty().getSeatsAllocated());
 		assertEquals(seatedCandidates.size(), opl.getSeats());
 	}
-	
+
 	@Test
-	void OPLTest2() throws FileNotFoundException{
+	void OPLTest2() throws FileNotFoundException {
 		String path = IRElectionTest.class.getResource("/election.files/OPLTest2.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
@@ -50,9 +43,9 @@ class OPLTest {
 		assertEquals("Jones", seatedCandidates.get(1).getName());
 		assertEquals("Foster", seatedCandidates.get(2).getName());
 	}
-	
+
 	@Test
-	void OPLTestSpecial() throws FileNotFoundException{
+	void OPLTestSpecial() throws FileNotFoundException {
 		String path = IRElectionTest.class.getResource("/election.files/OPLTestSpecial.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");

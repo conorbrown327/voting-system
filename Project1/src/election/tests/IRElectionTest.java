@@ -1,7 +1,6 @@
 package election.tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.File;
@@ -28,6 +27,11 @@ class IRElectionTest {
 
 		assertEquals(4, winner.getParty().getPartyMembers().size());
 		assertEquals(1, ir.getParticipatingParties().size());
+	}
+
+	@Test
+	void testLargeIRFile() {
+
 	}
 
 	@Test
