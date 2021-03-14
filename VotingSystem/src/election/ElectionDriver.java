@@ -13,25 +13,24 @@
 
 package election;
 
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ElectionDriver {
 	public static void main(String[] args) throws FileNotFoundException {
 		String fileName = "";
-		try{
+		try {
 			fileName = ElectionDriver.class.getResource(args[0]).getPath();
-		}
-		catch(NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			System.out.println("Please enter a valid file name.");
-			System.exit(1);
+			throw new IllegalArgumentException("Invalid file name");
 		}
 		System.out.println("Ballots file found, tallying votes...");
 		File file = new File(fileName);
 		Scanner ballotFile = new Scanner(file);
-		
+
 		// Dispatch to the appropriate election type
 		try {
 			String electionType = ballotFile.nextLine().replaceAll("\\s+", "");
