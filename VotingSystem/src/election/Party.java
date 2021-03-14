@@ -1,5 +1,14 @@
 package election;
 
+/**
+ * Party.java
+
+ * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
+ * 
+ * Candidate stores info about each candidate read in from the ballots file.
+ * This includes their votes and party affiliation.
+ */
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +17,6 @@ import java.util.List;
  * A class to represent an individual Party in an election. This class will be
  * used by multiple other methods throughout the course of running an election.
  * 
- * @author Jack Soderwall (soder365)
  *
  */
 public class Party {
