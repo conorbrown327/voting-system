@@ -7,20 +7,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.LinkedList;
 
 /**
  * OpenPartyListingElection.java
-
+ * 
  * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
  * 
- * OpenPartyListingElection process the Instant runoff election type and
- * produces results. determineWinner() is the main function beginning run
- * and will call various helper functions to parse the ballots file and store
- * needed info, create media and audit files and to display results to the
- * terminal.
+ *         OpenPartyListingElection process the Instant runoff election type and
+ *         produces results. determineWinner() is the main function beginning
+ *         run and will call various helper functions to parse the ballots file
+ *         and store needed info, create media and audit files and to display
+ *         results to the terminal.
  */
 
 public class OpenPartyListingElection extends Election {
@@ -30,12 +30,16 @@ public class OpenPartyListingElection extends Election {
 	private int seats; // This is where the initial seats will be read in from the file
 	private int quota;
 	private List<Candidate> seatedCandidates;
-	
+
 	/**
-	 * Constructor for an OpenPartyListingElection class. Initializes all parameters and then runs an election. Essentially also doubles as a driver for this class.
-	 * @param ballotFile: The Scanner object for the election file that was given to start this election
+	 * Constructor for an OpenPartyListingElection class. Initializes all parameters
+	 * and then runs an election. Essentially also doubles as a driver for this
+	 * class.
+	 * 
+	 * @param ballotFile: The Scanner object for the election file that was given to
+	 *                    start this election
 	 */
-	
+
 	public OpenPartyListingElection(Scanner ballotFile) {
 		try {
 			auditFile = new File(auditFileName);
@@ -48,6 +52,14 @@ public class OpenPartyListingElection extends Election {
 		seatedCandidates = new LinkedList<>();
 		readBallotFile(ballotFile);
 		determineWinner(ballotFile);
+	}
+
+	public List<Candidate> getSeatedCandidates() {
+		return seatedCandidates;
+	}
+
+	public int getSeats() {
+		return seats;
 	}
 
 	/**
@@ -66,7 +78,7 @@ public class OpenPartyListingElection extends Election {
 		numBallots = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
 		determineQuota(); // Get quota set
 		// write the audit file header after reading the ballots file header
-		writeAuditFileHeader(); 
+		writeAuditFileHeader();
 		while (ballotFile.hasNextLine()) {
 			Ballot ballot = new Ballot(candidates, ballotFile.nextLine().replaceAll("\\s+", ""));
 			// get the ballots preferred candidate
@@ -77,7 +89,8 @@ public class OpenPartyListingElection extends Election {
 			writeToAuditFile(ballot.getBallotInfo() + " awarded to " + preferredCandidate.getName() + "\n");
 		}
 
-		// write the votes summary to the audit final following the conclusion of tallying
+		// write the votes summary to the audit final following the conclusion of
+		// tallying
 		writeToAuditFile("\nVotes summary for party and each candidate: \n");
 		for (Party p : participatingParties) {
 			writeToAuditFile(p.getPartyName() + ", Total Party Votes: " + p.getTotalPartyVote() + "\n"
@@ -102,8 +115,7 @@ public class OpenPartyListingElection extends Election {
 			writeToAuditFile("Quota: " + quota + " votes\n");
 
 			writeToAuditFile("Candidate order as appears on ballots: \n");
-			for(Candidate c : candidates)
-			{
+			for (Candidate c : candidates) {
 				writeToAuditFile("-" + c.getName() + "\n");
 			}
 
@@ -151,7 +163,8 @@ public class OpenPartyListingElection extends Election {
 
 			writer.write("\nAwarded Seats: \n");
 			for (Candidate c : seatedCandidates) {
-				writer.write("-" + c.getName() + ": " + c.getParty().getPartyName() + ", with " + c.getVoteCount() + " votes\n");
+				writer.write("-" + c.getName() + ": " + c.getParty().getPartyName() + ", with " + c.getVoteCount()
+						+ " votes\n");
 			}
 
 			writer.flush();
@@ -180,7 +193,8 @@ public class OpenPartyListingElection extends Election {
 		System.out.println("Seats allocated: " + seats);
 		System.out.println("Winners: ");
 		for (Candidate c : seatedCandidates) {
-			System.out.println("-" + c.getName() + ": " + c.getParty().getPartyName() + ", with " + c.getVoteCount() + " votes");
+			System.out.println(
+					"-" + c.getName() + ": " + c.getParty().getPartyName() + ", with " + c.getVoteCount() + " votes");
 		}
 
 		System.out.println("\nAn audit file with the name " + auditFileName + " has been produced in "
@@ -195,7 +209,8 @@ public class OpenPartyListingElection extends Election {
 	 * function that determines which parties get which seats, and which seats go to
 	 * which candidates.
 	 * 
-	 * @param Scanner ballotFile: The Scanner object responsible for reading the ballot file that drives the entire election.
+	 * @param Scanner ballotFile: The Scanner object responsible for reading the
+	 *                ballot file that drives the entire election.
 	 */
 	@Override
 	protected void determineWinner(Scanner ballotFile) {
@@ -203,7 +218,7 @@ public class OpenPartyListingElection extends Election {
 		seatsRemaining = seats; // seatsRemaining should initially be equal to the seats read in from the file
 		List<Party> manipulatedList = new ArrayList<Party>(participatingParties);
 		// Initial distribution of seats to all of the parties in the election
-		for (Party p : manipulatedList) {
+		for (Party p : participatingParties) {
 			int partySeats = calculateSeats(p);
 			int partyRemainder = calculateRemainder(p);
 			p.setRemainder(partyRemainder);
@@ -256,7 +271,8 @@ public class OpenPartyListingElection extends Election {
 		}
 		writeToAuditFile("\nSeat winners: \n");
 		for (Candidate c : seatedCandidates) {
-			writeToAuditFile("-" + c.getName() + ": " + c.getParty().getPartyName() + ", with " + c.getVoteCount() + " votes\n");
+			writeToAuditFile(
+					"-" + c.getName() + ": " + c.getParty().getPartyName() + ", with " + c.getVoteCount() + " votes\n");
 		}
 
 		try {
@@ -302,8 +318,8 @@ public class OpenPartyListingElection extends Election {
 			if (sortedList.size() > (i + 1)
 					&& sortedList.get(i).getVoteCount() == sortedList.get(i + 1).getVoteCount()) {
 				Candidate tieLoser = breakTie(sortedList.get(i), sortedList.get(i + 1));
-				if(tieLoser.equals(sortedList.get(i)))
-					seatedCandidates.add(sortedList.get(i+1));
+				if (tieLoser.equals(sortedList.get(i)))
+					seatedCandidates.add(sortedList.get(i + 1));
 				else
 					seatedCandidates.add(sortedList.get(i));
 			} else {
