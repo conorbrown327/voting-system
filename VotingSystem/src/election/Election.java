@@ -165,7 +165,7 @@ public abstract class Election {
 	
 	/**
 	 * A helper function for file input that will set up candidates and parties for a given election. There is no return type.
-	 * @param candidateLine: A line from the file
+	 * @param candidateLine: Line from the file containing candidate and party information
 	 */
 
 	protected void setCandidatesAndParties(String candidateLine) {
@@ -174,7 +174,8 @@ public abstract class Election {
 	}
 	
 	/**
-	 * A helper function for file input that sets up candidates and parties. It takes no arguments and has no return type.
+	 * A helper function for file input - merges parties with the same name into one and adds adds their candidates to the
+	 * resulting Party object.
 	 */
 
 	protected void consolidateParties() {
@@ -201,8 +202,9 @@ public abstract class Election {
 	// when I can test the changes
 	
 	/**
-	 * Helper function for file input that sets the candidates for a given party
-	 * @param candidateLine: The line from the file containing the candidate
+	 * Helper function for file input that parses candidates and parties from the file line
+	 * containing them.
+	 * @param candidateLine: The file line containing the candidate
 	 */
 	
 	protected void setCandidates(String candidateLine) {
