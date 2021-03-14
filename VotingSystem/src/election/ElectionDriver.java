@@ -28,6 +28,7 @@ public class ElectionDriver {
 			System.out.println("Please enter a valid file name.");
 			System.exit(1);
 		}
+		System.out.println("Ballots file found, tallying votes...");
 		File file = new File(fileName);
 		Scanner ballotFile = new Scanner(file);
 		
