@@ -33,6 +33,18 @@ public abstract class Election {
 	protected String mediaFileName = "MediaFile-" + dateTime.format(formatObj) + ".txt";
 	protected String auditFileName = "AuditFile-" + dateTime.format(formatObj) + ".txt";
 
+	public List<Party> getParticipatingParties() {
+		return participatingParties;
+	}
+
+	public List<Candidate> getCandidates() {
+		return candidates;
+	}
+
+	public int getNumBallots() {
+		return numBallots;
+	}
+
 	/**
 	 * Helper function that initializes the necessary data structures for a given
 	 * election.
