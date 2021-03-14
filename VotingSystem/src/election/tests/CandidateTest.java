@@ -40,7 +40,7 @@ class CandidateTest {
 		// Should return 1 since comparator sorts those with greater votes with higher
 		// priority
 		kanyeWest.incrementVoteCount();
-		assertEquals(1, kanyeWest.compareTo(northWest));
+		assertEquals(-1, kanyeWest.compareTo(northWest));
 
 		// Should return 0 since the vote count is now equal
 		northWest.incrementVoteCount();
@@ -48,7 +48,7 @@ class CandidateTest {
 
 		// Should return -1 now that North West has the greater vote total
 		northWest.incrementVoteCount();
-		assertEquals(-1, kanyeWest.compareTo(northWest));
+		assertEquals(1, kanyeWest.compareTo(northWest));
 	}
 
 	@Test

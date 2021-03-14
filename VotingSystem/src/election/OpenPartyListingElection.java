@@ -49,6 +49,24 @@ public class OpenPartyListingElection extends Election {
 		readBallotFile(ballotFile);
 		determineWinner(ballotFile);
 	}
+	
+	/**
+	 * Getter function for the list of candidates who end up being seated by the election.
+	 * @return seatedCandidates: The list of candidates who are placed into seats by the election
+	 */
+	
+	public List<Candidate> getSeatedCandidates(){
+		return seatedCandidates;
+	}
+	
+	/**
+	 * Getter function for the number of seats to be assigned during the election.
+	 * @return
+	 */
+	
+	public int getSeats() {
+		return seats;
+	}
 
 	/**
 	 * Initialize election parameters from ballot file. See SRS for file format
@@ -57,6 +75,7 @@ public class OpenPartyListingElection extends Election {
 	 * @param ballotFile: Input file in Scanner form, pointed to second line of
 	 *                    data.
 	 */
+	
 	@Override
 	protected void readBallotFile(Scanner ballotFile) {
 		// read the ballots file header
@@ -294,6 +313,7 @@ public class OpenPartyListingElection extends Election {
 	private void determineQuota() {
 		quota = numBallots / seats;
 	}
+	
 
 	private void distributeSeats(int numSeats, Party p) {
 		p.sortPartyMembersByVote();
