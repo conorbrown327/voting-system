@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"election","l":"Ballot"},{"p":"election","l":"Candidate"},{"p":"election","l":"Election"},{"p":"election","l":"ElectionDriver"},{"p":"election","l":"InstantRunoffElection"},{"p":"election","l":"OpenPartyListingElection"},{"p":"election","l":"Party"}];updateSearchResults();
