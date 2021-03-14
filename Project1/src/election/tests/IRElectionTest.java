@@ -30,8 +30,15 @@ class IRElectionTest {
 	}
 
 	@Test
-	void testLargeIRFile() {
+	void testLargeIRFile() throws FileNotFoundException {
+		String path = IRElectionTest.class.getResource("/election.files/hundredk_ballots_ir.csv").getPath();
+		Scanner scan = new Scanner(new File(path));
+		scan.nextLine().replaceAll("\\s+", "");
+		InstantRunoffElection ir = new InstantRunoffElection(scan);
+		var winner = ir.getElectionWinner();
 
+		assertEquals("Rosen", winner.getName());
+		assertEquals("D", winner.getParty().getPartyName());
 	}
 
 	@Test

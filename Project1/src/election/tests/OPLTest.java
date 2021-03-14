@@ -45,6 +45,27 @@ class OPLTest {
 	}
 
 	@Test
+	void testLargeOPLFile() throws FileNotFoundException {
+		String path = IRElectionTest.class.getResource("/election.files/hundredk_ballots_opl.csv").getPath();
+		Scanner scan = new Scanner(new File(path));
+		scan.nextLine().replaceAll("\\s+", "");
+		OpenPartyListingElection opl = new OpenPartyListingElection(scan);
+
+		var seatedCandidates = opl.getSeatedCandidates();
+		assertEquals(seatedCandidates.size(), 3);
+		assertEquals(99999, seatedCandidates.get(0).getParty().getTotalPartyVote());
+		assertEquals(1, seatedCandidates.get(2).getParty().getTotalPartyVote());
+
+		assertEquals("Pike", seatedCandidates.get(0).getName());
+		assertEquals("D", seatedCandidates.get(0).getParty().getPartyName());
+		assertEquals("Foster", seatedCandidates.get(1).getName());
+		assertEquals("D", seatedCandidates.get(1).getParty().getPartyName());
+		assertEquals("Smith", seatedCandidates.get(2).getName());
+		assertEquals("I", seatedCandidates.get(2).getParty().getPartyName());
+
+	}
+
+	@Test
 	void OPLTestSpecial() throws FileNotFoundException {
 		String path = IRElectionTest.class.getResource("/election.files/OPLTestSpecial.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
