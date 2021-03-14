@@ -37,8 +37,31 @@ class IRElectionTest {
 		InstantRunoffElection ir = new InstantRunoffElection(scan);
 		var winner = ir.getElectionWinner();
 
+		// Ensures that Rosen is the victor of the election
 		assertEquals("Rosen", winner.getName());
 		assertEquals("D", winner.getParty().getPartyName());
+
+		var eliminatedCandidates = ir.getEliminatedCandidates();
+		var candidates = ir.getCandidates();
+		// Sorts candidate votes from highest vote to lowest
+		candidates.sort(null);
+
+		// Should only have 2 candidates being eliminated since after 2 eliminations
+		// Rosen has majority
+		assertEquals(2, eliminatedCandidates.size());
+
+		// Order of eliminated candidates should be Royce then Chou
+		assertEquals("Royce", eliminatedCandidates.get(0).getName());
+		assertEquals("L", eliminatedCandidates.get(0).getParty().getPartyName());
+		assertEquals("Chou", eliminatedCandidates.get(1).getName());
+		assertEquals("I", eliminatedCandidates.get(1).getParty().getPartyName());
+
+		// End result should be Royce with 52,000 votes and Kleinburg with 48,000
+		assertEquals(52000, winner.getVoteCount());
+		assertEquals(52000, candidates.get(0).getVoteCount());
+		assertEquals("Kleinburg", candidates.get(1).getName());
+		assertEquals(48000, candidates.get(1).getVoteCount());
+
 	}
 
 	@Test
@@ -80,7 +103,7 @@ class IRElectionTest {
 		scan.nextLine().replaceAll("\\s+", "");
 		InstantRunoffElection ir = new InstantRunoffElection(scan);
 		var winner = ir.getElectionWinner();
-		// Add to bug list or fix
+		// Addressed in bug list
 		assertEquals("Mike Douglas", winner.getName());
 		assertEquals("D", winner.getParty().getPartyName());
 	}
