@@ -8,6 +8,15 @@ import election.Candidate;
 import election.Party;
 
 class CandidateTest {
+	
+	@Test
+	void testName() {
+		Party independent = new Party("Independent");
+		Candidate kanyeWest = new Candidate("Kanye West", independent);
+		
+		// Test to make sure that the constructor and getter method are working properly
+		assertEquals("Kanye West", kanyeWest.getName());
+	}
 
 	@Test
 	void testVoteCount() {

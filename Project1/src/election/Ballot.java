@@ -39,7 +39,7 @@ public class Ballot {
 	 * Function that gets the Candidate that is currently the most preferred
 	 * eligible according to the voter preferences.
 	 * 
-	 * @return This ballot's highest-rated remaining candidate
+	 * @return This ballot's highest-rated remaining candidate. Gathered by using votePreferences.poll()
 	 */
 	public Candidate getPreferredCandidate() {
 		return votePreferences.peek();

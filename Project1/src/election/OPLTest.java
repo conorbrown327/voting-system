@@ -1,10 +1,11 @@
-package election.tests;
+package election;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.Scanner;
 
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,6 @@ class OPLTest {
 		assertEquals("I", participatingParties.get(2).getPartyName());
 	}
 	
-	/*
 	@Test
 	void tibreakTest() throws FileNotFoundException{
 		String path = OPLTest.class.getResource("/election.files/OPLTest1.csv").getPath();
@@ -61,8 +61,7 @@ class OPLTest {
 		assertTrue(Math.abs(c1Wins - c2Wins) < 10);
 		
 	}
-	*/
-	
+
 	@Test
 	void OPLTest1() throws FileNotFoundException {
 		String path = OPLTest.class.getResource("/election.files/OPLTest1.csv").getPath();
