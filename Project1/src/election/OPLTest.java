@@ -77,7 +77,7 @@ class OPLTest {
 		assertEquals(1, seatedCandidates.get(1).getParty().getSeatsAllocated());
 		assertEquals(seatedCandidates.size(), opl.getSeats());
 	}
-
+	
 	@Test
 	void OPLTest2() throws FileNotFoundException {
 		String path = OPLTest.class.getResource("/election.files/OPLTest2.csv").getPath();
@@ -114,7 +114,7 @@ class OPLTest {
 		assertEquals("I", seatedCandidates.get(2).getParty().getPartyName());
 
 	}
-
+	
 	@Test
 	void OPLTestSpecial() throws FileNotFoundException {
 		String path = OPLTest.class.getResource("/election.files/OPLTestSpecial.csv").getPath();
@@ -129,5 +129,15 @@ class OPLTest {
 		assertEquals(1, seatedCandidates.get(1).getParty().getTotalPartyVote());
 		assertEquals(1, seatedCandidates.get(2).getParty().getTotalPartyVote());
 		assertEquals(seatedCandidates.size(), opl.getSeats());
+	}
+	
+	@Test
+	void OPLTest3Way() throws FileNotFoundException{
+		String path = OPLTest.class.getResource("/election.files/OPL3Way.csv").getPath();
+		Scanner scan = new Scanner(new File(path));
+		scan.nextLine().replaceAll("\\s+", "");
+		OpenPartyListingElection opl = new OpenPartyListingElection(scan);
+		var seatedCandidates = opl.getSeatedCandidates();
+		assertEquals(2, seatedCandidates.size());
 	}
 }

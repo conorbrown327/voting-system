@@ -319,16 +319,39 @@ public class OpenPartyListingElection extends Election {
 	private void distributeSeats(int numSeats, Party p) {
 		p.sortPartyMembersByVote();
 		List<Candidate> sortedList = p.getPartyMembers();
-		for (int i = 0; i < numSeats; i++) {
-			if (sortedList.size() > (i + 1)
-					&& sortedList.get(i).getVoteCount() == sortedList.get(i + 1).getVoteCount()) {
-				Candidate tieLoser = breakTie(sortedList.get(i), sortedList.get(i + 1));
-				if (tieLoser.equals(sortedList.get(i)))
-					seatedCandidates.add(sortedList.get(i + 1));
-				else
-					seatedCandidates.add(sortedList.get(i));
-			} else {
+		// If the party wins the same number of seats as candidates, just give everyone a seat
+		if (numSeats == p.getPartyMembers().size()) {
+			for (int i = 0; i < numSeats; i++) {
 				seatedCandidates.add(sortedList.get(i));
+			}
+		}
+		else {
+			//Otherwise, we distribute here
+			for (int i = 0; i < numSeats; i++) {
+				// Case where there is a tie
+				if (sortedList.size() > (i + 1)
+						&& sortedList.get(i).getVoteCount() == sortedList.get(i + 1).getVoteCount()) {
+					Candidate tieLoser = breakTie(sortedList.get(i), sortedList.get(i + 1));
+					// Breaks ties and adds candidates to the list, checking for duplicates whenever they could arise
+					if (tieLoser.equals(sortedList.get(i))) {
+						if (seatedCandidates.contains(sortedList.get(i + 1))) {
+							seatedCandidates.add(tieLoser);
+						}
+						else {
+							seatedCandidates.add(sortedList.get(i + 1));
+						}
+					}
+					else {
+						if (seatedCandidates.contains(sortedList.get(i))){
+							seatedCandidates.add(sortedList.get(i + 1));
+						}
+						else {
+							seatedCandidates.add(sortedList.get(i));
+						}
+					}
+				} else {
+					seatedCandidates.add(sortedList.get(i));
+				}
 			}
 		}
 	}

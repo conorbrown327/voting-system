@@ -193,9 +193,9 @@ public class InstantRunoffElection extends Election {
 			counter++;
 		}
 
-		System.out.println("\nAn audit file with the name " + auditFileName + ".txt has been produced in "
+		System.out.println("\nAn audit file with the name " + auditFileName + " has been produced in "
 				+ System.getProperty("user.dir"));
-		System.out.println("A media file with the name " + mediaFileName + ".txt has been produced in "
+		System.out.println("A media file with the name " + mediaFileName + " has been produced in "
 				+ System.getProperty("user.dir"));
 	}
 

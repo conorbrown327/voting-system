@@ -92,7 +92,6 @@ public abstract class Election {
 				c2Wins += 1;
 			}
 		}
-
 		if (c1Wins > c2Wins) {
 			writeToAuditFile("Tie broken: " + candidate2.getName() + " eliminated\n");
 			return candidate2;
