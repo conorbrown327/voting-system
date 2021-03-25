@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Test;
 
 import election.ElectionDriver;
 import election.InstantRunoffElection;
+import election.OpenPartyListingElection;
 
 class OutputTest
-{
+{	
+	/*
     // test that file names are being made correctly
     @Test
     void testFileNames() throws FileNotFoundException
@@ -25,7 +27,7 @@ class OutputTest
         assertEquals(correctMediaFileName, elec.mediaFileName);
         assertEquals(correctAuditFileName, elec.auditFileName);
     } // testFileNames
-
+    */
     // run an IR election to test media file, audit and display to screen 
     // test will be done by inspection
     @Test
