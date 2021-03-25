@@ -13,14 +13,14 @@ import java.util.Scanner;
 
 /**
  * InstantRunoffElection.java
-
+ * 
  * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
  * 
- * InstantRunoffElection process the Instant runoff election type and
- * produces results. determineWinner() is the main function being run
- * and will call various helper functions to parse the ballots file and store
- * needed info, create media and audit files and to display results to the
- * terminal.
+ *         InstantRunoffElection process the Instant runoff election type and
+ *         produces results. determineWinner() is the main function being run
+ *         and will call various helper functions to parse the ballots file and
+ *         store needed info, create media and audit files and to display
+ *         results to the terminal.
  */
 
 public class InstantRunoffElection extends Election {
@@ -28,9 +28,12 @@ public class InstantRunoffElection extends Election {
 	private Map<Candidate, List<Ballot>> candidatesBallots;
 	private List<Candidate> eliminatedCandidates;
 	private Candidate winner;
-	
+
 	/**
-	 * The constructor for an IR election. Will initialize all of the necessary parameters and then run the election. Essentially doubles as a driver for this class.
+	 * The constructor for an IR election. Will initialize all of the necessary
+	 * parameters and then run the election. Essentially doubles as a driver for
+	 * this class.
+	 * 
 	 * @param ballotFile
 	 */
 	public InstantRunoffElection(Scanner ballotFile) {
@@ -47,18 +50,40 @@ public class InstantRunoffElection extends Election {
 		readBallotFile(ballotFile);
 		determineWinner(ballotFile);
 	}
-	
+
+	/**
+	 * The default constructor for an IR election. Will initialize all necessary
+	 * parameters, but doesn't run the election. Used for testing purposes.
+	 * 
+	 */
+	public InstantRunoffElection() {
+		try {
+			auditFile = new File(auditFileName);
+			auditFile.createNewFile();
+			auditFileWriter = new FileWriter(auditFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		initializeParameters();
+		candidatesBallots = new HashMap<>();
+		eliminatedCandidates = new LinkedList<>();
+	}
+
 	/**
 	 * A getter method for the winner of an Instant Runoff election.
+	 * 
 	 * @return winner: The winner of this election
 	 */
 	public Candidate getElectionWinner() {
 		return winner;
 	}
-	
+
 	/**
-	 * A getter method for the candidates who were eliminated throughout the course of this election.
-	 * @return eliminatedCandidates: The list of candidates who were eliminated throughout this election
+	 * A getter method for the candidates who were eliminated throughout the course
+	 * of this election.
+	 * 
+	 * @return eliminatedCandidates: The list of candidates who were eliminated
+	 *         throughout this election
 	 */
 	public List<Candidate> getEliminatedCandidates() {
 		return eliminatedCandidates;
@@ -200,10 +225,13 @@ public class InstantRunoffElection extends Election {
 	}
 
 	// Accomplishes what you did before, but uses the more general determineWinner
-	
+
 	/**
-	 * The main algorithm for an Instant Runoff election. Will determine the winner of the election and then display necessary information to the screen.
-	 * @param ballotFile: The scanner for the election file that is passed into the program
+	 * The main algorithm for an Instant Runoff election. Will determine the winner
+	 * of the election and then display necessary information to the screen.
+	 * 
+	 * @param ballotFile: The scanner for the election file that is passed into the
+	 *                    program
 	 */
 
 	@Override
@@ -228,7 +256,7 @@ public class InstantRunoffElection extends Election {
 	}
 
 	// Return winner of election
-	private Candidate getWinner() {
+	protected Candidate getWinner() {
 		candidates.sort(null); // Should sort using Comparable's compareTo()
 		if (existsMajority()) {
 			writeToAuditFile("\nMajority found, Winner declared: \n\n");
@@ -248,7 +276,7 @@ public class InstantRunoffElection extends Election {
 	}
 
 	// Check for candidate with majority of allocated votes
-	private boolean existsMajority() {
+	protected boolean existsMajority() {
 		if (candidates.size() < 2)
 			return true;
 		if (candidates.get(0).getVoteCount() > (numBallots / 2))
@@ -257,7 +285,7 @@ public class InstantRunoffElection extends Election {
 	}
 
 	// Return a list of candidates tied for last place
-	private List<Candidate> getLastPlaceCandidates() {
+	protected List<Candidate> getLastPlaceCandidates() {
 		List<Candidate> lastPlaceCandidates = new ArrayList<>();
 		lastPlaceCandidates.add(candidates.get(candidates.size() - 1));
 		int lastPlaceVoteCount = lastPlaceCandidates.get(0).getVoteCount();
@@ -282,7 +310,9 @@ public class InstantRunoffElection extends Election {
 	}
 
 	// Redistribute ballot vote to next preferred candidate
-	private void redistributeBallotVote(Ballot ballot, Map<Candidate, Integer> newlyAddedVotes) {
+	protected void redistributeBallotVote(Ballot ballot, Map<Candidate, Integer> newlyAddedVotes) {
+		if (ballot == null)
+			return;
 		Candidate nextPreferredCandidate = ballot.eliminatePreferredCandidate();
 		while (nextPreferredCandidate != null && eliminatedCandidates.contains(nextPreferredCandidate)) {
 			nextPreferredCandidate = ballot.eliminatePreferredCandidate();
@@ -299,7 +329,7 @@ public class InstantRunoffElection extends Election {
 	}
 
 	// Eliminate candidate from race
-	private void eliminateCandidate(Candidate eliminatedCandidate) {
+	protected void eliminateCandidate(Candidate eliminatedCandidate) {
 		// A data structure to keep track of how many votes each Candidate receives
 		// after ballot redistribution
 
@@ -307,8 +337,10 @@ public class InstantRunoffElection extends Election {
 		eliminatedCandidates.add(eliminatedCandidate);
 
 		Map<Candidate, Integer> newlyAddedVotes = initializeMap();
-		for (Ballot ballot : candidatesBallots.get(eliminatedCandidate)) {
-			redistributeBallotVote(ballot, newlyAddedVotes);
+		if (!candidatesBallots.isEmpty()) {
+			for (Ballot ballot : candidatesBallots.get(eliminatedCandidate)) {
+				redistributeBallotVote(ballot, newlyAddedVotes);
+			}
 		}
 		candidates.remove(eliminatedCandidate);
 		candidatesBallots.remove(eliminatedCandidate);
@@ -320,5 +352,4 @@ public class InstantRunoffElection extends Election {
 			}
 		}
 	}
-
 }
