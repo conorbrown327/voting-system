@@ -189,6 +189,7 @@ public abstract class Election {
 	 */
 	
 	protected void setCandidates(String candidateLine) {
+		candidateLine = candidateLine.replaceAll("\\s+", ""); // Strip whitespace for easy parsing
 		String nextCandidateName = "";
 		String nextCandidateParty = "";
 		boolean haveCandidateName = false;

@@ -25,11 +25,11 @@ import java.util.Scanner;
 
 public class OpenPartyListingElection extends Election {
 
-	private int seatsRemaining; // This will initially be set to equal the seats, but will be decremented as
+	protected int seatsRemaining; // This will initially be set to equal the seats, but will be decremented as
 								// seats are assigned
-	private int seats; // This is where the initial seats will be read in from the file
-	private int quota;
-	private List<Candidate> seatedCandidates;
+	protected int seats; // This is where the initial seats will be read in from the file
+	protected int quota;
+	protected List<Candidate> seatedCandidates;
 
 	/**
 	 * Constructor for an OpenPartyListingElection class. Initializes all parameters
