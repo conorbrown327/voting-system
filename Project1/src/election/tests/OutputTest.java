@@ -20,7 +20,7 @@ class OutputTest
     @Test
     void testIRWriteFunctions() throws FileNotFoundException
     {
-        String path = IRElectionTest.class.getResource("/election.files/fixedWinnerIR.csv").getPath();
+        String path = OutputTest.class.getResource("/election.files/fixedWinnerIR.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
 		InstantRunoffElection ir = new InstantRunoffElection(scan);
@@ -31,7 +31,7 @@ class OutputTest
     @Test
     void testOPLWriteFunctions() throws FileNotFoundException
     {
-        String path = OPLTest.class.getResource("/election.files/OPLTest1.csv").getPath();
+        String path = OutputTest.class.getResource("/election.files/OPLTest1.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
 		OpenPartyListingElection opl = new OpenPartyListingElection(scan);

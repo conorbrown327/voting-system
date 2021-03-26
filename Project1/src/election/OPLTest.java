@@ -35,33 +35,6 @@ class OPLTest {
 		assertEquals("I", participatingParties.get(2).getPartyName());
 	}
 	
-	/*
-	@Test
-	void tibreakTest() throws FileNotFoundException{
-		String path = OPLTest.class.getResource("/election.files/OPLTest1.csv").getPath();
-		Scanner scan = new Scanner(new File(path));
-		scan.nextLine().replaceAll("\\s+", "");
-		OpenPartyListingElection opl = new OpenPartyListingElection(scan);
-		var independent = new Party("I");
-		var c1 = new Candidate("Jack", independent);
-		var c2 = new Candidate("Sean", independent);
-		
-		var c1Wins = 0;
-		var c2Wins = 0;
-		Candidate winner;
-		
-		for(int i = 0; i < 100; i++) {
-			winner = opl.breakTie(c1, c2);
-			if (winner.equals(c1)) {
-				c1Wins += 1;
-			}
-			else {
-				c2Wins += 1;
-			}
-		}
-	}
-	*/
-	
 	@Test
 	void OPLTest1() throws FileNotFoundException {
 		String path = OPLTest.class.getResource("/election.files/OPLTest1.csv").getPath();

@@ -53,10 +53,36 @@ public class OpenPartyListingElection extends Election {
 		readBallotFile(ballotFile);
 		determineWinner(ballotFile);
 	}
-
+	
+	/**
+	 * The default constructor for an OpenPartyListing election that initializes all parameters,
+	 * but does not run the election. This is used for testing purposes.
+	 */
+	
+	public OpenPartyListingElection() {
+		try {
+			auditFile = new File(auditFileName);
+			auditFile.createNewFile();
+			auditFileWriter = new FileWriter(auditFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		initializeParameters();
+		seatedCandidates = new LinkedList<>();
+	}
+	
+	/**
+	 * A getter function for the candidates who are seated in this OPL election.
+	 * @return seatedCandiates: The list of seated candidates for this election
+	 */
 	public List<Candidate> getSeatedCandidates() {
 		return seatedCandidates;
 	}
+	
+	/**
+	 * A getter function for the number of seats at the beginning of this election.
+	 * @return seats: The number of seats up for grabs at the beginning of this election.
+	 */
 
 	public int getSeats() {
 		return seats;
