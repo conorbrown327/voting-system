@@ -65,7 +65,7 @@ public class InputHelperTest extends Election {
 	// Set IR candidates when parties are not abbreviated
 	@Test
 	public void testSetCandidatesIRPartyFullNames() {
-		String candidateLine = "Joe (Independent), Jim (Vegan Carnivorous Plant)";
+		String candidateLine = "Joe (Independent Democrat), Jim (Vegan Carnivorous Plant)";
 		candidates = new LinkedList<>();
 		setCandidates(candidateLine);
 		assertEquals(candidates.get(0).getName(), "Joe");
@@ -143,7 +143,7 @@ public class InputHelperTest extends Election {
 	// Set OPL candidates when parties are not abbreviated
 	@Test
 	public void testSetCandidatesOPLPartyFullNames() {
-		String candidateLine = "[Joe,Independent],[Jim,Vegan Carnivorous Plant]";
+		String candidateLine = "[Joe,Independent Democrat],[Jim,Vegan Carnivorous Plant]";
 		candidates = new LinkedList<>();
 		setCandidates(candidateLine);
 		assertEquals(candidates.size(), 2);
