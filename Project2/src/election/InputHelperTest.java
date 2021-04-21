@@ -15,6 +15,20 @@ public class InputHelperTest extends Election {
 	protected void writeMediaFile() {}
 	protected void displayResultsToTerminal() {}
 
+	@Test
+	public void testParseName() {
+		String candidateLine = "Joe (I), Jim (V), Mary (C), Sara (U)";
+		IntRef i = new IntRef(0);
+		assertEquals(parseName(candidateLine, i), "Joe");
+		assertEquals(parseName(candidateLine, i), "I");
+		assertEquals(parseName(candidateLine, i), "Jim");
+		assertEquals(parseName(candidateLine, i), "V");
+		assertEquals(parseName(candidateLine, i), "Mary");
+		assertEquals(parseName(candidateLine, i), "C");
+		assertEquals(parseName(candidateLine, i), "Sara");
+		assertEquals(parseName(candidateLine, i), "U");
+	}
+
 	// Set candidates when there are none
 	@Test
 	public void testSetCandidatesEmpty() {
