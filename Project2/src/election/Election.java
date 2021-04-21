@@ -196,41 +196,43 @@ public abstract class Election {
 		}
 	}
 
-	/**
-	 * Helper function for file input that parses candidates and parties from the
-	 * file line containing them.
-	 * 
-	 * @param candidateLine: The file line containing the candidate
-	 */
-
-	protected void setCandidates(String candidateLine) {
-		candidateLine = candidateLine.replaceAll("\\s+", ""); // Strip whitespace for easy parsing
-		String nextCandidateName = "";
-		String nextCandidateParty = "";
-		boolean haveCandidateName = false;
-		for (int i = 0; i < candidateLine.length(); ++i) {
-			if (Character.isLetter(candidateLine.charAt(i))) { // Char is part of candidate or party name
-				if (!haveCandidateName) { // Char is part of candidate name
-					nextCandidateName += candidateLine.charAt(i);
-				} else { // Char is part of party name
-					nextCandidateParty += candidateLine.charAt(i);
-				}
-			} else if (!nextCandidateName.equals("")) { // Full candidate name has been stored
-				if (!nextCandidateParty.equals("")) { // Full party name has been stored
-					candidates.add(new Candidate(nextCandidateName, new Party(nextCandidateParty)));
-					nextCandidateName = "";
-					nextCandidateParty = "";
-					haveCandidateName = false;
-				} else { // Only full candidate name has been stored - scan for party name
-					haveCandidateName = true;
-				}
-			}
-		}
-	}
 
 	protected class IntRef {
 		public IntRef(int val) { this.val = val; }
 		public int val;
+	}
+
+
+	/**
+	 * Helper function for file input that parses candidates and parties from the
+	 * file line containing them.
+	 * 
+	 * @param candidateLine: Ballot file line containing candidate information
+	 */
+
+	protected void setCandidates(String candidateLine) {
+		String nextCandidateName;
+		String nextPartyName;
+		IntRef i = IntRef(0);
+		while (i.val < candidateLine) {
+			nextCandidateName = parseName(candidateLine, i);
+			nextPartyName = parseName(candidateLine, i);
+
+			boolean isDuplicate = false;
+			for (Candidate candidate : candidates) {
+				if (
+					nextCandidateName.equals(candidate.getName()) && 
+					nextPartyName.equals(candidate.getParty().getPartyName())
+				) {
+					isDuplicate = true;
+					break;
+				}
+			}
+
+			if (!isDuplicate) {
+				candidates.add(new Candidate(nextCandidateName, new Party(nextPartyName)));
+			}
+		}
 	}
 
 	/**

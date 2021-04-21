@@ -29,6 +29,21 @@ public class InputHelperTest extends Election {
 		assertEquals(parseName(candidateLine, i), "U");
 	}
 
+	@Test
+	public void testSetCandidatesDuplicates() {
+		String candidateLine = "Joe (I), Joe (I), Jim (V), Mary (C), Sara (U)";
+		candidates = new LinkedList<>();
+		setCandidates(candidateLine);
+		assertEquals(candidates.get(0).getName(), "Joe");
+		assertEquals(candidates.get(1).getName(), "Jim");
+		assertEquals(candidates.get(2).getName(), "Mary");
+		assertEquals(candidates.get(3).getName(), "Sara");
+		assertEquals(candidates.get(0).getParty().getPartyName(), "I");
+		assertEquals(candidates.get(1).getParty().getPartyName(), "V");
+		assertEquals(candidates.get(2).getParty().getPartyName(), "C");
+		assertEquals(candidates.get(3).getParty().getPartyName(), "U");
+	}
+
 	// Set candidates when there are none
 	@Test
 	public void testSetCandidatesEmpty() {

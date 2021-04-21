@@ -387,3 +387,5 @@ public class OpenPartyListingElection extends Election {
 		}
 	}
 }
+
+//TODO Test candidate parsing fix, then remove whitespace replacement in readBallotFile
