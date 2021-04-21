@@ -26,7 +26,7 @@ public class ElectionDriver {
 		// Attempt to find the file path if not found throw exception and terminate
 		try {
 			for (int i = 0; i < args.length; i++) {
-				fileNames[i] = ElectionDriver.class.getResource(args[0]).getPath();
+				fileNames[i] = ElectionDriver.class.getResource(args[i]).getPath();
 			}
 		} catch (NullPointerException e) {
 			throw new IllegalArgumentException("Please enter a valid file name.\n");
