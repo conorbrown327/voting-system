@@ -227,4 +227,42 @@ public abstract class Election {
 			}
 		}
 	}
+
+	protected class IntRef {
+		public IntRef(int val) { this.val = val; }
+		public int val;
+	}
+
+	/**
+	 * Helper function for file input that retrieves the first valid
+	 * candidate or party name in candidateLine from index curIndex 
+	 * onward; curIndex is incremented to the index following said 
+	 * name to facilitate repeated calls.
+	 * 
+	 * @param candidateLine: Ballot file line containing candidate information
+	 * @param curIndex: Index of candidateLine from which to begin left-to-right search
+	 */
+
+	protected String parseName(String candidateLine, IntRef curIndex) {
+		StringBuilder buf = new StringBuilder();
+
+		while (
+			curIndex.val < candidateLine.length() && !(
+			Character.isLetter(candidateLine.charAt(curIndex.val)) ||
+			candidateLine.charAt(curIndex.val) == ' ' )
+		) {
+			++curIndex.val;
+		}
+
+		while (
+			curIndex.val < candidateLine.length() && (
+			Character.isLetter(candidateLine.charAt(curIndex.val)) ||
+			candidateLine.charAt(curIndex.val) == ' ' )
+		) {
+			buf.append(candidateLine.charAt(curIndex.val));
+			++curIndex.val;
+		}
+
+		return buf.toString().trim();
+	}
 }
