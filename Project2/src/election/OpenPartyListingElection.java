@@ -50,6 +50,10 @@ public class OpenPartyListingElection extends Election {
 		}
 		initializeParameters();
 		seatedCandidates = new LinkedList<>();
+		if (ballotFiles.size() == 1) {
+			readBallotFile(ballotFiles.get(0));
+			determineWinner();
+		}
 		readBallotFileList(ballotFiles);
 		determineWinner();
 	}
@@ -104,8 +108,8 @@ public class OpenPartyListingElection extends Election {
 		numCandidates = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
 		setCandidatesAndParties(ballotFile.nextLine().replaceAll("\\s+", ""));
 		seats = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
-		numBallots = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
-		determineQuota(); // Get quota set
+		numBallots += Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
+		// determineQuota(); // Get quota set
 		// write the audit file header after reading the ballots file header
 		writeAuditFileHeader();
 		while (ballotFile.hasNextLine()) {
@@ -243,7 +247,7 @@ public class OpenPartyListingElection extends Election {
 	 */
 	@Override
 	protected void determineWinner() {
-
+		determineQuota();
 		seatsRemaining = seats; // seatsRemaining should initially be equal to the seats read in from the file
 		List<Party> manipulatedList = new ArrayList<Party>(participatingParties);
 		// Initial distribution of seats to all of the parties in the election
@@ -313,7 +317,7 @@ public class OpenPartyListingElection extends Election {
 		writeMediaFile();
 		displayResultsToTerminal();
 	}
-
+	
 	// Calculate number of seats to award to party p
 	private int calculateSeats(Party p) {
 		int partyVotes = p.getTotalPartyVote();

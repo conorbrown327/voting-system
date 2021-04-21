@@ -110,6 +110,7 @@ public abstract class Election {
 	 * 
 	 */
 	protected abstract void determineWinner();
+	
 
 	/**
 	 * Function that handles the parsing and storage of the election data contained

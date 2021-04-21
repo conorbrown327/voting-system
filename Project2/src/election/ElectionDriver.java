@@ -36,6 +36,7 @@ public class ElectionDriver {
 		System.out.println("Ballots file(s) found, tallying votes...");
 		for (int i = 0; i < fileNames.length; i++) {
 			Scanner ballotFile = new Scanner(new File(fileNames[i]));
+			ballotFiles.add(ballotFile);
 		}
 //		File file = new File(fileNames[0]);
 //		Scanner ballotFile = new Scanner(file);
