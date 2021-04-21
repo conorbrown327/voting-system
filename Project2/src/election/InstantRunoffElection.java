@@ -36,7 +36,7 @@ public class InstantRunoffElection extends Election {
 	 * 
 	 * @param ballotFile
 	 */
-	public InstantRunoffElection(Scanner ballotFile) {
+	public InstantRunoffElection(List<Scanner> ballotFiles) {
 		try {
 			auditFile = new File(auditFileName);
 			auditFile.createNewFile();
@@ -47,8 +47,8 @@ public class InstantRunoffElection extends Election {
 		initializeParameters();
 		candidatesBallots = new HashMap<>();
 		eliminatedCandidates = new LinkedList<>();
-		readBallotFile(ballotFile);
-		determineWinner(ballotFile);
+		readBallotFileList(ballotFiles);
+		determineWinner();
 	}
 
 	/**
@@ -235,7 +235,7 @@ public class InstantRunoffElection extends Election {
 	 */
 
 	@Override
-	protected void determineWinner(Scanner ballotFile) {
+	protected void determineWinner() {
 		winner = getWinner();
 		writeToAuditFile("Final Vote Count: \n\n");
 		writeToAuditFile("Winner: " + winner.toString() + ", "

@@ -31,27 +31,31 @@ public abstract class Election {
 	protected DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
 	protected String mediaFileName = "MediaFile-" + dateTime.format(formatObj) + ".txt";
 	protected String auditFileName = "AuditFile-" + dateTime.format(formatObj) + ".txt";
-	
+
 	/**
 	 * Getter function for the participating parties in an election.
-	 * @return participatingParties: The list of parties participating in the given election
+	 * 
+	 * @return participatingParties: The list of parties participating in the given
+	 *         election
 	 */
 
 	public List<Party> getParticipatingParties() {
 		return participatingParties;
 	}
-	
+
 	/**
 	 * Getter function for the candidates of a given election.
+	 * 
 	 * @return candidates: The list of candidates for this election
 	 */
 
 	public List<Candidate> getCandidates() {
 		return candidates;
 	}
-	
+
 	/**
 	 * Getter function for the number of total ballots for an election.
+	 * 
 	 * @return numBallots: The total number of ballots for a given election
 	 */
 
@@ -104,9 +108,8 @@ public abstract class Election {
 	/**
 	 * Function that handles the main algorithm in determining the election winner.
 	 * 
-	 * @param ballotFile The file containing all of the voter information.
 	 */
-	protected abstract void determineWinner(Scanner ballotFile);
+	protected abstract void determineWinner();
 
 	/**
 	 * Function that handles the parsing and storage of the election data contained
@@ -116,9 +119,15 @@ public abstract class Election {
 	 */
 	protected abstract void readBallotFile(Scanner ballotFile);
 
+	protected void readBallotFileList(List<Scanner> ballotFiles) {
+		for (Scanner ballotFile : ballotFiles) {
+			readBallotFile(ballotFile);
+		}
+	}
+
 	/**
-	 * Takes in String and writes that line to the audit file. Has no
-	 * return type.
+	 * Takes in String and writes that line to the audit file. Has no return type.
+	 * 
 	 * @param line: A string that is a line to be written to the audit file
 	 */
 	protected void writeToAuditFile(String line) {
@@ -146,20 +155,23 @@ public abstract class Election {
 	protected abstract void displayResultsToTerminal();
 
 	// FILE INPUT HELPER METHODS //
-	
+
 	/**
-	 * A helper function for file input that will set up candidates and parties for a given election. There is no return type.
-	 * @param candidateLine: Line from the file containing candidate and party information
+	 * A helper function for file input that will set up candidates and parties for
+	 * a given election. There is no return type.
+	 * 
+	 * @param candidateLine: Line from the file containing candidate and party
+	 *                       information
 	 */
 
 	protected void setCandidatesAndParties(String candidateLine) {
 		setCandidates(candidateLine);
 		consolidateParties();
 	}
-	
+
 	/**
-	 * A helper function for file input - merges parties with the same name into one and adds adds their candidates to the
-	 * resulting Party object.
+	 * A helper function for file input - merges parties with the same name into one
+	 * and adds adds their candidates to the resulting Party object.
 	 */
 
 	protected void consolidateParties() {
@@ -168,7 +180,8 @@ public abstract class Election {
 			boolean partyFound = false;
 
 			for (Party party : participatingParties) {
-				if (candidate.getParty().getPartyName().equals(party.getPartyName())) { // Candidate party has been stored
+				if (candidate.getParty().getPartyName().equals(party.getPartyName())) { // Candidate party has been
+																						// stored
 					candidate.setParty(party); // Add party to its candidate
 					partyFound = true;
 				}
@@ -181,13 +194,14 @@ public abstract class Election {
 			candidate.getParty().addCandidate(candidate); // Add candidate to its party
 		}
 	}
-	
+
 	/**
-	 * Helper function for file input that parses candidates and parties from the file line
-	 * containing them.
+	 * Helper function for file input that parses candidates and parties from the
+	 * file line containing them.
+	 * 
 	 * @param candidateLine: The file line containing the candidate
 	 */
-	
+
 	protected void setCandidates(String candidateLine) {
 		candidateLine = candidateLine.replaceAll("\\s+", ""); // Strip whitespace for easy parsing
 		String nextCandidateName = "";

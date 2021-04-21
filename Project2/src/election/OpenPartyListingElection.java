@@ -26,7 +26,7 @@ import java.util.Scanner;
 public class OpenPartyListingElection extends Election {
 
 	protected int seatsRemaining; // This will initially be set to equal the seats, but will be decremented as
-								// seats are assigned
+									// seats are assigned
 	protected int seats; // This is where the initial seats will be read in from the file
 	protected int quota;
 	protected List<Candidate> seatedCandidates;
@@ -40,7 +40,7 @@ public class OpenPartyListingElection extends Election {
 	 *                    start this election
 	 */
 
-	public OpenPartyListingElection(Scanner ballotFile) {
+	public OpenPartyListingElection(List<Scanner> ballotFiles) {
 		try {
 			auditFile = new File(auditFileName);
 			auditFile.createNewFile();
@@ -50,15 +50,15 @@ public class OpenPartyListingElection extends Election {
 		}
 		initializeParameters();
 		seatedCandidates = new LinkedList<>();
-		readBallotFile(ballotFile);
-		determineWinner(ballotFile);
+		readBallotFileList(ballotFiles);
+		determineWinner();
 	}
-	
+
 	/**
-	 * The default constructor for an OpenPartyListing election that initializes all parameters,
-	 * but does not run the election. This is used for testing purposes.
+	 * The default constructor for an OpenPartyListing election that initializes all
+	 * parameters, but does not run the election. This is used for testing purposes.
 	 */
-	
+
 	public OpenPartyListingElection() {
 		try {
 			auditFile = new File(auditFileName);
@@ -70,18 +70,21 @@ public class OpenPartyListingElection extends Election {
 		initializeParameters();
 		seatedCandidates = new LinkedList<>();
 	}
-	
+
 	/**
 	 * A getter function for the candidates who are seated in this OPL election.
+	 * 
 	 * @return seatedCandiates: The list of seated candidates for this election
 	 */
 	public List<Candidate> getSeatedCandidates() {
 		return seatedCandidates;
 	}
-	
+
 	/**
 	 * A getter function for the number of seats at the beginning of this election.
-	 * @return seats: The number of seats up for grabs at the beginning of this election.
+	 * 
+	 * @return seats: The number of seats up for grabs at the beginning of this
+	 *         election.
 	 */
 
 	public int getSeats() {
@@ -239,7 +242,7 @@ public class OpenPartyListingElection extends Election {
 	 *                ballot file that drives the entire election.
 	 */
 	@Override
-	protected void determineWinner(Scanner ballotFile) {
+	protected void determineWinner() {
 
 		seatsRemaining = seats; // seatsRemaining should initially be equal to the seats read in from the file
 		List<Party> manipulatedList = new ArrayList<Party>(participatingParties);
@@ -345,33 +348,31 @@ public class OpenPartyListingElection extends Election {
 	private void distributeSeats(int numSeats, Party p) {
 		p.sortPartyMembersByVote();
 		List<Candidate> sortedList = p.getPartyMembers();
-		// If the party wins the same number of seats as candidates, just give everyone a seat
+		// If the party wins the same number of seats as candidates, just give everyone
+		// a seat
 		if (numSeats == p.getPartyMembers().size()) {
 			for (int i = 0; i < numSeats; i++) {
 				seatedCandidates.add(sortedList.get(i));
 			}
-		}
-		else {
-			//Otherwise, we distribute here
+		} else {
+			// Otherwise, we distribute here
 			for (int i = 0; i < numSeats; i++) {
 				// Case where there is a tie
 				if (sortedList.size() > (i + 1)
 						&& sortedList.get(i).getVoteCount() == sortedList.get(i + 1).getVoteCount()) {
 					Candidate tieLoser = breakTie(sortedList.get(i), sortedList.get(i + 1));
-					// Breaks ties and adds candidates to the list, checking for duplicates whenever they could arise
+					// Breaks ties and adds candidates to the list, checking for duplicates whenever
+					// they could arise
 					if (tieLoser.equals(sortedList.get(i))) {
 						if (seatedCandidates.contains(sortedList.get(i + 1))) {
 							seatedCandidates.add(tieLoser);
-						}
-						else {
+						} else {
 							seatedCandidates.add(sortedList.get(i + 1));
 						}
-					}
-					else {
-						if (seatedCandidates.contains(sortedList.get(i))){
+					} else {
+						if (seatedCandidates.contains(sortedList.get(i))) {
 							seatedCandidates.add(sortedList.get(i + 1));
-						}
-						else {
+						} else {
 							seatedCandidates.add(sortedList.get(i));
 						}
 					}
