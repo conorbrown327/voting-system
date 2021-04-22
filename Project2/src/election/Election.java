@@ -110,26 +110,35 @@ public abstract class Election {
 	 * 
 	 */
 	protected abstract void determineWinner();
-	
 
 	/**
 	 * Function that handles the parsing and storage of the election data contained
 	 * by the ballot file.
 	 * 
-	 * @param ballotFile The file containing all of the voter information.
+	 * @param ballotFile The file containing all of the election information.
 	 */
 	protected abstract void readBallotFile(Scanner ballotFile);
 
-	protected void readBallotFileList(List<Scanner> ballotFiles) {
-		for (Scanner ballotFile : ballotFiles) {
-			readBallotFile(ballotFile);
-		}
-	}
+	/**
+	 * Wrapper function that calls readBallotFile and readBallotFileHeader with each
+	 * ballot file in the provided list.
+	 * 
+	 * @param ballotFiles A list of all ballot files the election will process.
+	 */
+	protected abstract void readBallotFileList(List<Scanner> ballotFiles);
+
+	/**
+	 * Function that handles the reading of the ballot file headers and the storage
+	 * of the general election information that it contains.
+	 * 
+	 * @param ballotFile The file containing all of the election information.
+	 */
+	protected abstract void readBallotFileHeader(Scanner ballotFile);
 
 	/**
 	 * Takes in String and writes that line to the audit file. Has no return type.
 	 * 
-	 * @param line: A string that is a line to be written to the audit file
+	 * @param line: A string that is a line to be written to the audit file.
 	 */
 	protected void writeToAuditFile(String line) {
 		try {
@@ -200,10 +209,12 @@ public abstract class Election {
 	 * Wrapper class enabling pass-by-reference ints
 	 */
 	protected class IntRef {
-		public IntRef(int val) { this.val = val; }
+		public IntRef(int val) {
+			this.val = val;
+		}
+
 		public int val;
 	}
-
 
 	/**
 	 * Helper function for file input that parses candidates and parties from the
@@ -222,47 +233,52 @@ public abstract class Election {
 
 			boolean isDuplicate = false;
 			for (Candidate candidate : candidates) {
-				if (
-					nextCandidateName.equals(candidate.getName()) && 
-					nextPartyName.equals(candidate.getParty().getPartyName())
-				) { // candidate has already been stored
+				if (nextCandidateName.equals(candidate.getName())
+						&& nextPartyName.equals(candidate.getParty().getPartyName())) { // candidate has already been
+																						// stored
 					isDuplicate = true;
 					break;
 				}
 			}
 
-			if (!isDuplicate && !(nextCandidateName.length() == 0 || nextPartyName.length() == 0)) { // new candidate info has been parsed
+			if (!isDuplicate && !(nextCandidateName.length() == 0 || nextPartyName.length() == 0)) { // new candidate
+																										// info has been
+																										// parsed
 				candidates.add(new Candidate(nextCandidateName, new Party(nextPartyName)));
 			}
 		}
 	}
 
 	/**
-	 * Helper function for file input that retrieves the first valid
-	 * candidate or party name in candidateLine from index curIndex 
-	 * onward; curIndex is incremented to the index following said 
-	 * name to facilitate repeated calls.
+	 * Helper function for file input that retrieves the first valid candidate or
+	 * party name in candidateLine from index curIndex onward; curIndex is
+	 * incremented to the index following said name to facilitate repeated calls.
 	 * 
 	 * @param candidateLine: Ballot file line containing candidate information
-	 * @param curIndex: Index of candidateLine from which to begin left-to-right search
+	 * @param curIndex:      Index of candidateLine from which to begin
+	 *                       left-to-right search
 	 */
 
 	protected String parseName(String candidateLine, IntRef curIndex) {
 		StringBuilder buf = new StringBuilder();
 
-		while (
-			curIndex.val < candidateLine.length() && 
-			!Character.isLetter(candidateLine.charAt(curIndex.val))
-		) { // curIndex is not at an alphabetical character
+		while (curIndex.val < candidateLine.length() && !Character.isLetter(candidateLine.charAt(curIndex.val))) { // curIndex
+																													// is
+																													// not
+																													// at
+																													// an
+																													// alphabetical
+																													// character
 			++curIndex.val;
 		}
 
-		while (
-			curIndex.val < candidateLine.length() && (
-			Character.isLetter(candidateLine.charAt(curIndex.val)) ||
-			candidateLine.charAt(curIndex.val) == ' ' ||
-			candidateLine.charAt(curIndex.val) == '\t' )
-		) { // curIndex is not at an alphabetical/whitespace character
+		while (curIndex.val < candidateLine.length() && (Character.isLetter(candidateLine.charAt(curIndex.val))
+				|| candidateLine.charAt(curIndex.val) == ' ' || candidateLine.charAt(curIndex.val) == '\t')) { // curIndex
+																												// is
+																												// not
+																												// at an
+																												// alphabetical/whitespace
+																												// character
 			buf.append(candidateLine.charAt(curIndex.val));
 			++curIndex.val;
 		}

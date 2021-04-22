@@ -105,14 +105,6 @@ public class OpenPartyListingElection extends Election {
 	 */
 	@Override
 	protected void readBallotFile(Scanner ballotFile) {
-		// read the ballots file header
-		numCandidates = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
-		setCandidatesAndParties(ballotFile.nextLine());
-		seats = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
-		numBallots += Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
-		// determineQuota(); // Get quota set
-		// write the audit file header after reading the ballots file header
-		writeAuditFileHeader();
 		while (ballotFile.hasNextLine()) {
 			Ballot ballot = new Ballot(candidates, ballotFile.nextLine().replaceAll("\\s+", ""));
 			// get the ballots preferred candidate
@@ -133,6 +125,44 @@ public class OpenPartyListingElection extends Election {
 				writeToAuditFile("-" + c.toString() + "\n");
 			}
 		}
+	}
+
+	/**
+	 * Wrapper function that calls readBallotFile and readBallotFileHeader with each
+	 * ballot file in the provided list.
+	 * 
+	 * @param ballotFiles A list of all ballot files the election will process.
+	 */
+	@Override
+	protected void readBallotFileList(List<Scanner> ballotFiles) {
+		for (Scanner ballotFile : ballotFiles) {
+			readBallotFileHeader(ballotFile);
+		}
+		// Get quota set
+		determineQuota();
+		// write the audit file header after reading the ballots file header
+		writeAuditFileHeader();
+		for (Scanner ballotFile : ballotFiles) {
+			readBallotFile(ballotFile);
+		}
+	}
+
+	/**
+	 * Function that handles the reading of the ballot file headers and the storage
+	 * of the general election information that it contains.
+	 * 
+	 * @param ballotFile The file containing all of the election information.
+	 */
+	@Override
+	protected void readBallotFileHeader(Scanner ballotFile) {
+		numCandidates = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
+		if (candidates.isEmpty()) {
+			setCandidatesAndParties(ballotFile.nextLine());
+		} else {
+			ballotFile.nextLine().replaceAll("\\s+", "");
+		}
+		seats = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
+		numBallots += Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
 	}
 
 	/**

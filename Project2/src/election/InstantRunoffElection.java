@@ -98,22 +98,13 @@ public class InstantRunoffElection extends Election {
 	 */
 	@Override
 	protected void readBallotFile(Scanner ballotFile) {
-		// read the ballots file header
-		numCandidates = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
-		setCandidatesAndParties(ballotFile.nextLine());
-		for (Candidate candidate : candidates) {
-			candidatesBallots.put(candidate, new LinkedList<Ballot>());
-		}
-		numBallots = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
-		// write the audit file header after reading the ballots file header
-		writeAuditFileHeader();
 		writeToAuditFile("Initial ballot awarding: \n\n");
 		while (ballotFile.hasNextLine()) {
 			Ballot ballot = new Ballot(candidates, ballotFile.nextLine().replaceAll("\\s+", ""));
 
 			// Jack's invalidation check here
 			int votePrefSize = ballot.getVotePreferencesSize();
-			if((double)votePrefSize / (double)numCandidates < 0.5) {
+			if ((double) votePrefSize / (double) numCandidates < 0.5) {
 				continue;
 			}
 			// get the ballots preferred candidate
@@ -133,6 +124,45 @@ public class InstantRunoffElection extends Election {
 		for (Candidate c : candidates) {
 			writeToAuditFile("-" + c.toString() + "\n");
 		}
+	}
+
+	/**
+	 * Wrapper function that calls readBallotFile and readBallotFileHeader with each
+	 * ballot file in the provided list.
+	 * 
+	 * @param ballotFiles A list of all ballot files the election will process.
+	 */
+	@Override
+	protected void readBallotFileList(List<Scanner> ballotFiles) {
+		for (Scanner ballotFile : ballotFiles) {
+			readBallotFileHeader(ballotFile);
+		}
+		// write the audit file header after reading the ballots file header
+		writeAuditFileHeader();
+		for (Scanner ballotFile : ballotFiles) {
+			readBallotFile(ballotFile);
+		}
+	}
+
+	/**
+	 * Function that handles the reading of the ballot file headers and the storage
+	 * of the general election information that it contains.
+	 * 
+	 * @param ballotFile The file containing all of the election information.
+	 */
+	@Override
+	protected void readBallotFileHeader(Scanner ballotFile) {
+		// read the ballots file header
+		numCandidates = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
+		if (candidates.isEmpty()) {
+			setCandidatesAndParties(ballotFile.nextLine());
+			for (Candidate candidate : candidates) {
+				candidatesBallots.put(candidate, new LinkedList<Ballot>());
+			}
+		} else {
+			ballotFile.nextLine().replaceAll("\\s+", "");
+		}
+		numBallots += Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
 	}
 
 	/**
