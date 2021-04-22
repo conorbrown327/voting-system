@@ -107,7 +107,7 @@ public class OpenPartyListingElection extends Election {
 	protected void readBallotFile(Scanner ballotFile) {
 		// read the ballots file header
 		numCandidates = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
-		setCandidatesAndParties(ballotFile.nextLine().replaceAll("\\s+", ""));
+		setCandidatesAndParties(ballotFile.nextLine());
 		seats = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
 		numBallots += Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
 		// determineQuota(); // Get quota set

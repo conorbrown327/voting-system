@@ -100,7 +100,7 @@ public class InstantRunoffElection extends Election {
 	protected void readBallotFile(Scanner ballotFile) {
 		// read the ballots file header
 		numCandidates = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
-		setCandidatesAndParties(ballotFile.nextLine().replaceAll("\\s+", ""));
+		setCandidatesAndParties(ballotFile.nextLine());
 		for (Candidate candidate : candidates) {
 			candidatesBallots.put(candidate, new LinkedList<Ballot>());
 		}
