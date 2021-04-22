@@ -111,6 +111,8 @@ public class InstantRunoffElection extends Election {
 		while (ballotFile.hasNextLine()) {
 			Ballot ballot = new Ballot(candidates, ballotFile.nextLine().replaceAll("\\s+", ""));
 
+			// Jack's invalidation check here
+
 			// get the ballots preferred candidate
 			Candidate preferredCandidate = ballot.getPreferredCandidate();
 			candidatesBallots.get(preferredCandidate).add(ballot);
