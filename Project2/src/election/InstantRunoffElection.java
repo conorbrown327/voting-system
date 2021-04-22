@@ -112,12 +112,17 @@ public class InstantRunoffElection extends Election {
 			Ballot ballot = new Ballot(candidates, ballotFile.nextLine().replaceAll("\\s+", ""));
 
 			// Jack's invalidation check here
-
+			int votePrefSize = ballot.getVotePreferencesSize();
+			if((double)votePrefSize / (double)numCandidates < 0.5) {
+				continue;
+			}
 			// get the ballots preferred candidate
-			Candidate preferredCandidate = ballot.getPreferredCandidate();
-			candidatesBallots.get(preferredCandidate).add(ballot);
-			// write each ballot and who it is being awarded to to the audit file
-			writeToAuditFile(ballot.getBallotInfo() + " awarded to " + preferredCandidate.getName() + "\n");
+			else {
+				Candidate preferredCandidate = ballot.getPreferredCandidate();
+				candidatesBallots.get(preferredCandidate).add(ballot);
+				// write each ballot and who it is being awarded to to the audit file
+				writeToAuditFile(ballot.getBallotInfo() + " awarded to " + preferredCandidate.getName() + "\n");
+			}
 		}
 		// tally each candidate's vote count
 		for (Candidate candidate : candidates) {

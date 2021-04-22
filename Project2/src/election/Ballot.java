@@ -45,6 +45,10 @@ public class Ballot {
 	public Candidate getPreferredCandidate() {
 		return votePreferences.peek();
 	}
+	
+	public int getVotePreferencesSize() {
+		return votePreferences.size();
+	}
 
 	/**
 	 * Function that returns the ballot info as written in the initial audit file.
