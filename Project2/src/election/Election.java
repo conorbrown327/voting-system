@@ -213,8 +213,8 @@ public abstract class Election {
 	protected void setCandidates(String candidateLine) {
 		String nextCandidateName;
 		String nextPartyName;
-		IntRef i = IntRef(0);
-		while (i.val < candidateLine) {
+		IntRef i = new IntRef(0);
+		while (i.val < candidateLine.length()) {
 			nextCandidateName = parseName(candidateLine, i);
 			nextPartyName = parseName(candidateLine, i);
 
