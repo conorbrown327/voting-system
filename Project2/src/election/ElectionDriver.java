@@ -22,6 +22,10 @@ import java.util.Scanner;
 
 public class ElectionDriver {
 	public static void main(String[] args) throws FileNotFoundException {
+		if(args.length == 0) {
+			System.out.println("No file provided. Please provide a file to run.\n");
+			System.exit(1);
+		}
 		String[] fileNames = new String[args.length];
 		// Attempt to find the file path if not found throw exception and terminate
 		try {
