@@ -17,7 +17,7 @@ public class Ballot {
 
 	private Queue<Candidate> votePreferences;
 	private String ballotInfo;
-	
+
 	/**
 	 * Ballot constructor. See SRS for details regarding file format.
 	 * 
@@ -39,7 +39,8 @@ public class Ballot {
 	 * Function that gets the Candidate that is currently the most preferred
 	 * eligible according to the voter preferences.
 	 * 
-	 * @return This ballot's highest-rated remaining candidate. Gathered by using votePreferences.poll()
+	 * @return This ballot's highest-rated remaining candidate. Gathered by using
+	 *         votePreferences.poll()
 	 */
 	public Candidate getPreferredCandidate() {
 		return votePreferences.peek();
@@ -57,13 +58,15 @@ public class Ballot {
 
 	/**
 	 * Eliminates this ballot's highest-rated remaining candidate.
+	 * 
 	 * @return The candidate to be eliminated. Gathered using votePreferences.poll()
 	 */
 	public Candidate eliminatePreferredCandidate() {
 		return votePreferences.poll();
 	}
 
-	// Parses line of ballot data into list of rankings by order of candidate appearance
+	// Parses line of ballot data into list of rankings by order of candidate
+	// appearance
 	private List<int[]> getRankings(String ballotLine) {
 		List<int[]> result = new ArrayList<int[]>();
 
@@ -82,7 +85,7 @@ public class Ballot {
 			}
 		}
 
-		// Store last ranking  (it's a kludge but it works)
+		// Store last ranking (it's a kludge but it works)
 		if (strRanking != "") {
 			int[] nextRanking = { candidateIndex, Integer.parseInt(strRanking) };
 			result.add(nextRanking);

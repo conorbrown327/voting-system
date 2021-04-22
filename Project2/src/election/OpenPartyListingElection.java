@@ -50,12 +50,13 @@ public class OpenPartyListingElection extends Election {
 		}
 		initializeParameters();
 		seatedCandidates = new LinkedList<>();
-		if (ballotFiles.size() == 1) {
-			readBallotFile(ballotFiles.get(0));
-			determineWinner();
-		}
+//		if (ballotFiles.size() == 1) {
+//			readBallotFile(ballotFiles.get(0));
+//			determineWinner();
+//		}
 		readBallotFileList(ballotFiles);
 		determineWinner();
+		System.out.println("End of OPL Election");
 	}
 
 	/**
@@ -317,7 +318,7 @@ public class OpenPartyListingElection extends Election {
 		writeMediaFile();
 		displayResultsToTerminal();
 	}
-	
+
 	// Calculate number of seats to award to party p
 	private int calculateSeats(Party p) {
 		int partyVotes = p.getTotalPartyVote();
