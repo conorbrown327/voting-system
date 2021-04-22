@@ -196,7 +196,9 @@ public abstract class Election {
 		}
 	}
 
-
+	/**
+	 * Wrapper class enabling pass-by-reference ints
+	 */
 	protected class IntRef {
 		public IntRef(int val) { this.val = val; }
 		public int val;
@@ -223,13 +225,13 @@ public abstract class Election {
 				if (
 					nextCandidateName.equals(candidate.getName()) && 
 					nextPartyName.equals(candidate.getParty().getPartyName())
-				) {
+				) { // candidate has already been stored
 					isDuplicate = true;
 					break;
 				}
 			}
 
-			if (!isDuplicate) {
+			if (!isDuplicate && !(nextCandidateName.length() == 0 || nextPartyName.length() == 0)) { // new candidate info has been parsed
 				candidates.add(new Candidate(nextCandidateName, new Party(nextPartyName)));
 			}
 		}
@@ -249,18 +251,18 @@ public abstract class Election {
 		StringBuilder buf = new StringBuilder();
 
 		while (
-			curIndex.val < candidateLine.length() && !(
-			Character.isLetter(candidateLine.charAt(curIndex.val)) ||
-			candidateLine.charAt(curIndex.val) == ' ' )
-		) {
+			curIndex.val < candidateLine.length() && 
+			!Character.isLetter(candidateLine.charAt(curIndex.val))
+		) { // curIndex is not at an alphabetical character
 			++curIndex.val;
 		}
 
 		while (
 			curIndex.val < candidateLine.length() && (
 			Character.isLetter(candidateLine.charAt(curIndex.val)) ||
-			candidateLine.charAt(curIndex.val) == ' ' )
-		) {
+			candidateLine.charAt(curIndex.val) == ' ' ||
+			candidateLine.charAt(curIndex.val) == '\t' )
+		) { // curIndex is not at an alphabetical/whitespace character
 			buf.append(candidateLine.charAt(curIndex.val));
 			++curIndex.val;
 		}
