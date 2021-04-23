@@ -117,7 +117,7 @@ public class InstantRunoffElection extends Election {
 		}
 		// tally each candidate's vote count
 		for (Candidate candidate : candidates) {
-			candidate.incrementVoteCount(candidatesBallots.get(candidate).size());
+			candidate.incrementVoteCount(candidatesBallots.get(candidate).size() - candidate.getVoteCount());
 		}
 		// write each candidate's initial vote count after it has been tallied
 		writeToAuditFile("\nInitial votes per candidate: \n");
