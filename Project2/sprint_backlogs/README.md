@@ -1,1 +1,2 @@
 # Sprint Backlogs for Team 21
+IMPORTANT NOTE: We initially uploaded our first updated backlog on 4/20/2021, but for some reason when we were copying stuff over, the sprint_backlogs and product_backlogs randomly disappeared on Thursday, April 22nd. We reuploaded everything that day. We had these backlogs up on the given days, but GitHub and Eclipse do not mix well. We apologize for any inconvenience, and you should be able to see our commit history to confirm that we had these in on time so as to not cause problems with grading.
