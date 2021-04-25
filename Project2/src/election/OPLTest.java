@@ -19,7 +19,9 @@ public class OPLTest extends OpenPartyListingElection {
 		String path = OPLTest.class.getResource("/election.files/OPLTest1.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
-		OpenPartyListingElection opl = new OpenPartyListingElection(scan);
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		OpenPartyListingElection opl = new OpenPartyListingElection(ballotFiles);
 		var participatingParties = opl.getParticipatingParties();
 		var candidates = opl.getCandidates();
 		var numBallots = opl.getNumBallots();
@@ -83,7 +85,9 @@ public class OPLTest extends OpenPartyListingElection {
 		String path = OPLTest.class.getResource("/election.files/OPLTest1.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
-		OpenPartyListingElection opl = new OpenPartyListingElection(scan);
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		OpenPartyListingElection opl = new OpenPartyListingElection(ballotFiles);
 		var seatedCandidates = opl.getSeatedCandidates();
 		assertEquals(2, seatedCandidates.size());
 		seatedCandidates.sort(null);
@@ -99,7 +103,9 @@ public class OPLTest extends OpenPartyListingElection {
 		String path = OPLTest.class.getResource("/election.files/OPLTest2.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
-		OpenPartyListingElection opl = new OpenPartyListingElection(scan);
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		OpenPartyListingElection opl = new OpenPartyListingElection(ballotFiles);
 		var seatedCandidates = opl.getSeatedCandidates();
 		assertEquals(3, seatedCandidates.size());
 		seatedCandidates.sort(null);
@@ -115,7 +121,9 @@ public class OPLTest extends OpenPartyListingElection {
 		String path = OPLTest.class.getResource("/election.files/hundredk_ballots_opl.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
-		OpenPartyListingElection opl = new OpenPartyListingElection(scan);
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		OpenPartyListingElection opl = new OpenPartyListingElection(ballotFiles);
 
 		var seatedCandidates = opl.getSeatedCandidates();
 		assertEquals(seatedCandidates.size(), 3);
@@ -136,7 +144,9 @@ public class OPLTest extends OpenPartyListingElection {
 		String path = OPLTest.class.getResource("/election.files/OPLTestSpecial.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
-		OpenPartyListingElection opl = new OpenPartyListingElection(scan);
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		OpenPartyListingElection opl = new OpenPartyListingElection(ballotFiles);
 		var seatedCandidates = opl.getSeatedCandidates();
 		assertEquals(3, seatedCandidates.size());
 		seatedCandidates.sort(null);
@@ -152,7 +162,9 @@ public class OPLTest extends OpenPartyListingElection {
 		String path = OPLTest.class.getResource("/election.files/OPL3Way.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
-		OpenPartyListingElection opl = new OpenPartyListingElection(scan);
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		OpenPartyListingElection opl = new OpenPartyListingElection(ballotFiles);
 		var seatedCandidates = opl.getSeatedCandidates();
 		assertEquals(2, seatedCandidates.size());
 	}

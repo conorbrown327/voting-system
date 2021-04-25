@@ -105,6 +105,7 @@ public class InstantRunoffElection extends Election {
 			// Jack's invalidation check here
 			int votePrefSize = ballot.getVotePreferencesSize();
 			if ((double) votePrefSize / (double) numCandidates < 0.5) {
+				numBallots -= 1;
 				continue;
 			}
 			// get the ballots preferred candidate

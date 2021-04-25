@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.junit.jupiter.api.Test;
@@ -19,7 +21,9 @@ class IRElectionTest {
 		String path = IRElectionTest.class.getResource("/election.files/fixedWinnerIR.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
-		InstantRunoffElection ir = new InstantRunoffElection(scan);
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		InstantRunoffElection ir = new InstantRunoffElection(ballotFiles);
 		var winner = ir.getElectionWinner();
 		assertEquals("Watters", winner.getName());
 		assertEquals("P", winner.getParty().getPartyName());
@@ -34,7 +38,9 @@ class IRElectionTest {
 		String path = IRElectionTest.class.getResource("/election.files/hundredk_ballots_ir.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
-		InstantRunoffElection ir = new InstantRunoffElection(scan);
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		InstantRunoffElection ir = new InstantRunoffElection(ballotFiles);
 		var winner = ir.getElectionWinner();
 
 		// Ensures that Rosen is the victor of the election
@@ -69,7 +75,9 @@ class IRElectionTest {
 		String path = IRElectionTest.class.getResource("/election.files/comebackIR.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
-		InstantRunoffElection ir = new InstantRunoffElection(scan);
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		InstantRunoffElection ir = new InstantRunoffElection(ballotFiles);
 		var winner = ir.getElectionWinner();
 
 		assertEquals("Kleinberg", winner.getName());
@@ -83,7 +91,9 @@ class IRElectionTest {
 		String path = IRElectionTest.class.getResource("/election.files/fourWayTie.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
-		InstantRunoffElection ir = new InstantRunoffElection(scan);
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		InstantRunoffElection ir = new InstantRunoffElection(ballotFiles);
 
 		// There should always be 3 eliminated candidates by the end
 		assertEquals(3, ir.getEliminatedCandidates().size());
@@ -101,7 +111,9 @@ class IRElectionTest {
 		String path = IRElectionTest.class.getResource("/election.files/lastNameCandidatesIR.csv").getPath();
 		Scanner scan = new Scanner(new File(path));
 		scan.nextLine().replaceAll("\\s+", "");
-		InstantRunoffElection ir = new InstantRunoffElection(scan);
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		InstantRunoffElection ir = new InstantRunoffElection(ballotFiles);
 		var winner = ir.getElectionWinner();
 		// Addressed in bug list
 		assertEquals("Mike Douglas", winner.getName());

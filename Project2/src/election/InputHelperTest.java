@@ -9,8 +9,10 @@ import org.junit.Test;
 public class InputHelperTest extends Election {
 
 	// Abstract declarations to appease the compiler
-	protected void determineWinner(Scanner ballotFile) {}
+	protected void determineWinner() {}
 	protected void readBallotFile(Scanner ballotFile) {}
+	protected void readBallotFileHeader(Scanner ballotFile) {}
+	protected void readBallotFileList(List<Scanner> ballotFiles) {}
 	protected void writeAuditFileHeader() {}
 	protected void writeMediaFile() {}
 	protected void displayResultsToTerminal() {}
