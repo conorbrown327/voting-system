@@ -55,7 +55,10 @@ public class ElectionDriver {
 				new InstantRunoffElection(ballotFiles);
 			} else if (electionType.equals("OPL")) {
 				new OpenPartyListingElection(ballotFiles);
-			} else {
+			} else if (electionType.equals("PO")){
+				new PopularityOnlyElection();
+			}
+			else {
 				System.out.println("Invalid election type " + electionType);
 				System.exit(1);
 			}
