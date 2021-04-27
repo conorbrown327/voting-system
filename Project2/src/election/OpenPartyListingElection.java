@@ -56,7 +56,6 @@ public class OpenPartyListingElection extends Election {
 //		}
 		readBallotFileList(ballotFiles);
 		determineWinner();
-		System.out.println("End of OPL Election");
 	}
 
 	/**
@@ -418,5 +417,3 @@ public class OpenPartyListingElection extends Election {
 		}
 	}
 }
-
-//TODO Test candidate parsing fix, then remove whitespace replacement in readBallotFile
