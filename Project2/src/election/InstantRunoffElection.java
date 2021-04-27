@@ -293,7 +293,12 @@ public class InstantRunoffElection extends Election {
 		writeMediaFile();
 		displayResultsToTerminal();
 	}
-
+	
+	/**
+	 * Function that actually calculates the winner of an IR election.
+	 * 
+	 * @return The candidate who wins the election. Will be located at candidates[0] eventually
+	 */
 	// Return winner of election
 	protected Candidate getWinner() {
 		candidates.sort(null); // Should sort using Comparable's compareTo()
@@ -313,7 +318,12 @@ public class InstantRunoffElection extends Election {
 		eliminateCandidate(candidateToBeEliminated);
 		return getWinner();
 	}
-
+	
+	/**
+	 * Checks to see if a candidate has garnered a majority at this point of the election.
+	 * 
+	 * @return true if a majority exists, false otherwise
+	 */
 	// Check for candidate with majority of allocated votes
 	protected boolean existsMajority() {
 		if (candidates.size() < 2)
@@ -322,6 +332,12 @@ public class InstantRunoffElection extends Election {
 			return true;
 		return false;
 	}
+	
+	/**
+	 * A method to determine the list of candidate(s) who are in last place for an election
+	 * 
+	 * @return lastPlaceCandidates: The candidate(s) that are in last place for this election
+	 */
 
 	// Return a list of candidates tied for last place
 	protected List<Candidate> getLastPlaceCandidates() {
@@ -347,7 +363,13 @@ public class InstantRunoffElection extends Election {
 	private void updateMap(Candidate c, Map<Candidate, Integer> newlyAddedVotes) {
 		newlyAddedVotes.put(c, newlyAddedVotes.get(c) + 1);
 	}
-
+	
+	/**
+	 * A method to redistribute ballots from a candidate who has been eliminated.
+	 * 
+	 * @param ballot: The ballot containing votes for this candidate
+	 * @param newlyAddedVotes: Votes that are being added to this election
+	 */
 	// Redistribute ballot vote to next preferred candidate
 	protected void redistributeBallotVote(Ballot ballot, Map<Candidate, Integer> newlyAddedVotes) {
 		if (ballot == null)
@@ -366,7 +388,12 @@ public class InstantRunoffElection extends Election {
 			--numBallots;
 		}
 	}
-
+	
+	/**
+	 * Method that eliminates a candidate from the race by removing them from the necessary data structures
+	 * 
+	 * @param eliminatedCandidate: The candidate to be eliminated
+	 */
 	// Eliminate candidate from race
 	protected void eliminateCandidate(Candidate eliminatedCandidate) {
 		// A data structure to keep track of how many votes each Candidate receives
