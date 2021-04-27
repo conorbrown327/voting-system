@@ -275,6 +275,7 @@ public class InstantRunoffElection extends Election {
 	@Override
 	protected void determineWinner() {
 		winner = getWinner();
+		writeToAuditFile("Total Valid Votes: " + numBallots + "\n");
 		writeToAuditFile("Final Vote Count: \n\n");
 		writeToAuditFile("Winner: " + winner.toString() + ", "
 				+ (((double) winner.getVoteCount() / (double) numBallots) * 100.0) + "% of the vote\n");
