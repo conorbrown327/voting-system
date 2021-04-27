@@ -40,11 +40,12 @@ public class OPLTest extends OpenPartyListingElection {
 	public void testReadBallotFile() throws FileNotFoundException {
 		String path = OPLTest.class.getResource("/election.files/OPLTest1.csv").getPath();
 		Scanner ballotFile = new Scanner(new File(path));
-
+		List<Scanner> ballotFiles = new ArrayList<>();
 		ballotFile.nextLine();
+		ballotFiles.add(ballotFile);
 		seatedCandidates = new LinkedList<>();
 		initializeParameters();
-		readBallotFile(ballotFile);
+		readBallotFileList(ballotFiles);
 
 		assertEquals(numCandidates, 4);
 		assertEquals(candidates.size(), 4);
