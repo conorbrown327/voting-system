@@ -39,7 +39,7 @@ class MultipleFilesSystemTests {
         ElectionDriver.main(args);
 	}
 	
-	// Should result in successfully run OPL election and count ballots
+	// Should result in successfully run IR election and count ballots
 	// from both files
 	@Test
 	void testMultFilesIR() throws FileNotFoundException {

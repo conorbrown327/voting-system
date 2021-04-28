@@ -14,6 +14,7 @@ import election.*;
 
 public class POElectionTest {
 	
+	// Test that info from the run election is stored and is correct
 	@Test
 	void testPOFile1() throws FileNotFoundException {
 		String path = POElectionTest.class.getResource("/election.files/POFile1.csv").getPath();
@@ -50,6 +51,7 @@ public class POElectionTest {
 		assertEquals(numCands.get(5).getVoteCount(), 1);
 	}
 	
+	// Test that info from the run election is stored and is correct
 	@Test
 	void testPOFile2() throws FileNotFoundException {
 		String path = POElectionTest.class.getResource("/election.files/POFile2.csv").getPath();
@@ -80,6 +82,7 @@ public class POElectionTest {
 		assertEquals(numCands.get(3).getVoteCount(), 0);
 	}
 	
+	// Test that PO can read and store the correct info from multiple files
 	@Test
 	void testPOMultipleFiles() throws FileNotFoundException {
 		String path1 = POElectionTest.class.getResource("/election.files/POFile2.csv").getPath();
