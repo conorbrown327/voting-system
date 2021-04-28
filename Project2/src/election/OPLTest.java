@@ -191,4 +191,68 @@ public class OPLTest extends OpenPartyListingElection {
 		assertEquals(1, seatedCandidates.get(2).getParty().getTotalPartyVote());
 		assertEquals(seatedCandidates.size(), opl.getSeats());
 	}
+	
+	@Test 
+	void OPLMulti1() throws FileNotFoundException{
+		String pathOne = OPLTest.class.getResource("/election.files/OPLMultiOne.csv").getPath();
+		String pathTwo = OPLTest.class.getResource("/election.files/OPLMultiTwo.csv").getPath();
+		Scanner scanOne = new Scanner(new File(pathOne));
+		Scanner scanTwo = new Scanner(new File(pathTwo));
+		scanOne.nextLine().replaceAll("\\s+", "");
+		scanTwo.nextLine().replaceAll("\\s+", "");
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scanOne);
+		ballotFiles.add(scanTwo);
+		OpenPartyListingElection opl = new OpenPartyListingElection(ballotFiles);
+		var seatedCandidates = opl.getSeatedCandidates();
+		assertEquals(2, seatedCandidates.size());
+		seatedCandidates.sort(null);
+		assertEquals("Billy", seatedCandidates.get(0).getName());
+		assertEquals("D", seatedCandidates.get(0).getParty().getPartyName());
+		assertEquals(1, seatedCandidates.get(0).getParty().getSeatsAllocated());
+		assertEquals(1, seatedCandidates.get(1).getParty().getSeatsAllocated());
+		assertEquals(seatedCandidates.size(), opl.getSeats());
+	}
+	
+	@Test
+	void OPLMulti2() throws FileNotFoundException{
+		String pathOne = OPLTest.class.getResource("/election.files/OPLMulti21.csv").getPath();
+		String pathTwo = OPLTest.class.getResource("/election.files/OPLMulti22.csv").getPath();
+		String pathThree = OPLTest.class.getResource("/election.files/OPLMulti23.csv").getPath();
+		Scanner scanOne = new Scanner(new File(pathOne));
+		Scanner scanTwo = new Scanner(new File(pathTwo));
+		Scanner scanThree = new Scanner(new File(pathThree));
+		scanOne.nextLine().replaceAll("\\s+", "");
+		scanTwo.nextLine().replaceAll("\\s+", "");
+		scanThree.nextLine().replaceAll("\\s+", "");
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scanOne);
+		ballotFiles.add(scanTwo);
+		ballotFiles.add(scanThree);
+		OpenPartyListingElection opl = new OpenPartyListingElection(ballotFiles);
+		var seatedCandidates = opl.getSeatedCandidates();
+		assertEquals(3, seatedCandidates.size());
+		seatedCandidates.sort(null);
+		assertEquals(5, seatedCandidates.get(0).getParty().getTotalPartyVote());
+		assertEquals("Pike", seatedCandidates.get(0).getName());
+		assertEquals(3, seatedCandidates.get(1).getParty().getTotalPartyVote());
+		assertEquals("Jones", seatedCandidates.get(1).getName());
+		assertEquals("Foster", seatedCandidates.get(2).getName());
+	}
+	
+	@Test
+	void OPL3WayMulti() throws FileNotFoundException{
+		String pathOne = OPLTest.class.getResource("/election.files/OPL3Way1.csv").getPath();
+		String pathTwo = OPLTest.class.getResource("/election.files/OPL3Way2.csv").getPath();
+		Scanner scanOne = new Scanner(new File(pathOne));
+		Scanner scanTwo = new Scanner(new File(pathTwo));
+		scanOne.nextLine().replaceAll("\\s+", "");
+		scanTwo.nextLine().replaceAll("\\s+", "");
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scanOne);
+		ballotFiles.add(scanTwo);
+		OpenPartyListingElection opl = new OpenPartyListingElection(ballotFiles);
+		var seatedCandidates = opl.getSeatedCandidates();
+		assertEquals(2, seatedCandidates.size());
+	}
 }
