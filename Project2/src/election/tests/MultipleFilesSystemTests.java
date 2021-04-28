@@ -33,10 +33,19 @@ class MultipleFilesSystemTests {
 	// Should result in successfully run OPL election and count ballots
 	// from both files
 	@Test
-	void testTwoFiles() throws FileNotFoundException {
+	void testMultFilesOPL() throws FileNotFoundException {
 		String[] args = { "/election.files/OPLMultiOne.csv",
 						  "/election.files/OPLMultiTwo.csv" };
         ElectionDriver.main(args);
+	}
+	
+	// Should result in successfully run OPL election and count ballots
+	// from both files
+	@Test
+	void testMultFilesIR() throws FileNotFoundException {
+		String[] args = { "/election.files/comebackIR.csv",
+						  "/election.files/comebackIR.csv" };
+	    ElectionDriver.main(args);
 	}
 	
 	// Should result in an error must be the same election type
