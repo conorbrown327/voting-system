@@ -8,14 +8,18 @@ import java.util.Scanner;
  * 
  * @author Conor Brown, Jack Soderwall, Joe Cassidy, Sean Carter
  * 
- *         Class stub for compilation when passing in Popularity Only
- *         files
+ *         Reads in the PO file and stores files information
  */
 
 public class PopularityOnlyElection extends Election {
 	
 	public PopularityOnlyElection() {
 		
+	}
+	
+	public PopularityOnlyElection(List<Scanner> ballotFiles) {
+		initializeParameters();
+		readBallotFileList(ballotFiles);
 	}
 
 	@Override
@@ -26,20 +30,35 @@ public class PopularityOnlyElection extends Election {
 
 	@Override
 	protected void readBallotFile(Scanner ballotFile) {
-		// TODO Auto-generated method stub
+		while (ballotFile.hasNextLine()) {
+			Ballot ballot = new Ballot(candidates, ballotFile.nextLine().replaceAll("\\s+", ""));
+			// get the ballots preferred candidate
+			Candidate preferredCandidate = ballot.getPreferredCandidate();
+			preferredCandidate.incrementVoteCount();
+		}
 
 	}
 
 	@Override
 	protected void readBallotFileList(List<Scanner> ballotFiles) {
-		// TODO Auto-generated method stub
-
+		for (Scanner ballotFile : ballotFiles) {
+			readBallotFileHeader(ballotFile);
+		}
+		
+		for (Scanner ballotFile : ballotFiles) {
+			readBallotFile(ballotFile);
+		}
 	}
 
 	@Override
 	protected void readBallotFileHeader(Scanner ballotFile) {
-		// TODO Auto-generated method stub
-
+		numCandidates = Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
+		if (candidates.isEmpty()) {
+			setCandidatesAndParties(ballotFile.nextLine());
+		} else {
+			ballotFile.nextLine().replaceAll("\\s+", "");
+		}
+		numBallots += Integer.parseInt(ballotFile.nextLine().replaceAll("\\s+", ""));
 	}
 
 	@Override
