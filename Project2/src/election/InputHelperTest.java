@@ -105,17 +105,6 @@ public class InputHelperTest extends Election {
 		assertEquals(candidates.get(1).getParty().getPartyName(), "Vegan Carnivorous Plant");
 	}
 
-	// Set IR candidates when names contain non-ascii characters
-	@Test
-	public void testSetCandidatesIRNonAscii() {
-		String candidateLine = "Joñ (Q), Warszawa (ñ)";
-		candidates = new LinkedList<>();
-		setCandidates(candidateLine);
-		assertEquals(candidates.get(0).getName(), "Joñ");
-		assertEquals(candidates.get(1).getName(), "Warszawa");
-		assertEquals(candidates.get(0).getParty().getPartyName(), "Q");
-		assertEquals(candidates.get(1).getParty().getPartyName(), "ñ");
-	}
 
 	// Set IR candidates from line with arbitrary spacing
 	@Test
@@ -184,18 +173,6 @@ public class InputHelperTest extends Election {
 		assertEquals(candidates.get(1).getParty().getPartyName(), "Vegan Carnivorous Plant");
 	}
 
-	// Set OPL candidates when names contain non-ascii characters
-	@Test
-	public void testSetCandidatesOPLNonAscii() {
-		String candidateLine = "[Joñ,Q],[Warszawa,ñ]";
-		candidates = new LinkedList<>();
-		setCandidates(candidateLine);
-		assertEquals(candidates.size(), 2);
-		assertEquals(candidates.get(0).getName(), "Joñ");
-		assertEquals(candidates.get(1).getName(), "Warszawa");
-		assertEquals(candidates.get(0).getParty().getPartyName(), "Q");
-		assertEquals(candidates.get(1).getParty().getPartyName(), "ñ");
-	}
 
 	// Set OPL candidates from line with arbitrary spacing
 	@Test
