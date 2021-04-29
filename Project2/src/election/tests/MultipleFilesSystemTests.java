@@ -47,12 +47,4 @@ class MultipleFilesSystemTests {
 						  "/election.files/comebackIR.csv" };
 	    ElectionDriver.main(args);
 	}
-	
-	// Should result in an error must be the same election type
-	@Test
-	void testDifferentElectionTypes() throws FileNotFoundException {
-		String[] args = { "/election.files/fixedWinnerIR.csv",
-						  "/election.files/OPLTest1.csv" };
-        ElectionDriver.main(args);
-	}
 }
