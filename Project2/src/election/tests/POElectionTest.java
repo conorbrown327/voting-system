@@ -82,9 +82,9 @@ public class POElectionTest {
 		assertEquals(numCands.get(3).getVoteCount(), 0);
 	}
 	
-	// Test that PO can read and store the correct info from multiple files
+	// Test that PO can read and store the correct info with 2 files
 	@Test
-	void testPOMultipleFiles() throws FileNotFoundException {
+	void testPO2Files() throws FileNotFoundException {
 		String path1 = POElectionTest.class.getResource("/election.files/POFile2.csv").getPath();
 		String path2 = POElectionTest.class.getResource("/election.files/POFile2.csv").getPath();
 		Scanner scan1 = new Scanner(new File(path1));
@@ -114,6 +114,45 @@ public class POElectionTest {
 		assertEquals(numCands.get(0).getVoteCount(), 6);
 		assertEquals(numCands.get(1).getVoteCount(), 2);
 		assertEquals(numCands.get(2).getVoteCount(), 2);
+		assertEquals(numCands.get(3).getVoteCount(), 0);
+	}
+	
+	// Test that PO can read and store the correct info with 3 files
+	@Test
+	void testPO3Files() throws FileNotFoundException {
+		String path1 = POElectionTest.class.getResource("/election.files/POFile2.csv").getPath();
+		String path2 = POElectionTest.class.getResource("/election.files/POFile2.csv").getPath();
+		String path3 = POElectionTest.class.getResource("/election.files/POFile2.csv").getPath();
+		Scanner scan1 = new Scanner(new File(path1));
+		Scanner scan2 = new Scanner(new File(path2));
+		Scanner scan3 = new Scanner(new File(path3));
+		scan1.nextLine().replaceAll("\\s+", "");
+		scan2.nextLine().replaceAll("\\s+", "");
+		scan3.nextLine().replaceAll("\\s+", "");
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan1);
+		ballotFiles.add(scan2);
+		ballotFiles.add(scan3);
+		PopularityOnlyElection po = new PopularityOnlyElection(ballotFiles);
+		int numBallots = po.getNumBallots();
+		List<Candidate> numCands = po.getCandidates();
+		
+		assertEquals(numBallots, 15);
+		assertEquals(numCands.size(), 4);
+		
+		assertEquals(numCands.get(0).getName(), "Jack");
+		assertEquals(numCands.get(1).getName(), "Sean");
+		assertEquals(numCands.get(2).getName(), "Joe");
+		assertEquals(numCands.get(3).getName(), "Conor");
+		
+		assertEquals(numCands.get(0).getParty().getPartyName(), "I");
+		assertEquals(numCands.get(1).getParty().getPartyName(), "I");
+		assertEquals(numCands.get(2).getParty().getPartyName(), "I");
+		assertEquals(numCands.get(3).getParty().getPartyName(), "I");
+		
+		assertEquals(numCands.get(0).getVoteCount(), 9);
+		assertEquals(numCands.get(1).getVoteCount(), 3);
+		assertEquals(numCands.get(2).getVoteCount(), 3);
 		assertEquals(numCands.get(3).getVoteCount(), 0);
 	}
 }
