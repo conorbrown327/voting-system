@@ -128,4 +128,110 @@ class IRElectionTest {
 			ElectionDriver.main(args);
 		});
 	}
+	
+	@Test
+	void testFixedFileMulti() throws FileNotFoundException {
+		String path = IRElectionTest.class.getResource("/election.files/fixedWinnerIR.csv").getPath();
+		Scanner scan1 = new Scanner(new File(path));
+		Scanner scan2 = new Scanner(new File(path));
+		scan1.nextLine().replaceAll("\\s+", "");
+		scan2.nextLine().replaceAll("\\s+", "");
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan1);
+		ballotFiles.add(scan2);
+		InstantRunoffElection ir = new InstantRunoffElection(ballotFiles);
+		var winner = ir.getElectionWinner();
+
+		// Since we run the same file twice, the votes will be double, but all header
+		// information (like number of parties) should remain consistent
+		assertEquals("Watters", winner.getName());
+		assertEquals("P", winner.getParty().getPartyName());
+		assertEquals(6, winner.getVoteCount());
+
+		assertEquals(4, winner.getParty().getPartyMembers().size());
+		assertEquals(1, ir.getParticipatingParties().size());
+	}
+
+	@Test
+	void testComebackMulti() throws FileNotFoundException {
+		String path = IRElectionTest.class.getResource("/election.files/comebackIR.csv").getPath();
+		Scanner scan1 = new Scanner(new File(path));
+		Scanner scan2 = new Scanner(new File(path));
+		scan1.nextLine().replaceAll("\\s+", "");
+		scan2.nextLine().replaceAll("\\s+", "");
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan1);
+		ballotFiles.add(scan2);
+		InstantRunoffElection ir = new InstantRunoffElection(ballotFiles);
+		var winner = ir.getElectionWinner();
+
+		// Kleinberg should still win since the proportions for majority should also
+		// increase.
+		assertEquals("Kleinberg", winner.getName());
+		assertEquals("R", winner.getParty().getPartyName());
+		assertEquals(8, winner.getVoteCount());
+	}
+
+	@Test
+	void testFourWayTieMulti() throws FileNotFoundException {
+		String path = IRElectionTest.class.getResource("/election.files/fourWayTie.csv").getPath();
+		Scanner scan1 = new Scanner(new File(path));
+		Scanner scan2 = new Scanner(new File(path));
+		scan1.nextLine().replaceAll("\\s+", "");
+		scan2.nextLine().replaceAll("\\s+", "");
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan1);
+		ballotFiles.add(scan2);
+		InstantRunoffElection ir = new InstantRunoffElection(ballotFiles);
+
+		// There should always be 3 eliminated candidates by the end
+		assertEquals(3, ir.getEliminatedCandidates().size());
+
+		// 4 parties participated in this election
+		assertEquals(4, ir.getParticipatingParties().size());
+
+		// There should only be one candidate and no ballots remaining
+		// since every ballot should be invalidated
+		assertEquals(0, ir.getNumBallots());
+		assertEquals(1, ir.getCandidates().size());
+	}
+
+	@Test
+	void someValidsTest() throws FileNotFoundException {
+		String path = IRElectionTest.class.getResource("/election.files/IRSomeValids.csv").getPath();
+		Scanner scan = new Scanner(new File(path));
+		scan.nextLine().replaceAll("\\s+", "");
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		InstantRunoffElection ir = new InstantRunoffElection(ballotFiles);
+		var winner = ir.getElectionWinner();
+
+		// Jack should be the winner with the following vote counts
+		assertEquals("Jack", winner.getName());
+		assertEquals("I", winner.getParty().getPartyName());
+		assertEquals(3, winner.getVoteCount());
+
+		// Only 3 ballots should remains since the others are invalidated
+		assertEquals(3, ir.getNumBallots());
+	}
+
+	@Test
+	void oneValidTest() throws FileNotFoundException {
+		String path = IRElectionTest.class.getResource("/election.files/IROneValid.csv").getPath();
+		Scanner scan = new Scanner(new File(path));
+		scan.nextLine().replaceAll("\\s+", "");
+		List<Scanner> ballotFiles = new ArrayList<>();
+		ballotFiles.add(scan);
+		InstantRunoffElection ir = new InstantRunoffElection(ballotFiles);
+		var winner = ir.getElectionWinner();
+
+		// Sean should win through his one valid ballot vs Jack's 9 invalid ones
+		assertEquals("Sean", winner.getName());
+		assertEquals("I", winner.getParty().getPartyName());
+		assertEquals(1, winner.getVoteCount());
+
+		// Only one ballot should be present since it is the only valid one
+		assertEquals(1, ir.getNumBallots());
+
+	}
 }
