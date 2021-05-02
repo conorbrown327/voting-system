@@ -20,4 +20,6 @@ In order to run our tests, you can simply right click the .java files containing
 IMPORTANT NOTE ABOUT OUR TEST LOG: We felt it pertient to maintain almost all of our tests from the previous project iteration, so we appended the new individual test logs onto the bottom of the testinglogs.pdf file contained within the testing folder. It is clearly marked "Project Portion 2 New Tests" and contains further notes. We apologize for the document being 97 pages long, but we did quite a few tests and had quite a few templates to fill out. 
 
 Also, some testing files are in a separate location from the others. Some tests are in src/election/tests, while some (e.g. OPLTest.java, TiebreakTest.java, IRElectionUnitTest.java, and InputHelperTest.java) are in the src/election folder. There is a method to this madness, but we apologize for any inconvenience nonetheless.
+
+However you decided to run the program, it is already documented that it runs, as evidenced by all of our PBIs being approved in the Sprint Review Meeting with Team 22.
 ```
