@@ -15,52 +15,6 @@ import org.junit.jupiter.api.Test;
 
 public class IRElectionUnitTest extends InstantRunoffElection {
 
-	@Test
-	void readBallotFileTest() {
-		String path = IRElectionUnitTest.class.getResource("/election.files/comebackIR.csv").getPath();
-		try {
-			Scanner scan = new Scanner(new File(path));
-			scan.nextLine().replaceAll("\\s+", "");
-
-			IRElectionUnitTest IR = new IRElectionUnitTest();
-
-			assertEquals(0, IR.candidates.size());
-			assertEquals(0, IR.participatingParties.size());
-
-			IR.readBallotFile(scan);
-
-			// Tests for proper base values
-			assertEquals(7, IR.numBallots);
-			assertEquals(4, IR.candidates.size());
-			assertEquals(4, IR.participatingParties.size());
-
-			// Tests for individual candidate stats
-
-			// Rosen stats
-			assertEquals("Rosen", IR.candidates.get(0).getName());
-			assertEquals(3, IR.candidates.get(0).getVoteCount());
-			assertEquals("D", IR.candidates.get(0).getParty().getPartyName());
-
-			// Kleinberg stats
-			assertEquals("Kleinberg", IR.candidates.get(1).getName());
-			assertEquals(2, IR.candidates.get(1).getVoteCount());
-			assertEquals("R", IR.candidates.get(1).getParty().getPartyName());
-
-			// Chou stats
-			assertEquals("Chou", IR.candidates.get(2).getName());
-			assertEquals(1, IR.candidates.get(2).getVoteCount());
-			assertEquals("I", IR.candidates.get(2).getParty().getPartyName());
-
-			// Royce stats
-			assertEquals("Royce", IR.candidates.get(3).getName());
-			assertEquals(1, IR.candidates.get(3).getVoteCount());
-			assertEquals("L", IR.candidates.get(3).getParty().getPartyName());
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-	}
 
 	@Test
 	void getWinnerTest() {

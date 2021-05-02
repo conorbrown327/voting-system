@@ -102,7 +102,7 @@ class IRElectionTest {
 		assertEquals(4, ir.getParticipatingParties().size());
 
 		// There should only be one candidate and one ballot remaining
-		assertEquals(1, ir.getNumBallots());
+		assertEquals(0, ir.getNumBallots());
 		assertEquals(1, ir.getCandidates().size());
 	}
 
